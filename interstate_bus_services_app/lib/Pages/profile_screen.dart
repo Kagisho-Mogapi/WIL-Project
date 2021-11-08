@@ -75,7 +75,7 @@ class PprofileStateScreen extends State<ProfileScreen> {
                 Navigator.pop(context);
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.purple),
+                backgroundColor: MaterialStateProperty.all(Colors.green),
                 fixedSize: MaterialStateProperty.all(Size.fromWidth(250)),
               ),
             ),
