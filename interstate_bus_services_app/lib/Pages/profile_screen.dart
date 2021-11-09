@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  PprofileStateScreen createState() => PprofileStateScreen();
+  ProfileStateScreen createState() => ProfileStateScreen();
 }
 
-class PprofileStateScreen extends State<ProfileScreen> {
+class ProfileStateScreen extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
@@ -43,41 +43,36 @@ class PprofileStateScreen extends State<ProfileScreen> {
                 ),
               ),
             ]),
-            SizedBox(height: 20),
-            ProfileDetails(detailName: '{First Name}'),
-            SizedBox(height: 20),
-            ProfileDetails(detailName: '{Last Name}'),
-            SizedBox(height: 20),
-            ProfileDetails(detailName: '{ID Number}'),
-            SizedBox(height: 20),
-            ProfileDetails(detailName: '{Email}'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text(
-                'Edit Profile',
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {
-                //Navigator.pop(context);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.purple),
-                fixedSize: MaterialStateProperty.all(Size.fromWidth(250)),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text(
-                'Go Home',
-                style: TextStyle(fontSize: 20),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.green),
-                fixedSize: MaterialStateProperty.all(Size.fromWidth(250)),
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(height: 15),
+                ProfileDetails(detailName: 'First Name'),
+                SizedBox(height: 10),
+                ProfileDetails(detailName: 'Last Name'),
+                SizedBox(height: 10),
+                ProfileDetails(detailName: 'ID Number'),
+                SizedBox(height: 10),
+                ProfileDetails(detailName: 'Email'),
+                SizedBox(height: 30),
+                ViewProfileButtons(
+                    btnName: 'Edit Profile',
+                    routeName: RouteManager.editProfile),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  child: Text(
+                    'Go Home',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -93,15 +88,51 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.purple[600]),
-      height: 40,
-      width: 290,
-      child: Center(
-          child: Text(
-        detailName,
-        style: TextStyle(fontSize: 20, color: Colors.white),
-      )),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          detailName,
+          style: TextStyle(
+            color: Colors.purple[600],
+            fontSize: 15,
+          ),
+        ),
+        Text(
+          '{{Profile Details Here}}',
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ViewProfileButtons extends StatelessWidget {
+  const ViewProfileButtons({
+    Key? key,
+    required this.btnName,
+    required this.routeName,
+  }) : super(key: key);
+
+  final String btnName;
+  final String routeName;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: Text(
+        btnName,
+        style: TextStyle(fontSize: 15),
+      ),
+      onPressed: () {
+        Navigator.of(context).pushNamed(routeName);
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.blue),
+        fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
+      ),
     );
   }
 }

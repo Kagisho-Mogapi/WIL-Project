@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RouteManager.home,
+      initialRoute: RouteManager.editProfile,
       onGenerateRoute: RouteManager.generateRoute,
     );
   }

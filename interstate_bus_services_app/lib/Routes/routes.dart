@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Pages/edit_profile_screen.dart';
 import 'package:interstate_bus_services_app/Pages/home_screen.dart';
 import 'package:interstate_bus_services_app/Pages/profile_screen.dart';
 
@@ -12,6 +13,7 @@ class RouteManager {
   static const String announcements = '/announcements';
   static const String profile = '/profile';
   static const String getQR = '/getQR';
+  static const String editProfile = '/profile/edit profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -21,6 +23,9 @@ class RouteManager {
 
       case profile:
         return MaterialPageRoute(builder: (context) => ProfileScreen());
+
+      case editProfile:
+        return MaterialPageRoute(builder: (context) => EditProfile());
 
       default:
         throw FormatException('Route not found, check route again');
