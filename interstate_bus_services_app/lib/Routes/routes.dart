@@ -5,7 +5,7 @@ import 'package:interstate_bus_services_app/Pages/profile_screen.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
 class RouteManager {
-  //TODO: Change routes after combination
+  //TODO: Change routes after Adding a Page
   static const String start = '/';
   static const String home = '/home';
   static const String Buy = '/home/Buy';
