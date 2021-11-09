@@ -28,7 +28,7 @@ class WelcomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   Image.asset(
                     'assets/images/Interstatelogo.jpg',
@@ -46,7 +46,7 @@ class WelcomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   Text(
                     'Making life easier for our commuters',
@@ -57,7 +57,7 @@ class WelcomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 60,
+                    height: 30,
                   ),
                   MaterialButton(
                     height: 50,
@@ -74,7 +74,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 12,
+                    height: 10,
                   ),
                   MaterialButton(
                     height: 50,

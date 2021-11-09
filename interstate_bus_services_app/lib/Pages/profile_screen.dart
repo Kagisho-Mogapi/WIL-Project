@@ -48,11 +48,11 @@ class ProfileStateScreen extends State<ProfileScreen> {
               children: [
                 SizedBox(height: 15),
                 ProfileDetails(detailName: 'First Name'),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 ProfileDetails(detailName: 'Last Name'),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 ProfileDetails(detailName: 'ID Number'),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 ProfileDetails(detailName: 'Email'),
                 SizedBox(height: 30),
                 ViewProfileButtons(
