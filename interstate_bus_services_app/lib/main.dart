@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  SystemChrome.setEnabledSystemUIOverlays([]); //For the top and bottom tabs
   runApp(MyApp());
 }
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RouteManager.home,
+      initialRoute: RouteManager.start,
       onGenerateRoute: RouteManager.generateRoute,
     );
   }

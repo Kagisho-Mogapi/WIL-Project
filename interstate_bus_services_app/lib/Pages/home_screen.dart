@@ -16,9 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
       //backgroundColor: Colors.blue[600],
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
@@ -27,51 +27,51 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 5),
               Text(
-                '{username}',
+                '{{username}}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(height: 25),
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   HomeScreenButton(
                     btnName: 'Buy Ticket',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'Purchase History',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'View Schedule',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'Balance Details',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'Annoucements',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'View Profile',
                     routeName: RouteManager.profile,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   HomeScreenButton(
                     btnName: 'Scan QR',
                     routeName: '',
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 3),
                   ElevatedButton(
                     onPressed: () {
-                      SystemNavigator.pop();
+                      //SystemNavigator.pop();
                     },
                     child: Text('Exit'),
                     style: ButtonStyle(
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     btnName: 'Quit',
                     routeName: '',
                   ),*/
-                  SizedBox(height: 10),
+                  SizedBox(height: 30),
                 ],
               )
             ],

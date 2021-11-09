@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -79,7 +80,9 @@ class WelcomePage extends StatelessWidget {
                     height: 50,
                     minWidth: 200,
                     color: Colors.red[700],
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(RouteManager.home);
+                    },
                     child: Text(
                       'Sign In',
                       style: TextStyle(
