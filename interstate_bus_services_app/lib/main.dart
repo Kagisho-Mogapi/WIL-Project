@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 void main() {
+  SystemChrome.setEnabledSystemUIOverlays([]);
   runApp(MyApp());
 }
 
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: RouteManager.editProfile,
+      initialRoute: RouteManager.home,
       onGenerateRoute: RouteManager.generateRoute,
     );
   }
