@@ -8,6 +8,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final profileFormKey = GlobalKey<FormState>();
   // To capture input
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
@@ -31,64 +32,88 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFields(
-                  hint: 'Enter First Name',
-                  keyType: TextInputType.text,
-                  controller: fNameController,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: profileFormKey,
+                child: Column(
+                  children: [
+                    TextFormFields(
+                      hint: 'Edit First Name',
+                      regExp: r'^[a-z A-Z]+$',
+                      controller: fNameController,
+                    ),
+                    SizedBox(height: 5),
+                    TextFormFields(
+                      hint: 'Edit Last Name',
+                      regExp: r'^[a-z A-Z]+$',
+                      controller: lNameController,
+                    ),
+                    SizedBox(height: 5),
+                    TextFormFields(
+                      hint: 'Edit Phone Number',
+                      regExp: r'^(\+27|0)[6-8][0-9]{8}$',
+                      controller: phoneNoController,
+                    ),
+                    SizedBox(height: 5),
+                    TextFormFields(
+                      hint: 'Edit Email',
+                      regExp:
+                          r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
+                      controller: emailController,
+                    ),
+                    SizedBox(height: 5),
+                    PasswordFormFields(
+                      hint:
+                          'Enter Old Password(8 characters, 1 letter, 1 number and 1 special character)',
+                      // Minimum eight characters, at least one letter, one number and one special character
+                      regExp:
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$',
+                      controller: oldPassController,
+                    ),
+                    SizedBox(height: 5),
+                    PasswordFormFields(
+                      hint:
+                          'Enter New Password(8 characters, 1 letter, 1 number and 1 special character)',
+                      // Minimum eight characters, at least one letter, one number and one special character
+                      regExp:
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$',
+                      controller: newPassController,
+                    ),
+                    SizedBox(height: 5),
+                    PasswordFormFields(
+                      hint:
+                          'Confirm New Password(8 characters, 1 letter, 1 number and 1 special character)',
+                      // Minimum eight characters, at least one letter, one number and one special character
+                      regExp:
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$',
+                      controller: confirmPassController,
+                    ),
+                    SizedBox(height: 30),
+                    ElevatedButton(
+                      style: buttonStyle(),
+                      child: Text('Submit'),
+                      onPressed: () {
+                        if (profileFormKey.currentState!.validate()) {
+                          print('Submitting To Server...');
+                        }
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                        style: buttonStyle(),
+                        child: Text('View Profile'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        })
+                  ],
                 ),
-                SizedBox(height: 10),
-                TextFields(
-                    hint: 'Enter Last Name',
-                    keyType: TextInputType.text,
-                    controller: lNameController),
-                SizedBox(height: 10),
-                TextFields(
-                  hint: 'Enter Phone Number',
-                  keyType: TextInputType.phone,
-                  controller: phoneNoController,
-                ),
-                SizedBox(height: 10),
-                TextFields(
-                  hint: 'Enter Email',
-                  keyType: TextInputType.emailAddress,
-                  controller: emailController,
-                ),
-                SizedBox(height: 10),
-                PasswordFields(
-                  hint: 'Enter Old Password',
-                  controller: oldPassController,
-                ),
-                SizedBox(height: 10),
-                PasswordFields(
-                  hint: 'Enter New Password',
-                  controller: newPassController,
-                ),
-                SizedBox(height: 10),
-                PasswordFields(
-                  hint: 'Confirm New Password',
-                  controller: confirmPassController,
-                ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                  style: buttonStyle(),
-                  child: Text('Submit'),
-                  onPressed: () {},
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                    style: buttonStyle(),
-                    child: Text('View Profile'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    })
-              ],
+              ),
             ),
           ),
         ),
@@ -97,53 +122,69 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-class TextFields extends StatelessWidget {
-  const TextFields(
-      {Key? key,
-      required this.hint,
-      required this.keyType,
-      required this.controller})
-      : super(key: key);
+class TextFormFields extends StatelessWidget {
+  const TextFormFields({
+    Key? key,
+    required this.hint,
+    required this.regExp,
+    required this.controller,
+  }) : super(key: key);
 
   final String hint;
-  final TextInputType keyType;
+  final String regExp;
   final TextEditingController controller;
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      style: TextStyle(fontSize: 15),
+    return TextFormField(
+      style: TextStyle(fontSize: 13),
       controller: controller,
-      keyboardType: keyType,
       decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.all(15),
-        border: OutlineInputBorder(),
         labelText: hint,
+        isDense: true,
       ),
+      validator: (value) {
+        if (value!.length == 0) {
+          return null;
+        }
+        if (!RegExp(regExp).hasMatch(value)) {
+          return 'Enter Correct Info';
+        }
+      },
     );
   }
 }
 
-class PasswordFields extends StatelessWidget {
-  const PasswordFields({Key? key, required this.hint, required this.controller})
-      : super(key: key);
+class PasswordFormFields extends StatelessWidget {
+  const PasswordFormFields({
+    Key? key,
+    required this.hint,
+    required this.regExp,
+    required this.controller,
+  }) : super(key: key);
 
   final String hint;
+  final String regExp;
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      style: TextStyle(fontSize: 15),
-      controller: controller,
-      keyboardType: TextInputType.text,
+    return TextFormField(
       obscureText: true,
+      style: TextStyle(fontSize: 13),
+      controller: controller,
       decoration: InputDecoration(
-        isDense: true,
-        contentPadding: EdgeInsets.all(15),
-        border: OutlineInputBorder(),
         labelText: hint,
+        isDense: true,
       ),
+      validator: (value) {
+        if (value!.length == 0) {
+          return null;
+        }
+        if (!RegExp(regExp).hasMatch(value)) {
+          return 'Enter Correct Info';
+        }
+      },
     );
   }
 }

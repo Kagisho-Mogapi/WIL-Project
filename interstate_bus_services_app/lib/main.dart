@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([]); //For the top and bottom tabs
+  SystemChrome.setEnabledSystemUIOverlays(
+      []); //For removal of top and bottom tabs
   runApp(MyApp());
 }
 

@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 5),
               Text(
-                '{{username}}',
+                '{{Full Name}}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(height: 25),
