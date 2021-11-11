@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Pages/edit_profile_screen.dart';
-import 'package:interstate_bus_services_app/Pages/home_screen.dart';
-import 'package:interstate_bus_services_app/Pages/profile_screen.dart';
+import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
+import 'package:interstate_bus_services_app/Pages/home_page.dart';
+import 'package:interstate_bus_services_app/Pages/profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
 class RouteManager {
@@ -24,10 +24,10 @@ class RouteManager {
         return MaterialPageRoute(builder: (context) => WelcomePage());
 
       case home:
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return MaterialPageRoute(builder: (context) => HomePage());
 
       case profile:
-        return MaterialPageRoute(builder: (context) => ProfileScreen());
+        return MaterialPageRoute(builder: (context) => ProfilePage());
 
       case editProfile:
         return MaterialPageRoute(builder: (context) => EditProfile());

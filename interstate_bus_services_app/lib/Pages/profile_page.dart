@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  ProfileStateScreen createState() => ProfileStateScreen();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class ProfileStateScreen extends State<ProfileScreen> {
+class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
