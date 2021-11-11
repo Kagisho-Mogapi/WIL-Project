@@ -148,7 +148,7 @@ class TextFormFields extends StatelessWidget {
           return null;
         }
         if (!RegExp(regExp).hasMatch(value)) {
-          return 'Enter Correct Info';
+          return 'Enter Correct Info For This Field';
         }
       },
     );
@@ -182,7 +182,7 @@ class PasswordFormFields extends StatelessWidget {
           return null;
         }
         if (!RegExp(regExp).hasMatch(value)) {
-          return 'Enter Correct Info';
+          return 'Enter Correct Info For This Field';
         }
       },
     );
