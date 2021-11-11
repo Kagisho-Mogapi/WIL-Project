@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                     minWidth: 200,
                     color: Colors.red[700],
                     onPressed: () {
-                      Navigator.of(context).pushNamed(RouteManager.home);
+                      Navigator.of(context).pushNamed(RouteManager.login);
                     },
                     child: Text(
                       'Sign In',
