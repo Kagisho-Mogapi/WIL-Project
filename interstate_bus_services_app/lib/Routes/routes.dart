@@ -8,7 +8,7 @@ import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
 class RouteManager {
   //TODO: Change routes after Adding a Page
-  static const String start = '/';
+  static const String welcome = '/';
   static const String register = '/register';
   static const String login = '/login';
   static const String home = '/login/home';
@@ -24,7 +24,7 @@ class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       //TODO: Add routes of other pages once are finished
-      case start:
+      case welcome:
         return MaterialPageRoute(builder: (context) => WelcomePage());
 
       case register:

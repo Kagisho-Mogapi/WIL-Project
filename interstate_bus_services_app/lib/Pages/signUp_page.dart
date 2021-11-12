@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/services/helper_user.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:interstate_bus_services_app/widgets/sign_up_text_field.dart';
+import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -63,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Image.asset(
-                        'assets/images/Register.png',
+                        'assets/images/Register.jpg',
                         alignment: Alignment.center,
                       ),
                     ),
@@ -92,10 +97,37 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: phoneNumberController,
                       labeltext: 'Enter Phone Number',
                     ),
-                    SignUpTextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      labeltext: 'Enter Email Address',
+                    Focus(
+                      onFocusChange: (value) async {
+                        if (!value) {
+                          context
+                              .read<UserService>()
+                              .checkIfUserExists(emailController.text.trim());
+                        }
+                      },
+                      child: SignUpTextField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        labeltext: 'Enter Email Address',
+                      ),
+                    ),
+                    Selector<UserService, bool>(
+                      selector: (context, value) => value.userExists,
+                      builder: (context, value, child) {
+                        Widget result;
+                        if (value) {
+                          result = Text(
+                            'User already exixts',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        } else {
+                          result = Container();
+                        }
+                        return result;
+                      },
                     ),
                     SignUpTextField(
                       hideText: true,
@@ -114,15 +146,37 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: ElevatedButton(
                         style:
                             ElevatedButton.styleFrom(primary: Colors.red[400]),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Passing New User Details
+                          createNewUserInUI(context,
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              name: nameController.text.trim());
+                        },
                         child: Text('Submit'),
                       ),
                     ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      child: Text('Back'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
                   ],
                 ),
               ),
             ),
           ),
+          Selector<UserService, Tuple2>(
+            selector: (context, value) =>
+                Tuple2(value.showUserProgress, value.userProgressText),
+            builder: (context, value, child) {
+              return value.item1
+                  ? AppProgressIndicator(text: '${value.item2}')
+                  : Container();
+            },
+          )
         ],
       ),
     );

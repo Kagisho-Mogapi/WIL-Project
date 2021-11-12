@@ -72,6 +72,12 @@ class _LoginPageState extends State<LoginPage> {
                           ElevatedButton(
                             style: buttonStyle(),
                             child: Text('Reset Password'),
+                            onPressed: () {},
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            style: buttonStyle(),
+                            child: Text('Back'),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -83,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              // Listening on {showUserProgress} and {userProgressText}
+              // Checking on {showUserProgress} and {userProgressText}
               Selector<UserService, Tuple2>(
                   selector: (context, value) =>
                       Tuple2(value.showUserProgress, value.userProgressText),

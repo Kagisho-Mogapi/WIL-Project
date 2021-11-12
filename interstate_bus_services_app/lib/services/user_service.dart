@@ -95,7 +95,7 @@ class UserService with ChangeNotifier {
 
       // Create an empty announcement entry
       AnnouncementEntry emptyEntry =
-          AnnouncementEntry(announcements: {}, phoneNumber: user.email);
+          AnnouncementEntry(announcements: {}, username: user.email);
 
       // Sends the blank entry to the {AnnouncementEntry} table on Backendless
       // .onError gives errors
