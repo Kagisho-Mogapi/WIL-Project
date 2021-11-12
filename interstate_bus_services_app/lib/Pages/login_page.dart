@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               Selector<UserService, Tuple2>(
                   selector: (context, value) =>
                       Tuple2(value.showUserProgress, value.userProgressText),
-                  builder: (context, value) {
+                  builder: (context, value, child) {
                     return value.item1
                         ? AppProgressIndicator(text: '${value.item2}')
                         : Container();

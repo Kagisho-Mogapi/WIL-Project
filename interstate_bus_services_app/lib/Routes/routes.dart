@@ -3,27 +3,32 @@ import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/home_page.dart';
 import 'package:interstate_bus_services_app/Pages/login_page.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
+import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
 class RouteManager {
   //TODO: Change routes after Adding a Page
   static const String start = '/';
+  static const String register = '/register';
   static const String login = '/login';
-  static const String home = '/home';
-  static const String Buy = '/home/Buy';
-  static const String history = '/home/history';
-  static const String schedule = '/home/schedule';
-  static const String balance = '/home/balance';
-  static const String announcements = '/home/announcements';
-  static const String profile = '/home/profile';
-  static const String getQR = '/home/getQR';
-  static const String editProfile = '/home/profile/edit profile';
+  static const String home = '/login/home';
+  static const String Buy = '/login/home/Buy';
+  static const String history = '/login/home/history';
+  static const String schedule = '/login/home/schedule';
+  static const String balance = '/login/home/balance';
+  static const String announcements = '/login/home/announcements';
+  static const String profile = '/login/home/profile';
+  static const String getQR = '/login/home/getQR';
+  static const String editProfile = '/login/home/profile/edit profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       //TODO: Add routes of other pages once are finished
       case start:
         return MaterialPageRoute(builder: (context) => WelcomePage());
+
+      case register:
+        return MaterialPageRoute(builder: (context) => SignUpPage());
 
       case login:
         return MaterialPageRoute(builder: (context) => LoginPage());
