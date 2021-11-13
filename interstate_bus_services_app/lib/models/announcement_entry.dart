@@ -15,7 +15,7 @@ class AnnouncementEntry {
 
   // Converts the announcements Map to Json
   Map<String, Object?> toJson() => {
-        'phoneNumber': username,
+        'username': username,
         'announcements': announcements,
         'objectId': objectId,
         'created': created,
@@ -25,7 +25,7 @@ class AnnouncementEntry {
   // Converts the announcements Json to Map
   static AnnouncementEntry fromJson(Map<dynamic, dynamic>? json) =>
       AnnouncementEntry(
-        username: json!['phoneNumber'] as String,
+        username: json!['username'] as String,
         announcements: json['announcements'] as Map<dynamic, dynamic>,
         objectId: json['objectId'] as String,
         created: json['created'] as DateTime,

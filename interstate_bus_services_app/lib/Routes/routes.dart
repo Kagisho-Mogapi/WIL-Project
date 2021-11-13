@@ -6,8 +6,12 @@ import 'package:interstate_bus_services_app/Pages/profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
+import '../main.dart';
+
 class RouteManager {
   //TODO: Change routes after Adding a Page
+
+  static const String myWelcome = '/';
   static const String welcome = '/';
   static const String register = '/register';
   static const String login = '/login';
@@ -24,6 +28,10 @@ class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       //TODO: Add routes of other pages once are finished
+
+      case myWelcome:
+        return MaterialPageRoute(builder: (context) => MyHomePage());
+
       case welcome:
         return MaterialPageRoute(builder: (context) => WelcomePage());
 

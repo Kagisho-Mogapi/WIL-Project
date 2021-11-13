@@ -1,7 +1,23 @@
+import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 class WelcomePage extends StatelessWidget {
+  @override
+  void initState() {
+    init();
+  }
+
+  void init() async {
+    await Backendless.setUrl('https://eu-api.backendless.com');
+
+    await Backendless.initApp(
+        applicationId: '6C057E8A-5743-1687-FF77-06AE75443400',
+        iosApiKey: '6A6097DF-84AC-442F-AEA9-FADDCE16F1CB',
+        androidApiKey: '5771E324-6F0D-4CF2-A813-D9339D3223FD',
+        jsApiKey: 'CBB3571F-FB60-4DDE-95B3-21615345B79B');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -6,14 +6,24 @@ import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
-void createNewUserInUI(BuildContext context,
-    {required String email,
-    required String password,
-    required String name}) async {
+void createNewUserInUI(
+  BuildContext context, {
+  required String email,
+  required String password,
+  required String fName,
+  required String lName,
+  required String idNumber,
+  required String phoneNumber,
+}) async {
   // to remove focus from field
   FocusManager.instance.primaryFocus?.unfocus();
 
-  if (email.isEmpty || name.isEmpty || password.isEmpty) {
+  if (email.isEmpty ||
+      fName.isEmpty ||
+      lName.isEmpty ||
+      idNumber.isEmpty ||
+      phoneNumber.isEmpty ||
+      password.isEmpty) {
     showSnackBar(context, 'Please Enter All Fields');
   }
   // Set User Details
@@ -22,14 +32,17 @@ void createNewUserInUI(BuildContext context,
       ..email = email.trim()
       ..password = password.trim()
       ..putProperties({
-        'name': name.trim(),
+        'fName': fName.trim(),
+        'lName': lName.trim(),
+        'idNumber': idNumber.trim(),
+        'phoneNumber': phoneNumber.trim(),
       });
     //Custom columns here
 
     // Sends user details to {createUser} function
     String result = await context.read<UserService>().createUser(user);
 
-    if (result != 'Ok') {
+    if (result != 'OK') {
       showSnackBar(context, result);
     } else {
       showSnackBar(context, 'Account Created!!!');
@@ -52,10 +65,10 @@ void loginUserInUI(BuildContext context,
         .read<UserService>()
         .loginUser(phoneNumber.trim(), password.trim());
     // if anything wrong it shows snack bar error message
-    if (result != 'Ok') {
+    if (result != 'OK') {
       showSnackBar(context, result);
     }
-    // if everything went ok with the login process
+    // if everything went OK with the login process
     else {
       Navigator.of(context).popAndPushNamed(RouteManager.home);
     }

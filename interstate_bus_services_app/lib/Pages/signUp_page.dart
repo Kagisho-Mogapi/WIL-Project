@@ -97,6 +97,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: phoneNumberController,
                       labeltext: 'Enter Phone Number',
                     ),
+                    /*
+                    SignUpTextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      labeltext: 'Enter Email Address',
+                    ),*/
+
                     Focus(
                       onFocusChange: (value) async {
                         if (!value) {
@@ -148,10 +155,15 @@ class _SignUpPageState extends State<SignUpPage> {
                             ElevatedButton.styleFrom(primary: Colors.red[400]),
                         onPressed: () {
                           // Passing New User Details
-                          createNewUserInUI(context,
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                              name: nameController.text.trim());
+                          createNewUserInUI(
+                            context,
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            fName: nameController.text.trim(),
+                            lName: surnameController.text.trim(),
+                            idNumber: idNumberController.text.trim(),
+                            phoneNumber: phoneNumberController.text.trim(),
+                          );
                         },
                         child: Text('Submit'),
                       ),

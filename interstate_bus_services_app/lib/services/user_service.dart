@@ -25,18 +25,18 @@ class UserService with ChangeNotifier {
   }
 
   Future<String> resetPassword(String phoneNumber) async {
-    String result = 'Ok';
+    String result = 'OK';
     return result;
   }
 
   Future<String> logoutUser() async {
-    String result = 'Ok';
+    String result = 'OK';
     return result;
   }
 
   void checkIfUserExists(String username) async {
-    DataQueryBuilder queryBuilder = DataQueryBuilder()
-      ..whereClause = "phoneNumber = '$username'";
+    DataQueryBuilder? queryBuilder = DataQueryBuilder()
+      ..whereClause = "email = '$username'";
 
     await Backendless.data
         .withClass<BackendlessUser>()
@@ -56,7 +56,7 @@ class UserService with ChangeNotifier {
   }
 
   Future<String> loginUser(String username, String password) async {
-    String result = 'Ok';
+    String result = 'OK';
 
     _showUserProgress = true;
     _userProgressText = 'Logging In.... Please Wait';
@@ -78,12 +78,12 @@ class UserService with ChangeNotifier {
   }
 
   Future<String> checkIfUserLoggedIn(String phoneNumber) async {
-    String result = 'Ok';
+    String result = 'OK';
     return result;
   }
 
   Future<String> createUser(BackendlessUser user) async {
-    String result = 'Ok';
+    String result = 'OK';
 
     _showUserProgress = true;
     _userProgressText = 'Creating Account... Please Wait...';
@@ -99,11 +99,17 @@ class UserService with ChangeNotifier {
 
       // Sends the blank entry to the {AnnouncementEntry} table on Backendless
       // .onError gives errors
-      await Backendless.data.of('AnnouncementEntry').save(emptyEntry.toJson());
+      await Backendless.data
+          .of('AnnouncementEntry')
+          .save(emptyEntry.toJson())
+          .onError((error, stackTrace) {
+        result = error.toString();
+      });
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }
 
+    // When account is successfully created
     _showUserProgress = false;
     notifyListeners();
 
