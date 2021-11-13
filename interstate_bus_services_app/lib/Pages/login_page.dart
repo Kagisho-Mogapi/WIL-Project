@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           TextFormFields(
-                            hint: 'Phone Number',
+                            hint: 'Email',
                             regExp: r'^(\+27|0)[6-8][0-9]{8}$',
                             controller: phoneNoController,
                           ),

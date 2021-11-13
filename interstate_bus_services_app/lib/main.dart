@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => UserService()),
         ],
         child: MaterialApp(
-          initialRoute: RouteManager.myWelcome,
+          initialRoute: RouteManager.loading,
           onGenerateRoute: RouteManager.generateRoute,
         ));
   }
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               minWidth: 200,
               color: Colors.red[700],
               onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.register);
+                Navigator.of(context).pushNamed(RouteManager.welcome);
               },
               child: Text(
                 'bump',

@@ -11,7 +11,7 @@ import '../main.dart';
 class RouteManager {
   //TODO: Change routes after Adding a Page
 
-  static const String myWelcome = '/';
+  static const String loading = '/loading';
   static const String welcome = '/';
   static const String register = '/register';
   static const String login = '/login';
@@ -29,7 +29,7 @@ class RouteManager {
     switch (settings.name) {
       //TODO: Add routes of other pages once are finished
 
-      case myWelcome:
+      case loading:
         return MaterialPageRoute(builder: (context) => MyHomePage());
 
       case welcome:
