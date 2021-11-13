@@ -64,8 +64,11 @@ class UserService with ChangeNotifier {
 
     // Logging in a user
     // .onError gives errors
-    BackendlessUser? user =
-        await Backendless.userService.login(username, password, true);
+    BackendlessUser? user = await Backendless.userService
+        .login(username, password, true)
+        .onError((error, stackTrace) {
+      result = getHumanReadableError(error.toString());
+    });
 
     if (user != null) {
       _currentUser = user;

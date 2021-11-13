@@ -52,18 +52,19 @@ void createNewUserInUI(
 }
 
 void loginUserInUI(BuildContext context,
-    {required String phoneNumber, required String password}) async {
+    {required String email, required String password}) async {
+  // For closing the keyboard
   FocusManager.instance.primaryFocus?.unfocus();
 
   // Check for empty fields
-  if (phoneNumber.isEmpty || password.isEmpty) {
+  if (email.isEmpty || password.isEmpty) {
     showSnackBar(context, 'Please Enter All Fields');
   }
   // if no empty fields were found
   else {
     String result = await context
         .read<UserService>()
-        .loginUser(phoneNumber.trim(), password.trim());
+        .loginUser(email.trim(), password.trim());
     // if anything wrong it shows snack bar error message
     if (result != 'OK') {
       showSnackBar(context, result);

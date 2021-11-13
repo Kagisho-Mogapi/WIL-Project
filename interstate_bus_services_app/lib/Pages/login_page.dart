@@ -15,12 +15,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final profileFormKey = GlobalKey<FormState>();
   // To capture input
-  TextEditingController phoneNoController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
   @override
   void dispose() {
-    phoneNoController.dispose();
+    emailController.dispose();
     passController.dispose();
     super.dispose();
   }
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormFields(
                             hint: 'Email',
                             regExp: r'^(\+27|0)[6-8][0-9]{8}$',
-                            controller: phoneNoController,
+                            controller: emailController,
                           ),
                           SizedBox(height: 5),
                           PasswordFormFields(
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text('Login'),
                             onPressed: () {
                               loginUserInUI(context,
-                                  phoneNumber: phoneNoController.text,
+                                  email: emailController.text,
                                   password: passController.text);
                               /*
                             if (profileFormKey.currentState!.validate()) {
