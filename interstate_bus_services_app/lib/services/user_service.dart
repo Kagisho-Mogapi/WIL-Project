@@ -1,6 +1,7 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:interstate_bus_services_app/models/announcement_entry.dart';
+import 'package:interstate_bus_services_app/models/user_registration.dart';
 
 class UserService with ChangeNotifier {
   BackendlessUser? _currentUser;
@@ -24,13 +25,36 @@ class UserService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> resetPassword(String phoneNumber) async {
+  Future<String> resetPassword(String username) async {
     String result = 'OK';
+    _showUserProgress = true;
+    _userProgressText = 'Reseting the password... Please Wait...';
+    notifyListeners();
+
+    await Backendless.userService
+        .restorePassword(username)
+        .onError((error, stackTrace) {
+      result = getHumanReadableError(error.toString());
+    });
+    _showUserProgress = false;
+    notifyListeners();
+
     return result;
   }
 
   Future<String> logoutUser() async {
     String result = 'OK';
+
+    _showUserProgress = true;
+    _userProgressText = 'Signing Out... Please Wait...';
+    notifyListeners();
+
+    await Backendless.userService.logout().onError((error, stackTrace) {
+      result = error.toString();
+    });
+
+    _showUserProgress = false;
+    notifyListeners();
     return result;
   }
 
@@ -80,8 +104,45 @@ class UserService with ChangeNotifier {
     return result;
   }
 
-  Future<String> checkIfUserLoggedIn(String phoneNumber) async {
+  Future<String> checkIfUserLoggedIn() async {
     String result = 'OK';
+
+    // Checks if there was a valid login
+    bool? validLogin = await Backendless.userService
+        .isValidLogin()
+        .onError((error, stackTrace) {
+      result = error.toString();
+    });
+
+    if (validLogin != null && validLogin) {
+      // Retrives the current user's Object Id
+      String? currentUserObjectId = await Backendless.userService
+          .loggedInUser()
+          .onError((error, stackTrace) {
+        result = error.toString();
+      });
+      if (currentUserObjectId != null) {
+        // finds the user from {Users} table using {currentUserObjectId} and retrive
+        // their Json
+        Map<dynamic, dynamic>? mapOfCurentUser = await Backendless.data
+            .of('Users')
+            .findById(currentUserObjectId)
+            .onError((error, stackTrace) {
+          result = error.toString();
+        });
+
+        if (mapOfCurentUser != null) {
+          _currentUser = BackendlessUser.fromJson(mapOfCurentUser);
+          notifyListeners();
+        } else {
+          result = 'NOT OK';
+        }
+      } else {
+        result = 'NOT OK';
+      }
+    } else {
+      result = 'NOT OK';
+    }
     return result;
   }
 
@@ -97,8 +158,15 @@ class UserService with ChangeNotifier {
       await Backendless.userService.register(user);
 
       // Create an empty announcement entry
-      AnnouncementEntry emptyEntry =
-          AnnouncementEntry(announcements: {}, username: user.email);
+      UserRegistration emptyEntry = UserRegistration(
+        announcements: {},
+        username: user.email,
+        fName: user.getProperty('fName'),
+        lName: user.getProperty('lName'),
+        phoneNumber: user.getProperty('phoneNumber'),
+        idNumber: user.getProperty('idNumber'),
+        password: user.password,
+      );
 
       // Sends the blank entry to the {AnnouncementEntry} table on Backendless
       // .onError gives errors

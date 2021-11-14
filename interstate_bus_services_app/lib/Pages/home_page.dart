@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/helper_user.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,27 +18,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.blue[600],
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 70,
-                  backgroundImage: AssetImage('assets/images/Unity.jpeg'),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  '{{Full Name}}',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                SizedBox(height: 25),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage('assets/images/Unity.jpeg'),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '{{Full Name}}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    SizedBox(height: 25),
                     HomeScreenButton(
                       btnName: 'Buy Ticket',
                       routeName: '',
@@ -71,9 +76,9 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 3),
                     ElevatedButton(
                       onPressed: () {
-                        //SystemNavigator.pop();
+                        logoutUserInUI(context);
                       },
-                      child: Text('Exit'),
+                      child: Text('Logout'),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.blue),
                         fixedSize:
@@ -84,13 +89,22 @@ class _HomePageState extends State<HomePage> {
                       btnName: 'Quit',
                       routeName: '',
                     ),*/
-                    SizedBox(height: 30),
+                    SizedBox(height: 30)
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ),
-        ),
+          Selector<UserService, Tuple2>(
+            selector: (context, value) =>
+                Tuple2(value.showUserProgress, value.userProgressText),
+            builder: (context, value, child) {
+              return value.item1
+                  ? AppProgressIndicator(text: value.item2)
+                  : Container();
+            },
+          )
+        ],
       ),
     );
   }

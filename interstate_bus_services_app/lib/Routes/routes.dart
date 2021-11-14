@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/home_page.dart';
+import 'package:interstate_bus_services_app/Pages/loading.dart';
 import 'package:interstate_bus_services_app/Pages/login_page.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
-
-import '../main.dart';
 
 class RouteManager {
   //TODO: Change routes after Adding a Page
@@ -30,7 +29,7 @@ class RouteManager {
       //TODO: Add routes of other pages once are finished
 
       case loading:
-        return MaterialPageRoute(builder: (context) => MyHomePage());
+        return MaterialPageRoute(builder: (context) => Loading());
 
       case welcome:
         return MaterialPageRoute(builder: (context) => WelcomePage());

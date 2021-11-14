@@ -75,3 +75,29 @@ void loginUserInUI(BuildContext context,
     }
   }
 }
+
+void logoutUserInUI(BuildContext context) async {
+  String result = await context.read<UserService>().logoutUser();
+  if (result == 'OK') {
+    context.read<UserService>().setCurrentUserNull();
+    Navigator.pushNamed(context, RouteManager.login);
+  } else {
+    showSnackBar(context, result);
+  }
+}
+
+void resetPasswordInUI(BuildContext context, {required String email}) async {
+  if (email.isEmpty) {
+    showSnackBar(context, 'Please Enter Email First');
+  } else {
+    String result =
+        await context.read<UserService>().resetPassword(email.trim());
+
+    if (result == 'OK') {
+      showSnackBar(context,
+          'Successfully Sent Password Reset. Please Check Email for Instructions');
+    } else {
+      showSnackBar(context, result);
+    }
+  }
+}

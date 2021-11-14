@@ -1,4 +1,4 @@
-/*class AnnouncementEntry {
+class UserRegistration {
   Map<dynamic, dynamic> announcements;
   String username;
   String lName;
@@ -10,7 +10,7 @@
   DateTime? created;
   DateTime? updated;
 
-  AnnouncementEntry({
+  UserRegistration({
     required this.announcements,
     required this.username,
     required this.fName,
@@ -38,8 +38,8 @@
       };
 
   // Converts the announcements Json to Map
-  static AnnouncementEntry fromJson(Map<dynamic, dynamic>? json) =>
-      AnnouncementEntry(
+  static UserRegistration fromJson(Map<dynamic, dynamic>? json) =>
+      UserRegistration(
         username: json!['username'] as String,
         announcements: json['announcements'] as Map<dynamic, dynamic>,
         lName: json['lName'] as String,
@@ -51,4 +51,4 @@
         created: json['created'] as DateTime,
         updated: json['updated'] as DateTime,
       );
-}*/
+}

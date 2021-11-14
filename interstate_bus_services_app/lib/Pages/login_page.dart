@@ -72,7 +72,10 @@ class _LoginPageState extends State<LoginPage> {
                           ElevatedButton(
                             style: buttonStyle(),
                             child: Text('Reset Password'),
-                            onPressed: () {},
+                            onPressed: () {
+                              resetPasswordInUI(context,
+                                  email: emailController.text);
+                            },
                           ),
                           SizedBox(height: 10),
                           ElevatedButton(
