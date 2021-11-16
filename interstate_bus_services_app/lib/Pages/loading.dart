@@ -1,6 +1,7 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +29,13 @@ class _LoadingState extends State<Loading> {
   void loadTimer() async {
     String result = await context.read<UserService>().checkIfUserLoggedIn();
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
 
     if (result == 'OK') {
       Navigator.popAndPushNamed(context, RouteManager.home);
+      context
+          .read<AnnouncementService>()
+          .getAnnouncements(context.read<UserService>().currentUser!.email);
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }

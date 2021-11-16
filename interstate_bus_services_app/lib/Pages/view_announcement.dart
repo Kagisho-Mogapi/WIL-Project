@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/helper_announcement.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/announcement_card.dart';
+import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:provider/provider.dart' as provider;
+import 'package:tuple/tuple.dart';
 
 class ViewAnnouncement extends StatefulWidget {
   const ViewAnnouncement({Key? key}) : super(key: key);
@@ -14,6 +21,9 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
   @override
   void initState() {
     super.initState();
+    /*context
+        .read<AnnouncementService>()
+        .getAnnouncements(context.read<UserService>().currentUser!.email);*/
     announcementController = TextEditingController();
   }
 
@@ -63,23 +73,71 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 20,
-                    ),
-                    child: ListView.builder(
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return AnnouncementCard(
-                            messageToggleAction: (value) async {},
-                            deletaAction: () async {},
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 20,
+                      ),
+                      child: provider.Consumer<AnnouncementService>(
+                        builder: (context, value, child) {
+                          return ListView.builder(
+                            itemCount: value.announcements.length,
+                            itemBuilder: (context, index) {
+                              return AnnouncementCard(
+                                message: value.announcements[index],
+                                deletaAction: () async {
+                                  context
+                                      .read<AnnouncementService>()
+                                      .deleteAnnouncement(
+                                          value.announcements[index]);
+                                },
+                              );
+                            },
                           );
-                        }),
-                  ),
+                        },
+                      )),
+                ),
+                ElevatedButton(
+                  child: Text('Refresh'),
+                  onPressed: () {
+                    refreshAnnouncementsInUI(context);
+                  },
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  child: Text('Save Changes'),
+                  onPressed: () {
+                    saveAllAnnouncementsInUI(context);
+                  },
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  child: Text('Write Announcement'),
+                  onPressed: () {
+                    saveAllAnnouncementsInUI(context);
+                    Navigator.pushNamed(
+                        context, RouteManager.writeAnnouncements);
+                  },
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  child: Text('Back'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
           ),
+          provider.Selector<AnnouncementService, bool>(
+            selector: (context, value) => value.busyRetrieving,
+            builder: (context, value, child) {
+              return value
+                  ? AppProgressIndicator(
+                      text:
+                          'Retrieving data from the database... Please wait...')
+                  : Container();
+            },
+          )
         ]),
       ),
     );

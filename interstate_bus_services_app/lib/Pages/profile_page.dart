@@ -1,5 +1,8 @@
+import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:provider/provider.dart' as provider;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -44,16 +47,18 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ]),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 15),
-                ProfileDetails(detailName: 'First Name'),
+                ProfileDetails(detailHeader: 'First Name', detailName: 'fName'),
                 SizedBox(height: 15),
-                ProfileDetails(detailName: 'Last Name'),
+                ProfileDetails(detailHeader: 'Last Name', detailName: 'lName'),
                 SizedBox(height: 15),
-                ProfileDetails(detailName: 'ID Number'),
+                ProfileDetails(
+                    detailHeader: 'ID Number', detailName: 'idNumber'),
                 SizedBox(height: 15),
-                ProfileDetails(detailName: 'Email'),
+                ProfileDetails(detailHeader: 'Email', detailName: 'email'),
                 SizedBox(height: 30),
                 ViewProfileButtons(
                     btnName: 'Edit Profile',
@@ -82,8 +87,13 @@ class ProfilePageState extends State<ProfilePage> {
 }
 
 class ProfileDetails extends StatelessWidget {
-  const ProfileDetails({Key? key, required this.detailName}) : super(key: key);
+  const ProfileDetails({
+    Key? key,
+    required this.detailName,
+    required this.detailHeader,
+  }) : super(key: key);
 
+  final String detailHeader;
   final String detailName;
 
   @override
@@ -92,18 +102,35 @@ class ProfileDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          detailName,
+          detailHeader,
           style: TextStyle(
             color: Colors.purple[600],
             fontSize: 15,
           ),
         ),
+        provider.Selector<UserService, BackendlessUser?>(
+          selector: (context, value) => value.currentUser,
+          builder: (context, value, child) {
+            return value == null
+                ? Container()
+                : Text(
+                    value.getProperty(detailName),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w200,
+                      color: Colors.amber[900],
+                    ),
+                  );
+          },
+        ),
+        /*
         Text(
           '{{Profile Details Here}}',
           style: TextStyle(
             fontSize: 20,
           ),
-        ),
+        ),*/
       ],
     );
   }

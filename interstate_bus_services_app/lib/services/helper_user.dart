@@ -2,6 +2,7 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
@@ -71,6 +72,7 @@ void loginUserInUI(BuildContext context,
     }
     // if everything went OK with the login process
     else {
+      context.read<AnnouncementService>().getAnnouncements(email);
       Navigator.of(context).popAndPushNamed(RouteManager.home);
     }
   }

@@ -1,9 +1,10 @@
+import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as provider;
 import 'package:tuple/tuple.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,10 +34,26 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/Unity.jpeg'),
                     ),
                     SizedBox(height: 5),
-                    Text(
+                    /*Text(
                       '{{Full Name}}',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),*/
+                    provider.Selector<UserService, BackendlessUser?>(
+                      selector: (context, value) => value.currentUser,
+                      builder: (context, value, child) {
+                        return value == null
+                            ? Container()
+                            : Text(
+                                "Hello ${value.getProperty('fName')}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 46,
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.amber[900],
+                                ),
+                              );
+                      },
                     ),
                     SizedBox(height: 25),
                     HomeScreenButton(
@@ -61,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 3),
                     HomeScreenButton(
                       btnName: 'Annoucements',
-                      routeName: '',
+                      routeName: RouteManager.announcements,
                     ),
                     SizedBox(height: 3),
                     HomeScreenButton(
@@ -95,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Selector<UserService, Tuple2>(
+          provider.Selector<UserService, Tuple2>(
             selector: (context, value) =>
                 Tuple2(value.showUserProgress, value.userProgressText),
             builder: (context, value, child) {
@@ -129,6 +146,7 @@ class HomeScreenButton extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.of(context).pushNamed(routeName);
+        //print(context.read<AnnouncementService>().busyRetrieving);
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.blue),

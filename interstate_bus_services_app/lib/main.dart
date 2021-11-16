@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
         providers: [
           // List of providers
           ChangeNotifierProvider(create: (context) => UserService()),
+          ChangeNotifierProvider(create: (context) => AnnouncementService()),
         ],
         child: MaterialApp(
           initialRoute: RouteManager.loading,

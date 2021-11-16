@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/helper_announcement.dart';
+import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:provider/provider.dart' as provider;
 
 class CreateAnnouncement extends StatefulWidget {
   const CreateAnnouncement({Key? key}) : super(key: key);
@@ -11,9 +15,9 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
   late TextEditingController announcementController;
 
   final List<String> administrators = [
-    'Bus Driver 1',
-    'Bus Driver 2',
-    'All Commuters',
+    'Administrators',
+    'Bus Drivers',
+    'Everyone',
   ];
 
   String? value;
@@ -145,6 +149,7 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                                 ),
                               ),
                               child: TextField(
+                                controller: announcementController,
                                 maxLines: 8,
                                 decoration: InputDecoration(
                                   hintText: 'Type Announcement',
@@ -160,8 +165,34 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                       child: ElevatedButton(
                         style:
                             ElevatedButton.styleFrom(primary: Colors.red[400]),
-                        onPressed: () {},
+                        onPressed: () {
+                          createNewAnnouncementInUI(context,
+                              titleController: announcementController);
+                          saveAllAnnouncementsInUI(context);
+                        },
                         child: Text('Upload'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.red[400]),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancel'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(primary: Colors.red[400]),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Back'),
                       ),
                     ),
                   ],
@@ -169,6 +200,15 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
               ),
             ),
           ),
+          provider.Selector<AnnouncementService, bool>(
+            selector: (context, value) => value.busySaving,
+            builder: (context, value, child) {
+              return value
+                  ? AppProgressIndicator(
+                      text: 'Saving data To the database... Please wait...')
+                  : Container();
+            },
+          )
         ],
       ),
     );

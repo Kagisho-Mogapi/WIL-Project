@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 
 class WelcomePage extends StatelessWidget {
-  @override
   void initState() {
     init();
   }

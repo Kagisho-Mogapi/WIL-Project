@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-// import 'package:interstate_bus_services_app/models/announcement_entry.dart';
+import 'package:interstate_bus_services_app/models/announcement.dart';
 
 class AnnouncementCard extends StatelessWidget {
   const AnnouncementCard({
     Key? key,
-    // required this.message,
+    required this.message,
     required this.deletaAction,
-    required this.messageToggleAction,
+    //required this.messageToggleAction,
   }) : super(key: key);
-  // final AnnouncementEntry message;
+
+  final Announcement message;
   final Function() deletaAction;
-  final Function(bool? value) messageToggleAction;
+  //final Function(bool? value) messageToggleAction;
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +28,16 @@ class AnnouncementCard extends StatelessWidget {
             onTap: deletaAction,
           )
         ],
-        child: CheckboxListTile(
-          checkColor: Colors.grey[100],
-          activeColor: Colors.grey[100],
-          tileColor: Colors.grey[700],
-          value: false,
-          onChanged: messageToggleAction,
+        child: ListTile(
+          tileColor: Colors.lightBlueAccent,
           title: Text(
-            'Announcement',
+            message.title,
             style: TextStyle(
-              color: Colors.grey[200],
+              color: Colors.orange[900],
             ),
           ),
-          subtitle: Text('Sent to Bus driver',
+          subtitle: Text(
+              '${message.created.day}/${message.created.month}/${message.created.year}',
               style: TextStyle(
                 fontSize: 10,
                 color: Colors.grey[200],

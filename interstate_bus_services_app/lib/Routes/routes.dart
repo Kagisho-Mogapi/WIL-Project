@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Pages/create_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/home_page.dart';
 import 'package:interstate_bus_services_app/Pages/loading.dart';
 import 'package:interstate_bus_services_app/Pages/login_page.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
+import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
 class RouteManager {
@@ -20,6 +22,8 @@ class RouteManager {
   static const String schedule = '/login/home/schedule';
   static const String balance = '/login/home/balance';
   static const String announcements = '/login/home/announcements';
+  static const String writeAnnouncements =
+      '/login/home/announcements/writeAnnouncements';
   static const String profile = '/login/home/profile';
   static const String getQR = '/login/home/getQR';
   static const String editProfile = '/login/home/profile/edit profile';
@@ -42,6 +46,12 @@ class RouteManager {
 
       case home:
         return MaterialPageRoute(builder: (context) => HomePage());
+
+      case announcements:
+        return MaterialPageRoute(builder: (context) => ViewAnnouncement());
+
+      case writeAnnouncements:
+        return MaterialPageRoute(builder: (context) => CreateAnnouncement());
 
       case profile:
         return MaterialPageRoute(builder: (context) => ProfilePage());
