@@ -4,6 +4,7 @@ import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/elevated_btn_a.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:tuple/tuple.dart';
 
@@ -18,11 +19,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.lightBlue,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () {
+                logoutUserInUI(context);
+              }),
+          SizedBox(width: 20),
+        ],
+      ),
       //backgroundColor: Colors.blue[600],
       body: Stack(
         children: [
           SafeArea(
-            child: Center(
+            child: Container(
+              width: 1000,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.lightBlue,
+                      Colors.blue.shade900,
+                    ]),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -34,11 +59,6 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: AssetImage('assets/images/Unity.jpeg'),
                     ),
                     SizedBox(height: 5),
-                    /*Text(
-                      '{{Full Name}}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),*/
                     provider.Selector<UserService, BackendlessUser?>(
                       selector: (context, value) => value.currentUser,
                       builder: (context, value, child) {
@@ -48,65 +68,48 @@ class _HomePageState extends State<HomePage> {
                                 "Hello ${value.getProperty('fName')}",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 46,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.amber[900],
+                                  fontSize: 50,
+                                  color: Colors.white,
                                 ),
                               );
                       },
                     ),
-                    SizedBox(height: 25),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'Buy Ticket',
                       routeName: '',
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'Purchase History',
                       routeName: '',
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'View Schedule',
                       routeName: '',
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'Balance Details',
                       routeName: '',
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'Annoucements',
                       routeName: RouteManager.announcements,
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'View Profile',
                       routeName: RouteManager.profile,
                     ),
-                    SizedBox(height: 3),
-                    HomeScreenButton(
+                    MyElevatedBtnA(
                       btnName: 'Scan QR',
                       routeName: '',
                     ),
-                    SizedBox(height: 3),
-                    ElevatedButton(
-                      onPressed: () {
-                        logoutUserInUI(context);
-                      },
-                      child: Text('Logout'),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        fixedSize:
-                            MaterialStateProperty.all(Size.fromWidth(220)),
-                      ),
+                    MyElevatedBtnA(
+                      btnName: 'Messages',
+                      routeName: RouteManager.messages,
                     ),
-                    /*HomeScreenButton(
-                      btnName: 'Quit',
-                      routeName: '',
-                    ),*/
-                    SizedBox(height: 30)
+                    MyElevatedBtnA(
+                      btnName: 'Payment Details',
+                      routeName: RouteManager.paymentDetails,
+                    ),
                   ],
                 ),
               ),
@@ -122,35 +125,6 @@ class _HomePageState extends State<HomePage> {
             },
           )
         ],
-      ),
-    );
-  }
-}
-
-class HomeScreenButton extends StatelessWidget {
-  const HomeScreenButton({
-    Key? key,
-    required this.btnName,
-    required this.routeName,
-  }) : super(key: key);
-
-  final String btnName;
-  final String routeName;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Text(
-        btnName,
-        style: TextStyle(fontSize: 15),
-      ),
-      onPressed: () {
-        Navigator.of(context).pushNamed(routeName);
-        //print(context.read<AnnouncementService>().busyRetrieving);
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.blue),
-        fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
       ),
     );
   }

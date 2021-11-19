@@ -35,6 +35,7 @@ class _EditProfileState extends State<EditProfile> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: AppBar(),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -104,13 +105,6 @@ class _EditProfileState extends State<EditProfile> {
                         }
                       },
                     ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                        style: buttonStyle(),
-                        child: Text('View Profile'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        })
                   ],
                 ),
               ),

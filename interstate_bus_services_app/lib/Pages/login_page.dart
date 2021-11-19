@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/open_text_field.dart';
+import 'package:interstate_bus_services_app/widgets/regexes.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -30,6 +33,14 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.welcome);
+            },
+          ),
+        ),
         body: SafeArea(
           child: Stack(
             children: [
@@ -41,18 +52,22 @@ class _LoginPageState extends State<LoginPage> {
                       key: profileFormKey,
                       child: Column(
                         children: [
-                          TextFormFields(
+                          Image.asset(
+                            'assets/images/login.jpg',
+                            alignment: Alignment.center,
+                          ),
+                          OpenTextField(
                             hint: 'Email',
-                            regExp: r'^(\+27|0)[6-8][0-9]{8}$',
+                            regExp: myRegexe('Email'),
                             controller: emailController,
+                            isPass: false,
                           ),
                           SizedBox(height: 5),
-                          PasswordFormFields(
+                          OpenTextField(
                             hint: 'Password',
-                            // Minimum eight characters, at least one letter, one number and one special character
-                            regExp:
-                                r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$',
+                            regExp: 'Password',
                             controller: passController,
+                            isPass: true,
                           ),
                           SizedBox(height: 40),
                           ElevatedButton(
@@ -62,10 +77,6 @@ class _LoginPageState extends State<LoginPage> {
                               loginUserInUI(context,
                                   email: emailController.text,
                                   password: passController.text);
-                              /*
-                            if (profileFormKey.currentState!.validate()) {
-                              print('Submitting To Server...');
-                            }*/
                             },
                           ),
                           SizedBox(height: 10),
@@ -77,14 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                                   email: emailController.text);
                             },
                           ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            style: buttonStyle(),
-                            child: Text('Back'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )
                         ],
                       ),
                     ),
@@ -109,73 +112,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class TextFormFields extends StatelessWidget {
-  const TextFormFields({
-    Key? key,
-    required this.hint,
-    required this.regExp,
-    required this.controller,
-  }) : super(key: key);
-
-  final String hint;
-  final String regExp;
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      style: TextStyle(fontSize: 13),
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: hint,
-        isDense: true,
-      ),
-      validator: (value) {
-        if (value!.length == 0) {
-          return null;
-        }
-        if (!RegExp(regExp).hasMatch(value)) {
-          return 'Enter Correct Info For This Field';
-        }
-      },
-    );
-  }
-}
-
-class PasswordFormFields extends StatelessWidget {
-  const PasswordFormFields({
-    Key? key,
-    required this.hint,
-    required this.regExp,
-    required this.controller,
-  }) : super(key: key);
-
-  final String hint;
-  final String regExp;
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: true,
-      style: TextStyle(fontSize: 13),
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: hint,
-        isDense: true,
-      ),
-      validator: (value) {
-        if (value!.length == 0 || !RegExp(regExp).hasMatch(value)) {
-          return 'Enter All Info';
-        }
-      },
-    );
-  }
-}
-
 ButtonStyle buttonStyle() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.blue),
+    backgroundColor: MaterialStateProperty.all(Colors.red[600]),
     fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
   );
 }
