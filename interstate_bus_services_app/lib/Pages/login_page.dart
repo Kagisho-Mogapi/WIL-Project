@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
+  bool? rememberMe = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -69,6 +71,20 @@ class _LoginPageState extends State<LoginPage> {
                             controller: passController,
                             isPass: true,
                           ),
+                          SizedBox(height: 7),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: rememberMe,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    rememberMe = value;
+                                  });
+                                },
+                              ),
+                              Text('Remember Me'),
+                            ],
+                          ),
                           SizedBox(height: 40),
                           ElevatedButton(
                             style: buttonStyle(),
@@ -84,8 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                             style: buttonStyle(),
                             child: Text('Reset Password'),
                             onPressed: () {
-                              resetPasswordInUI(context,
-                                  email: emailController.text);
+                              Navigator.pushNamed(
+                                  context, RouteManager.resetPassword);
                             },
                           ),
                         ],

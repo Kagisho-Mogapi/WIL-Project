@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
-import 'package:interstate_bus_services_app/services/announcement_service.dart';
-import 'package:interstate_bus_services_app/services/helper_announcement.dart';
+import 'package:interstate_bus_services_app/services/schedule_service.dart';
+import 'package:interstate_bus_services_app/services/helper_schedule.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
-import 'package:interstate_bus_services_app/widgets/announcement_card.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/schedule_card.dart';
 import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:tuple/tuple.dart';
 
-class ViewAnnouncement extends StatefulWidget {
-  const ViewAnnouncement({Key? key}) : super(key: key);
+class ViewBusSchedule extends StatefulWidget {
+  const ViewBusSchedule({Key? key}) : super(key: key);
 
   @override
-  _ViewAnnouncementState createState() => _ViewAnnouncementState();
+  _ViewBusScheduleState createState() => _ViewBusScheduleState();
 }
 
-class _ViewAnnouncementState extends State<ViewAnnouncement> {
-  late TextEditingController announcementController;
+class _ViewBusScheduleState extends State<ViewBusSchedule> {
+  late TextEditingController scheduleController;
 
   @override
   void initState() {
     super.initState();
-    announcementController = TextEditingController();
+    scheduleController = TextEditingController();
   }
 
   @override
   void dispose() {
-    announcementController.dispose();
+    scheduleController.dispose();
     super.dispose();
   }
 
@@ -42,21 +42,21 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
               icon: Icon(Icons.replay_outlined),
               tooltip: 'Refresh',
               onPressed: () {
-                refreshAnnouncementsInUI(context);
+                refreshSchedulesInUI(context);
               }),
           SizedBox(width: 10),
           IconButton(
               icon: Icon(Icons.system_update_tv_sharp),
               tooltip: 'Save',
               onPressed: () {
-                saveAllAnnouncementsInUI(context);
+                saveAllSchedulesInUI(context);
               }),
           SizedBox(width: 10),
           IconButton(
               icon: Icon(Icons.add),
-              tooltip: 'Write Announcement',
+              tooltip: 'Write Schedule',
               onPressed: () {
-                Navigator.pushNamed(context, RouteManager.writeAnnouncements);
+                Navigator.pushNamed(context, RouteManager.writeSchedule);
               }),
           SizedBox(width: 20),
         ],
@@ -74,7 +74,7 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'View Announcement',
+                        'View Schedule',
                         style: TextStyle(
                           fontSize: 22,
                           color: Colors.black,
@@ -97,24 +97,29 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                     ],
                   ),
                 ),
+                Divider(
+                  color: Colors.white,
+                  thickness: 2,
+                  endIndent: 10,
+                  indent: 10,
+                ),
                 Expanded(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8.0,
                         vertical: 20,
                       ),
-                      child: provider.Consumer<AnnouncementService>(
+                      child: provider.Consumer<ScheduleService>(
                         builder: (context, value, child) {
                           return ListView.builder(
-                            itemCount: value.announcements.length,
+                            itemCount: value.schedules.length,
                             itemBuilder: (context, index) {
-                              return AnnouncementCard(
-                                message: value.announcements[index],
+                              return ScheduleCard(
+                                message: value.schedules[index],
                                 deletaAction: () async {
                                   context
-                                      .read<AnnouncementService>()
-                                      .deleteAnnouncement(
-                                          value.announcements[index]);
+                                      .read<ScheduleService>()
+                                      .deleteSchedule(value.schedules[index]);
                                 },
                               );
                             },
@@ -122,35 +127,10 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                         },
                       )),
                 ),
-                /*ElevatedButton(
-                  child: Text(
-                    'Refresh',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {
-                    refreshAnnouncementsInUI(context);
-                  },
-                ),*/
-                /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Save Changes'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                  },
-                ),*/
-                /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Write Announcement'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                    Navigator.pushNamed(
-                        context, RouteManager.writeAnnouncements);
-                  },
-                ),*/
               ],
             ),
           ),
-          provider.Selector<AnnouncementService, bool>(
+          provider.Selector<ScheduleService, bool>(
             selector: (context, value) => value.busyRetrieving,
             builder: (context, value, child) {
               return value
@@ -164,4 +144,8 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
       ),
     );
   }
+}
+
+TextStyle myTextStyle() {
+  return TextStyle(fontSize: 15, color: Colors.white);
 }

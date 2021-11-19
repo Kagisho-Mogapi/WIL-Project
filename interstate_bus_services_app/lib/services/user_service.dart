@@ -157,7 +157,7 @@ class UserService with ChangeNotifier {
       await Backendless.userService.register(user);
 
       // Create an empty announcement entry
-      /*UserRegistration emptyEntry = UserRegistration(
+      UserRegistration emptyEntry = UserRegistration(
         announcements: {},
         username: user.email,
         fName: user.getProperty('fName'),
@@ -165,16 +165,16 @@ class UserService with ChangeNotifier {
         phoneNumber: user.getProperty('phoneNumber'),
         idNumber: user.getProperty('idNumber'),
         password: user.password,
-      );*/
+      );
 
       // Sends the blank entry to the {AnnouncementEntry} table on Backendless
       // .onError gives errors
-      /*await Backendless.data
+      await Backendless.data
           .of('AnnouncementEntry')
           .save(emptyEntry.toJson())
           .onError((error, stackTrace) {
         result = error.toString();
-      });*/
+      });
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }

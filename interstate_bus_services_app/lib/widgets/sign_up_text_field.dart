@@ -26,6 +26,7 @@ class SignUpTextField extends StatelessWidget {
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
+          //errorStyle: ,
           labelStyle: TextStyle(color: Colors.grey.shade600),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -44,4 +45,4 @@ class SignUpTextField extends StatelessWidget {
       ),
     );
   }
-} 
+}

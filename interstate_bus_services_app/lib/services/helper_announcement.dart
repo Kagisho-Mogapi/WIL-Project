@@ -7,6 +7,7 @@ import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
 void refreshAnnouncementsInUI(BuildContext context) async {
+  //TODO: Check when doing full announcements
   String result = await context
       .read<AnnouncementService>()
       .getAnnouncements(context.read<UserService>().currentUser!.email);
@@ -21,7 +22,7 @@ void refreshAnnouncementsInUI(BuildContext context) async {
 void createNewAnnouncementInUI(BuildContext context,
     {required TextEditingController titleController}) async {
   if (titleController.text.isEmpty) {
-    showSnackBar(context, 'Please Enter Announcement First');
+    showSnackBar(context, 'Please Enter Announcement First!!');
   } else {
     Announcement announcement = Announcement(
         title: titleController.text.trim(), created: DateTime.now());

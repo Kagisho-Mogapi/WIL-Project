@@ -49,6 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
@@ -150,6 +151,33 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
+                      child: MaterialButton(
+                        height: 50,
+                        minWidth: 200,
+                        color: Colors.red[700],
+                        onPressed: () {
+                          createNewUserInUI(
+                            context,
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            fName: nameController.text.trim(),
+                            lName: surnameController.text.trim(),
+                            idNumber: idNumberController.text.trim(),
+                            phoneNumber: phoneNumberController.text.trim(),
+                          );
+                        },
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                    /*Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: ElevatedButton(
                         style:
                             ElevatedButton.styleFrom(primary: Colors.red[400]),
@@ -167,14 +195,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         child: Text('Submit'),
                       ),
-                    ),
-                    SizedBox(height: 10),
+                    ),*/
+                    /*SizedBox(height: 10),
                     ElevatedButton(
                       child: Text('Back'),
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                    )
+                    )*/
                   ],
                 ),
               ),

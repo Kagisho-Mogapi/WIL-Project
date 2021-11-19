@@ -1,6 +1,7 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/widgets/material_btn_a.dart';
 
 class WelcomePage extends StatelessWidget {
   void initState() {
@@ -74,41 +75,12 @@ class WelcomePage extends StatelessWidget {
                   SizedBox(
                     height: 30,
                   ),
-                  MaterialButton(
-                    height: 50,
-                    minWidth: 200,
-                    color: Colors.red[700],
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(RouteManager.register);
-                    },
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
+                  MaterialBtnA(
+                      btnName: 'Sign Up', location: RouteManager.register),
                   SizedBox(
                     height: 10,
                   ),
-                  MaterialButton(
-                    height: 50,
-                    minWidth: 200,
-                    color: Colors.red[700],
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(RouteManager.login);
-                    },
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
+                  MaterialBtnA(btnName: 'Sign In', location: RouteManager.login)
                 ],
               ),
             ],

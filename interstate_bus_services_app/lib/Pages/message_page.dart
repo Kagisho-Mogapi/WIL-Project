@@ -26,7 +26,8 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(       
+      appBar: AppBar(),
+      body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -43,8 +44,7 @@ class _MessagePageState extends State<MessagePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 70,
-                      backgroundImage:
-                          AssetImage('assets/images/BlankProfile.png'),
+                      backgroundImage: AssetImage('assets/images/Unity.jpeg'),
                     ),
                   ),
                   Padding(

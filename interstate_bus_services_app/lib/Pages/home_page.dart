@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     MyElevatedBtnA(
                       btnName: 'View Schedule',
-                      routeName: '',
+                      routeName: RouteManager.schedule,
                     ),
                     MyElevatedBtnA(
                       btnName: 'Balance Details',

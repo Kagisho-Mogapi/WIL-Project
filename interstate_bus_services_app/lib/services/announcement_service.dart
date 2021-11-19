@@ -10,6 +10,11 @@ class AnnouncementService with ChangeNotifier {
   List<Announcement> _announcements = [];
   List<Announcement> get announcements => _announcements;
 
+  // Level of announcement
+  String levelEveryone = "level ='everyone'";
+  String levelBusDriver = "level ='busDriver'";
+  String levelAdmin = "level ='admin'";
+
   void emptyAnnouncements() {
     _announcements = [];
     notifyListeners();
@@ -26,7 +31,7 @@ class AnnouncementService with ChangeNotifier {
 
     // Which username's Row
     DataQueryBuilder queryBuilder = DataQueryBuilder()
-      ..whereClause = "username ='$username'";
+      ..whereClause = levelEveryone;
 
     _busyRetrieving = true;
     notifyListeners();
@@ -49,7 +54,7 @@ class AnnouncementService with ChangeNotifier {
     if (map != null) {
       if (map.length > 0) {
         // !!!! {map.first} because there's only one list per user !!!!!!!!!
-        //_announcementEntry = AnnouncementEntry.fromJson(map.first);
+        _announcementEntry = AnnouncementEntry.fromJson(map.first);
         _announcements =
             convertMapToAnnouncementList(_announcementEntry!.announcements);
         notifyListeners();

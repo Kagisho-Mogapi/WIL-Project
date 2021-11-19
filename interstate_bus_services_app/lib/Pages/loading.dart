@@ -2,6 +2,7 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/schedule_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    init();
+    //init();
     loadTimer();
   }
 
@@ -36,6 +37,9 @@ class _LoadingState extends State<Loading> {
       context
           .read<AnnouncementService>()
           .getAnnouncements(context.read<UserService>().currentUser!.email);
+      context
+          .read<ScheduleService>()
+          .getSchedules(context.read<UserService>().currentUser!.email);
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }
@@ -54,21 +58,23 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
+      body: Stack(children: [
+        Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.purple, Colors.blue],
-            ),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.lightBlue,
+                  Colors.blue.shade900,
+                ]),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.note_alt,
+                Icons.timelapse_outlined,
                 size: 100,
                 color: Colors.white,
               ),
@@ -80,10 +86,19 @@ class _LoadingState extends State<Loading> {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30),
+                child: LinearProgressIndicator(
+                  minHeight: 7,
+                ),
+              ),
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }
