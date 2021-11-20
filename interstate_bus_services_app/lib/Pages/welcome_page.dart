@@ -24,8 +24,22 @@ class WelcomePage extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/Background1.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 10.0,
+              sigmaY: 10.0,
+            ),
+          //width: double.infinity,
+          //height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
