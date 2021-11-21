@@ -53,14 +53,26 @@ class _SignUpPageState extends State<SignUpPage> {
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
-          Container(
+           Container(
+            constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.grey.shade300, Colors.grey.shade200],
+              image: DecorationImage(
+                image: AssetImage('assets/images/Background1.jpg'),
+                fit: BoxFit.cover,
               ),
             ),
+          ),
+          Opacity(
+            opacity: 0.85,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.red, Colors.blue]),
+              ),
+            ),
+          ),
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
