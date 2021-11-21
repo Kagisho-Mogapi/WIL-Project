@@ -35,6 +35,26 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/Background1.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Opacity(
+              opacity: 0.85,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.red, Colors.blue]),
+                ),
+              ),
+            ),
             SizedBox(
               height: 10,
             ),
