@@ -36,18 +36,28 @@ class _HomePageState extends State<HomePage> {
       //backgroundColor: Colors.blue[600],
       body: Stack(
         children: [
-          SafeArea(
+          Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Background1.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Opacity(
+            opacity: 0.85,
             child: Container(
-              width: 1000,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.lightBlue,
-                      Colors.blue.shade900,
-                    ]),
+                    colors: [Colors.red, Colors.blue]),
               ),
+            ),
+          ),
+          SafeArea(
+            
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
