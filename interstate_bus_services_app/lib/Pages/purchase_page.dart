@@ -13,7 +13,7 @@ class _PurchasePageState extends State<PurchasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.redAccent,
       body: Stack(
         children: [
           Container(

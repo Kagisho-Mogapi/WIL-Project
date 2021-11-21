@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => ScheduleService()),
         ],
         child: MaterialApp(
-          initialRoute: RouteManager.loading,
+          initialRoute: RouteManager.editProfile,
           onGenerateRoute: RouteManager.generateRoute,
         ));
   }

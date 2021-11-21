@@ -84,7 +84,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.redAccent,
       ),
       //backgroundColor: Colors.grey[200],
       body: Stack(
@@ -111,171 +111,171 @@ class _CreateScheduleState extends State<CreateSchedule> {
           ),
           SafeArea(
             //child: Container(
-              //height: 1000,
-              //width: 1000,
-              //decoration: waterDeepDeco(),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
+            //height: 1000,
+            //width: 1000,
+            //decoration: waterDeepDeco(),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Create Schedule',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/Interstatelogo.jpg',
+                          alignment: Alignment.center,
+                          width: 394,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 15,
+                    thickness: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Schedule',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            'Create Schedule',
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextField(
+                              controller: fromController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter From Location',
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextField(
+                              controller: toController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter To Location',
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextField(
+                              controller: timeController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter Departure Time',
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextField(
+                              controller: busCodeController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter Bus Code',
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/Interstatelogo.jpg',
-                            alignment: Alignment.center,
-                            width: 394,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      height: 15,
-                      thickness: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Schedule',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: fromController,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter From Location',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: toController,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter To Location',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: timeController,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter Departure Time',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: busCodeController,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter Bus Code',
-                                ),
-                              ),
-                            ),
-                          ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 7, bottom: 7),
+                        child: Text(
+                          'Upload',
+                          style: TextStyle(fontSize: 15),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 7, bottom: 7),
-                          child: Text(
-                            'Upload',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        onPressed: () {
-                          // Are they both needed?
-                          createNewScheduleInUI(context,
-                              fromController: fromController,
-                              toController: toController,
-                              timeController: timeController,
-                              busCodeController: busCodeController);
-                          saveAllSchedulesInUI(context);
-                        },
-                        style: ButtonStyle(
-                          shadowColor: MaterialStateProperty.all(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue[900]),
-                          fixedSize:
-                              MaterialStateProperty.all(Size.fromWidth(220)),
-                        ),
+                      onPressed: () {
+                        // Are they both needed?
+                        createNewScheduleInUI(context,
+                            fromController: fromController,
+                            toController: toController,
+                            timeController: timeController,
+                            busCodeController: busCodeController);
+                        saveAllSchedulesInUI(context);
+                      },
+                      style: ButtonStyle(
+                        shadowColor: MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue[900]),
+                        fixedSize:
+                            MaterialStateProperty.all(Size.fromWidth(220)),
                       ),
-                      /*MaterialButton(
+                    ),
+                    /*MaterialButton(
                         height: 50,
                         minWidth: 200,
                         color: Colors.red[700],
@@ -294,9 +294,8 @@ class _CreateScheduleState extends State<CreateSchedule> {
                           ),
                         ),
                       ),*/
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -46,7 +46,7 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.redAccent,
       ),
       backgroundColor: Colors.grey[200],
       body: Stack(
@@ -73,72 +73,102 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
           ),
           SafeArea(
             //child: Container(
-              //height: 1000,
-              //width: 1000,
-              //decoration: waterDeepDeco(),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Create Announcement',
-                            style: TextStyle(
-                              fontSize: 22,
+            //height: 1000,
+            //width: 1000,
+            //decoration: waterDeepDeco(),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Create Announcement',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/Interstatelogo.jpg',
+                          alignment: Alignment.center,
+                          width: 394,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 15,
+                    thickness: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Announcement',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            border: Border.all(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                              width: 2,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/Interstatelogo.jpg',
-                            alignment: Alignment.center,
-                            width: 394,
+                          child: DropdownButton(
+                            onChanged: (value) =>
+                                setState(() => this.value = value as String?),
+                            value: value,
+                            items: administrators.map(buildMenuItem).toList(),
+                            icon: Icon(Icons.arrow_drop_down,
+                                color: Colors.black),
+                            iconSize: 20,
+                            hint: Text('Choose recipient'),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Divider(
-                      height: 15,
-                      thickness: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Announcement',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 4,
-                            ),
+                            padding: EdgeInsets.only(bottom: 8.0),
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
                               border: Border.all(
@@ -146,73 +176,43 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                                 width: 2,
                               ),
                             ),
-                            child: DropdownButton(
-                              onChanged: (value) =>
-                                  setState(() => this.value = value as String?),
-                              value: value,
-                              items: administrators.map(buildMenuItem).toList(),
-                              icon: Icon(Icons.arrow_drop_down,
-                                  color: Colors.black),
-                              iconSize: 20,
-                              hint: Text('Choose recipient'),
+                            child: TextField(
+                              controller: announcementController,
+                              maxLines: 8,
+                              decoration: InputDecoration(
+                                hintText: 'Type Announcement',
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.only(bottom: 8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: announcementController,
-                                maxLines: 8,
-                                decoration: InputDecoration(
-                                  hintText: 'Type Announcement',
-                                ),
-                              ),
-                            ),
-                          ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 7, bottom: 7),
+                        child: Text(
+                          'Upload',
+                          style: TextStyle(fontSize: 15),
                         ),
+                      ),
+                      onPressed: () {
+                        // Are they both needed?
+                        createNewAnnouncementInUI(context,
+                            titleController: announcementController);
+                        saveAllAnnouncementsInUI(context);
+                      },
+                      style: ButtonStyle(
+                        shadowColor: MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue[900]),
+                        fixedSize:
+                            MaterialStateProperty.all(Size.fromWidth(220)),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 7, bottom: 7),
-                          child: Text(
-                            'Upload',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        onPressed: () {
-                          // Are they both needed?
-                          createNewAnnouncementInUI(context,
-                              titleController: announcementController);
-                          saveAllAnnouncementsInUI(context);
-                        },
-                        style: ButtonStyle(
-                          shadowColor: MaterialStateProperty.all(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue[900]),
-                          fixedSize:
-                              MaterialStateProperty.all(Size.fromWidth(220)),
-                        ),
-                      ),
-                      /*MaterialButton(
+                    /*MaterialButton(
                         height: 50,
                         minWidth: 200,
                         color: Colors.red[700],
@@ -231,9 +231,8 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                           ),
                         ),
                       ),*/
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

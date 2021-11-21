@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class OpenTextField extends StatelessWidget {
   const OpenTextField({
@@ -7,20 +8,28 @@ class OpenTextField extends StatelessWidget {
     required this.regExp,
     required this.controller,
     required this.isPass,
+    required this.isValidInput,
+    required this.errorMsg,
   }) : super(key: key);
 
   final String hint;
   final String regExp;
   final TextEditingController controller;
   final bool isPass;
+  final bool isValidInput;
+  final String errorMsg;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Colors.white,
       obscureText: isPass,
-      style: TextStyle(fontSize: 15),
+      style: TextStyle(fontSize: 15, color: Colors.white),
       controller: controller,
       decoration: InputDecoration(
+        errorStyle: TextStyle(color: Colors.amber[400]),
+        labelStyle: TextStyle(color: Colors.white),
+        errorText: isValidInput ? null : errorMsg,
         labelText: hint,
         isDense: true,
       ),

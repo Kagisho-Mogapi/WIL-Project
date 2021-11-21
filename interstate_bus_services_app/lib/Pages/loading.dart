@@ -19,11 +19,13 @@ class _LoadingState extends State<Loading> {
   static const String ANDROID_API_KEY = "5771E324-6F0D-4CF2-A813-D9339D3223FD";
   static const String IOS_API_KEY = "6A6097DF-84AC-442F-AEA9-FADDCE16F1CB";
   static const String JS_API_KEY = "CBB3571F-FB60-4DDE-95B3-21615345B79B";
+  static const String STREAM_CHAT_API_KEY = "cecfemefmkqf";
+  String getStream = '';
 
   @override
   void initState() {
     super.initState();
-    //init();
+    init();
     loadTimer();
   }
 
@@ -40,6 +42,22 @@ class _LoadingState extends State<Loading> {
       context
           .read<ScheduleService>()
           .getSchedules(context.read<UserService>().currentUser!.email);
+
+      if (context.read<UserService>().currentUser!.getProperty('fName') ==
+          'Johnney') {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiam9obm5leSJ9.ZxQBe8iAshCY3zLaMbLGusELOaBSvVF2Tcl2LL42K1I';
+      } else if (context
+              .read<UserService>()
+              .currentUser!
+              .getProperty('fName') ==
+          'Hephaestus') {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaGVwaGFlc3R1cyJ9.qQwKnmhpljgJo9o9ahDKx1b08EH0emcPshOWqReI21U';
+      } else {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibWFyeSJ9.574p0xc5I8EZWYOTMOx88IAhpgDCGws3p_2-vBTMfUc';
+      }
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
@@ -38,66 +40,68 @@ class WelcomePage extends StatelessWidget {
               sigmaX: 10.0,
               sigmaY: 10.0,
             ),
-          //width: double.infinity,
-          //height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    'Welcome',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 40,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.italic,
+            //width: double.infinity,
+            //height: MediaQuery.of(context).size.height,
+            //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text(
+                      'Welcome',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Image.asset(
-                    'assets/images/Interstatelogo.jpg',
-                    alignment: Alignment.center,
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    'Interstate Bus Line',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
+                    SizedBox(
+                      height: 50,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Making life easier for our commuters',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
+                    Image.asset(
+                      'assets/images/Interstatelogo.jpg',
+                      alignment: Alignment.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  MaterialBtnA(
-                      btnName: 'Sign Up', location: RouteManager.register),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  MaterialBtnA(btnName: 'Sign In', location: RouteManager.login)
-                ],
-              ),
-            ],
+                    SizedBox(
+                      height: 60,
+                    ),
+                    Text(
+                      'Interstate Bus Line',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Making life easier for our commuters',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    MaterialBtnA(
+                        btnName: 'Sign Up', location: RouteManager.register),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    MaterialBtnA(
+                        btnName: 'Sign In', location: RouteManager.login)
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

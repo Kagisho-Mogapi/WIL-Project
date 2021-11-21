@@ -21,7 +21,7 @@ class ProfileDetails extends StatelessWidget {
         Text(
           detailHeader,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.white70,
             fontSize: 15,
           ),
         ),
@@ -31,12 +31,12 @@ class ProfileDetails extends StatelessWidget {
             return value == null
                 ? Container()
                 : Text(
-                    value.getProperty(detailName),
+                    ' ${value.getProperty(detailName)}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w200,
-                      color: Colors.amber[900],
+                      color: Colors.white,
                     ),
                   );
           },

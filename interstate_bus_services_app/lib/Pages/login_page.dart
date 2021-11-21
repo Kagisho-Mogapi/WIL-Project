@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passController = TextEditingController();
 
   bool? rememberMe = false;
+  bool isValidEmail = true;
+  bool isValidPass = true;
 
   @override
   void dispose() {
@@ -36,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.redAccent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -79,18 +82,59 @@ class _LoginPageState extends State<LoginPage> {
                             'assets/images/login.jpg',
                             alignment: Alignment.center,
                           ),
-                          OpenTextField(
-                            hint: 'Email',
-                            regExp: myRegexe('Email'),
-                            controller: emailController,
-                            isPass: false,
+                          Focus(
+                            onFocusChange: (value) async {
+                              if (!value) {
+                                setState(() {
+                                  if (emailController.text.trim().isEmpty) {
+                                    isValidEmail = true;
+                                  } else {
+                                    isValidEmail = myInputValidation(
+                                        emailController.text.trim(),
+                                        MyRegexes.email);
+                                    if (isValidEmail) {
+                                      context
+                                          .read<UserService>()
+                                          .checkIfUserExists(
+                                              emailController.text.trim());
+                                    }
+                                  }
+                                });
+                              }
+                            },
+                            child: OpenTextField(
+                              hint: 'Email',
+                              regExp: MyRegexes.email,
+                              controller: emailController,
+                              isPass: false,
+                              errorMsg: 'Not Correct Email Format',
+                              isValidInput: isValidEmail,
+                            ),
                           ),
                           SizedBox(height: 5),
-                          OpenTextField(
-                            hint: 'Password',
-                            regExp: 'Password',
-                            controller: passController,
-                            isPass: true,
+                          Focus(
+                            onFocusChange: (value) async {
+                              if (!value) {
+                                setState(() {
+                                  if (passController.text.trim().isEmpty) {
+                                    isValidPass = true;
+                                  } else {
+                                    isValidPass = myInputValidation(
+                                        passController.text.trim(),
+                                        MyRegexes.password);
+                                  }
+                                });
+                              }
+                            },
+                            child: OpenTextField(
+                              hint: 'Password',
+                              regExp: 'Password',
+                              controller: passController,
+                              isPass: true,
+                              errorMsg:
+                                  'Minimum eight characters, at least one letter, one number and one special character',
+                              isValidInput: isValidPass,
+                            ),
                           ),
                           SizedBox(height: 7),
                           Row(
@@ -154,4 +198,16 @@ ButtonStyle buttonStyle() {
     backgroundColor: MaterialStateProperty.all(Colors.red[600]),
     fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
   );
+}
+
+bool myInputValidation(String input, String regexe) {
+  bool isValid = false;
+
+  if (!RegExp(regexe).hasMatch(input)) {
+    isValid = false;
+  } else {
+    isValid = true;
+  }
+
+  return isValid;
 }

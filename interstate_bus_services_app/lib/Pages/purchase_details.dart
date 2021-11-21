@@ -11,6 +11,9 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+      ),
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [

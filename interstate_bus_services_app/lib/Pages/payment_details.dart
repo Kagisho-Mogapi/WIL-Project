@@ -30,20 +30,22 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+      ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/Background1.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Container(
+            //   constraints: BoxConstraints.expand(),
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/images/Background1.jpg'),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
             Opacity(
               opacity: 0.85,
               child: Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Pages/buy_for_user.dart';
+import 'package:interstate_bus_services_app/Pages/chat.dart';
 import 'package:interstate_bus_services_app/Pages/chatting.dart';
 import 'package:interstate_bus_services_app/Pages/create_schedule.dart';
 import 'package:interstate_bus_services_app/Pages/create_announcement.dart';
@@ -9,8 +11,12 @@ import 'package:interstate_bus_services_app/Pages/login_page.dart';
 import 'package:interstate_bus_services_app/Pages/message_page.dart';
 import 'package:interstate_bus_services_app/Pages/payment_details.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
+import 'package:interstate_bus_services_app/Pages/purchase_details.dart';
+import 'package:interstate_bus_services_app/Pages/purchase_page.dart';
+import 'package:interstate_bus_services_app/Pages/qrPage.dart';
 import 'package:interstate_bus_services_app/Pages/reset_password.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
+import 'package:interstate_bus_services_app/Pages/successPage.dart';
 import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/view_bus_schedule.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
@@ -27,7 +33,8 @@ class RouteManager {
 
   static const String chatting = '/login/home/chatting';
   static const String messages = '/login/home/messages';
-  static const String Buy = '/login/home/Buy';
+  static const String buy = '/login/home/Buy';
+  static const String purchaseDetails = '/login/home/Buy/PuchaseDetails';
   static const String history = '/login/home/history';
   static const String schedule = '/login/home/schedule';
   static const String writeSchedule = '/login/home/schedule/writeSchedule';
@@ -36,7 +43,7 @@ class RouteManager {
   static const String writeAnnouncements =
       '/login/home/announcements/writeAnnouncements';
   static const String profile = '/login/home/profile';
-  static const String getQR = '/login/home/getQR';
+  static const String scanQR = '/login/home/scanQR';
   static const String editProfile = '/login/home/profile/edit profile';
   ////////////////
   static const String paymentDetails = '/login/home/';
@@ -66,11 +73,26 @@ class RouteManager {
       case chatting:
         return MaterialPageRoute(builder: (context) => Chatting());
 
+      case home:
+        return MaterialPageRoute(builder: (context) => HomePage());
+
+      case buy:
+        return MaterialPageRoute(builder: (context) => BuyForUser());
+
+      case messages:
+        return MaterialPageRoute(builder: (context) => Chat());
+
+      case purchaseDetails:
+        return MaterialPageRoute(builder: (context) => PurchaseDetails());
+
       case schedule:
         return MaterialPageRoute(builder: (context) => ViewBusSchedule());
 
       case writeSchedule:
         return MaterialPageRoute(builder: (context) => CreateSchedule());
+
+      case scanQR:
+        return MaterialPageRoute(builder: (context) => QrPage());
 
       case announcements:
         return MaterialPageRoute(builder: (context) => ViewAnnouncement());

@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.redAccent,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -56,8 +56,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SafeArea(
-            
+          Center(
+            child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     MyElevatedBtnA(
                       btnName: 'Buy Ticket',
-                      routeName: '',
+                      routeName: RouteManager.buy,
                     ),
                     MyElevatedBtnA(
                       btnName: 'Purchase History',
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     MyElevatedBtnA(
                       btnName: 'Scan QR',
-                      routeName: '',
+                      routeName: RouteManager.scanQR,
                     ),
                     MyElevatedBtnA(
                       btnName: 'Messages',

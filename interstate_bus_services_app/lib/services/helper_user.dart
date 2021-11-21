@@ -55,6 +55,7 @@ void createNewUserInUI(
 
 void loginUserInUI(BuildContext context,
     {required String email, required String password}) async {
+  String getStream = '';
   // For closing the keyboard
   FocusManager.instance.primaryFocus?.unfocus();
 
@@ -75,6 +76,21 @@ void loginUserInUI(BuildContext context,
     else {
       context.read<ScheduleService>().getSchedules(email);
       context.read<AnnouncementService>().getAnnouncements(email);
+      if (context.read<UserService>().currentUser!.getProperty('fName') ==
+          'johnney') {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiam9obm5leSJ9.ZxQBe8iAshCY3zLaMbLGusELOaBSvVF2Tcl2LL42K1I';
+      } else if (context
+              .read<UserService>()
+              .currentUser!
+              .getProperty('fName') ==
+          'hephaestus') {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaGVwaGFlc3R1cyJ9.qQwKnmhpljgJo9o9ahDKx1b08EH0emcPshOWqReI21U';
+      } else {
+        getStream =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibWFyeSJ9.574p0xc5I8EZWYOTMOx88IAhpgDCGws3p_2-vBTMfUc';
+      }
       Navigator.of(context).popAndPushNamed(RouteManager.home);
     }
   }

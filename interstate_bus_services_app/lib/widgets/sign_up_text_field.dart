@@ -6,6 +6,8 @@ class SignUpTextField extends StatelessWidget {
     required this.controller,
     required this.labeltext,
     required this.keyboardType,
+    required this.isValidInput,
+    required this.errorMsg,
     this.hideText = false,
   }) : super(key: key);
 
@@ -14,6 +16,9 @@ class SignUpTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool hideText;
 
+  final bool isValidInput;
+  final String errorMsg;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,17 +26,18 @@ class SignUpTextField extends StatelessWidget {
           const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 20, right: 20),
       child: TextField(
         obscureText: hideText,
-        style: TextStyle(color: Colors.black),
-        cursorColor: Colors.red.shade300,
+        style: TextStyle(color: Colors.white),
+        cursorColor: Colors.white,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          //errorStyle: ,
-          labelStyle: TextStyle(color: Colors.grey.shade600),
+          errorText: isValidInput ? null : errorMsg,
+          errorStyle: TextStyle(color: Colors.amber[400]),
+          labelStyle: TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,
-              color: Colors.black,
+              color: Colors.white54,
             ),
           ),
           enabledBorder: OutlineInputBorder(

@@ -36,7 +36,7 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.redAccent,
         actions: [
           IconButton(
               icon: Icon(Icons.replay_outlined),
@@ -83,83 +83,81 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
             ),
           ),
         ),
-          SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'View Schedule',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+        SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'View Schedule',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/Interstatelogo.jpg',
-                        alignment: Alignment.center,
-                        width: 394,
-                      ),
-                    ],
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/Interstatelogo.jpg',
+                      alignment: Alignment.center,
+                      width: 394,
+                    ),
+                  ],
                 ),
-                Divider(
-                  color: Colors.white,
-                  thickness: 2,
-                  endIndent: 10,
-                  indent: 10,
-                ),
-                Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0,
-                        vertical: 20,
-                      ),
-                      child: provider.Consumer<ScheduleService>(
-                        builder: (context, value, child) {
-                          return ListView.builder(
-                            itemCount: value.schedules.length,
-                            itemBuilder: (context, index) {
-                              return ScheduleCard(
-                                message: value.schedules[index],
-                                deletaAction: () async {
-                                  context
-                                      .read<ScheduleService>()
-                                      .deleteSchedule(value.schedules[index]);
-                                },
-                              );
-                            },
-                          );
-                        },
-                      )),
-                ),
-              ],
-            
+              ),
+              Divider(
+                color: Colors.white,
+                thickness: 2,
+                endIndent: 10,
+                indent: 10,
+              ),
+              Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 20,
+                    ),
+                    child: provider.Consumer<ScheduleService>(
+                      builder: (context, value, child) {
+                        return ListView.builder(
+                          itemCount: value.schedules.length,
+                          itemBuilder: (context, index) {
+                            return ScheduleCard(
+                              message: value.schedules[index],
+                              deletaAction: () async {
+                                context
+                                    .read<ScheduleService>()
+                                    .deleteSchedule(value.schedules[index]);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    )),
+              ),
+            ],
           ),
-          provider.Selector<ScheduleService, bool>(
-            selector: (context, value) => value.busyRetrieving,
-            builder: (context, value, child) {
-              return value
-                  ? AppProgressIndicator(
-                      text:
-                          'Retrieving data from the database... Please wait...')
-                  : Container();
-            },
-          )
-        ]),
-      ),
+        ),
+        provider.Selector<ScheduleService, bool>(
+          selector: (context, value) => value.busyRetrieving,
+          builder: (context, value, child) {
+            return value
+                ? AppProgressIndicator(
+                    text: 'Retrieving data from the database... Please wait...')
+                : Container();
+          },
+        )
+      ]),
     );
   }
 }
