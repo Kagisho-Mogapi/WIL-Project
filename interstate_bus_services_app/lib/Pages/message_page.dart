@@ -27,16 +27,28 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.grey.shade600, Colors.grey.shade200],
-          ),
-        ),
-        child: Stack(
+      body: Stack(
           children: <Widget>[
+            Container(
+                  constraints: BoxConstraints.expand(),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/Background1.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Opacity(
+                  opacity: 0.85,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.red, Colors.blue]),
+                    ),
+                  ),
+                ),
             SafeArea(
               child: Column(
                 children: [
