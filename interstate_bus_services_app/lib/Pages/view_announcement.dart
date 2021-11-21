@@ -62,9 +62,27 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
         ],
       ),
       backgroundColor: Colors.grey[200],
-      body: Container(
-        decoration: waterDeepDeco(),
-        child: Stack(children: [
+      body: Stack(children: [
+        Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/Background1.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Opacity(
+          opacity: 0.85,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.red, Colors.blue]),
+            ),
+          ),
+        ),
           SafeArea(
             child: Column(
               children: [
@@ -148,7 +166,7 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                   },
                 ),*/
               ],
-            ),
+            
           ),
           provider.Selector<AnnouncementService, bool>(
             selector: (context, value) => value.busyRetrieving,
