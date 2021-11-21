@@ -51,11 +51,31 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: <Widget>[
-          SafeArea(
+          Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Background1.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Opacity(
+            opacity: 0.85,
             child: Container(
-              height: 1000,
-              width: 1000,
-              decoration: waterDeepDeco(),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.red, Colors.blue]),
+              ),
+            ),
+          ),
+          SafeArea(
+            //child: Container(
+              //height: 1000,
+              //width: 1000,
+              //decoration: waterDeepDeco(),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
