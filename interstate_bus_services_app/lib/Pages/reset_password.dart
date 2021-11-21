@@ -33,13 +33,25 @@ class _ResetPasswordState extends State<ResetPassword> {
         body: Stack(
           children: [
             Container(
+              constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.grey.shade300, Colors.grey.shade200],
+                image: DecorationImage(
+                  image: AssetImage('assets/images/Background1.jpg'),
+                  fit: BoxFit.cover,
                 ),
               ),
+            ),
+            Opacity(
+              opacity: 0.85,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.red, Colors.blue]),
+                ),
+              ),
+            ),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
