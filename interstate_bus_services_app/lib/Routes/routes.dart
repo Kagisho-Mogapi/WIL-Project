@@ -18,6 +18,7 @@ import 'package:interstate_bus_services_app/Pages/reset_password.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
 import 'package:interstate_bus_services_app/Pages/successPage.dart';
 import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
+import 'package:interstate_bus_services_app/Pages/view_bought_tickets.dart';
 import 'package:interstate_bus_services_app/Pages/view_bus_schedule.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 
@@ -35,6 +36,8 @@ class RouteManager {
   static const String messages = '/login/home/messages';
   static const String buy = '/login/home/Buy';
   static const String purchaseDetails = '/login/home/Buy/PuchaseDetails';
+  static const String boughtHistory =
+      '/login/home/Buy/PuchaseDetails/boughtHistory';
   static const String history = '/login/home/history';
   static const String schedule = '/login/home/schedule';
   static const String writeSchedule = '/login/home/schedule/writeSchedule';
@@ -78,6 +81,9 @@ class RouteManager {
 
       case buy:
         return MaterialPageRoute(builder: (context) => BuyForUser());
+
+      case boughtHistory:
+        return MaterialPageRoute(builder: (context) => ViewMyBoughtTicket());
 
       case messages:
         return MaterialPageRoute(builder: (context) => Chat());

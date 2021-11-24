@@ -5,6 +5,7 @@ import 'package:interstate_bus_services_app/models/user_registration.dart';
 class UserService with ChangeNotifier {
   BackendlessUser? _currentUser;
   BackendlessUser? get currentUser => _currentUser;
+  static String userEmail = '';
 
   bool _userExists = false;
   bool get userExists => _userExists;
@@ -96,6 +97,7 @@ class UserService with ChangeNotifier {
     if (user != null) {
       _currentUser = user;
     }
+    userEmail = _currentUser!.email;
 
     _showUserProgress = false;
     notifyListeners();
@@ -157,7 +159,7 @@ class UserService with ChangeNotifier {
       await Backendless.userService.register(user);
 
       // Create an empty announcement entry
-      UserRegistration emptyEntry = UserRegistration(
+      /*UserRegistration emptyEntry = UserRegistration(
         announcements: {},
         username: user.email,
         fName: user.getProperty('fName'),
@@ -165,16 +167,16 @@ class UserService with ChangeNotifier {
         phoneNumber: user.getProperty('phoneNumber'),
         idNumber: user.getProperty('idNumber'),
         password: user.password,
-      );
+      );*/
 
       // Sends the blank entry to the {AnnouncementEntry} table on Backendless
       // .onError gives errors
-      await Backendless.data
+      /*await Backendless.data
           .of('AnnouncementEntry')
           .save(emptyEntry.toJson())
           .onError((error, stackTrace) {
         result = error.toString();
-      });
+      });*/
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/helper_announcement.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
 
@@ -21,7 +22,7 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
     'Everyone',
   ];
 
-  String? value;
+  String? recipient;
   DropdownMenuItem<String> buildMenuItem(String admin) => DropdownMenuItem(
       value: admin,
       child: Text(
@@ -147,9 +148,9 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                             ),
                           ),
                           child: DropdownButton(
-                            onChanged: (value) =>
-                                setState(() => this.value = value as String?),
-                            value: value,
+                            onChanged: (value) => setState(
+                                () => this.recipient = value as String),
+                            value: recipient,
                             items: administrators.map(buildMenuItem).toList(),
                             icon: Icon(Icons.arrow_drop_down,
                                 color: Colors.black),
@@ -199,10 +200,15 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                         ),
                       ),
                       onPressed: () {
-                        // Are they both needed?
-                        createNewAnnouncementInUI(context,
-                            titleController: announcementController);
-                        saveAllAnnouncementsInUI(context);
+                        if (recipient == null ||
+                            announcementController.text.trim().isEmpty) {
+                          showSnackBar(context, 'Please Enter All Fields');
+                        } else {
+                          // Are they both needed?
+                          createNewAnnouncementInUI(context,
+                              titleController: announcementController);
+                          saveAllAnnouncementsInUI(context);
+                        }
                       },
                       style: ButtonStyle(
                         shadowColor: MaterialStateProperty.all(Colors.white),
@@ -212,25 +218,6 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                             MaterialStateProperty.all(Size.fromWidth(220)),
                       ),
                     ),
-                    /*MaterialButton(
-                        height: 50,
-                        minWidth: 200,
-                        color: Colors.red[700],
-                        onPressed: () {
-                          // Are they both needed?
-                          createNewAnnouncementInUI(context,
-                              titleController: announcementController);
-                          saveAllAnnouncementsInUI(context);
-                        },
-                        child: Text(
-                          'Upload',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),*/
                   ),
                 ],
               ),

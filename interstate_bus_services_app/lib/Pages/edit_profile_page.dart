@@ -108,19 +108,16 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       SizedBox(height: 5),
                       MyPasswordFormField(
-                        hint:
-                            'Enter New Password(8 characters, 1 letter, 1 number and 1 special character)',
+                        hint: 'Enter New Password',
                         // Minimum eight characters, at least one letter, one number and one special character
                         regExp: MyRegexes.password,
                         controller: newPassController,
                       ),
                       SizedBox(height: 5),
                       MyPasswordFormField(
-                        hint:
-                            'Confirm New Password(8 characters, 1 letter, 1 number and 1 special character)',
+                        hint: 'Confirm New Password',
                         // Minimum eight characters, at least one letter, one number and one special character
-                        regExp:
-                            r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$',
+                        regExp: MyRegexes.password,
                         controller: confirmPassController,
                       ),
                       SizedBox(height: 30),
@@ -129,10 +126,6 @@ class _EditProfileState extends State<EditProfile> {
                         child: Text('Submit'),
                         onPressed: () {
                           if (profileFormKey.currentState!.validate()) {
-                            context
-                                .read<UserService>()
-                                .currentUser!
-                                .setProperty('fName', 'fName');
                             print('Submitting To Server...');
                           }
                         },

@@ -1,5 +1,6 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
@@ -84,42 +85,15 @@ class _HomePageState extends State<HomePage> {
                               );
                       },
                     ),
-                    MyElevatedBtnA(
-                      btnName: 'Buy Ticket',
-                      routeName: RouteManager.buy,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Purchase History',
-                      routeName: '',
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'View Schedule',
-                      routeName: RouteManager.schedule,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Balance Details',
-                      routeName: '',
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Annoucements',
-                      routeName: RouteManager.announcements,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'View Profile',
-                      routeName: RouteManager.profile,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Scan QR',
-                      routeName: RouteManager.scanQR,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Messages',
-                      routeName: RouteManager.messages,
-                    ),
-                    MyElevatedBtnA(
-                      btnName: 'Payment Details',
-                      routeName: RouteManager.paymentDetails,
-                    ),
+                    UserRole.userRole == 'commuter'
+                        ? commuterWidgets(context)
+                        : UserRole.userRole == 'admin'
+                            ? adminWidgets(context)
+                            : UserRole.userRole == 'driver'
+                                ? driverWidgets(context)
+                                : Container(
+                                    child: Text('Unknown Role'),
+                                  )
                   ],
                 ),
               ),
@@ -138,4 +112,103 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Container commuterWidgets(BuildContext context) {
+  return Container(
+    child: Column(
+      children: [
+        MyElevatedBtnA(
+          btnName: 'Buy Ticket',
+          routeName: RouteManager.buy,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Purchase History',
+          routeName: RouteManager.boughtHistory,
+        ),
+        MyElevatedBtnA(
+          btnName: 'View Schedule',
+          routeName: RouteManager.schedule,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Balance Details',
+          routeName: '',
+        ),
+        MyElevatedBtnA(
+          btnName: 'Annoucements',
+          routeName: RouteManager.announcements,
+        ),
+        MyElevatedBtnA(
+          btnName: 'View Profile',
+          routeName: RouteManager.profile,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Scan QR',
+          routeName: RouteManager.scanQR,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Messages',
+          routeName: RouteManager.messages,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Payment Details',
+          routeName: RouteManager.paymentDetails,
+        ),
+      ],
+    ),
+  );
+}
+
+Container adminWidgets(BuildContext context) {
+  return Container(
+    child: Column(
+      children: [
+        MyElevatedBtnA(
+          btnName: 'Purchase History',
+          routeName: '',
+        ),
+        MyElevatedBtnA(
+          btnName: 'View Schedule',
+          routeName: RouteManager.schedule,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Annoucements',
+          routeName: RouteManager.announcements,
+        ),
+        MyElevatedBtnA(
+          btnName: 'View Profile',
+          routeName: RouteManager.profile,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Messages',
+          routeName: RouteManager.messages,
+        ),
+      ],
+    ),
+  );
+}
+
+Container driverWidgets(BuildContext context) {
+  return Container(
+    child: Column(
+      children: [
+        MyElevatedBtnA(
+          btnName: 'View Schedule',
+          routeName: RouteManager.schedule,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Annoucements',
+          routeName: RouteManager.announcements,
+        ),
+        MyElevatedBtnA(
+          btnName: 'View Profile',
+          routeName: RouteManager.profile,
+        ),
+        MyElevatedBtnA(
+          btnName: 'Messages',
+          routeName: RouteManager.messages,
+        ),
+      ],
+    ),
+  );
 }

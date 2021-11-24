@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Functions/user_role.dart';
-import 'package:interstate_bus_services_app/Routes/routes.dart';
-import 'package:interstate_bus_services_app/services/announcement_service.dart';
-import 'package:interstate_bus_services_app/services/helper_announcement.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
-import 'package:interstate_bus_services_app/widgets/announcement_card.dart';
+import 'package:interstate_bus_services_app/services/ticket_service.dart';
+import 'package:interstate_bus_services_app/services/helper_ticket.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
-import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
+import 'package:interstate_bus_services_app/widgets/schedule_card.dart';
+import 'package:interstate_bus_services_app/widgets/ticket_card.dart';
 import 'package:provider/provider.dart' as provider;
-import 'package:tuple/tuple.dart';
 
-class ViewAnnouncement extends StatefulWidget {
-  const ViewAnnouncement({Key? key}) : super(key: key);
+class ViewMyBoughtTicket extends StatefulWidget {
+  const ViewMyBoughtTicket({Key? key}) : super(key: key);
 
   @override
-  _ViewAnnouncementState createState() => _ViewAnnouncementState();
+  _ViewMyBoughtTicketState createState() => _ViewMyBoughtTicketState();
 }
 
-class _ViewAnnouncementState extends State<ViewAnnouncement> {
-  late TextEditingController announcementController;
+class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
+  late TextEditingController ticketController;
 
   @override
   void initState() {
     super.initState();
-    announcementController = TextEditingController();
+    ticketController = TextEditingController();
   }
 
   @override
   void dispose() {
-    announcementController.dispose();
+    ticketController.dispose();
     super.dispose();
   }
 
@@ -43,10 +39,10 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
               icon: Icon(Icons.replay_outlined),
               tooltip: 'Refresh',
               onPressed: () {
-                refreshAnnouncementsInUI(context);
+                refreshTicketsInUI(context);
               }),
-          SizedBox(width: 10),
-          UserRole.userRole == 'admin' ? adminWidgets(context) : Container()
+          SizedBox(width: 30),
+          //UserRole.userRole == 'admin' ? adminWidgets(context) : Container()
         ],
       ),
       backgroundColor: Colors.grey[200],
@@ -80,7 +76,7 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'View Announcement',
+                      'View My Tickets',
                       style: TextStyle(
                         fontSize: 22,
                         color: Colors.black,
@@ -103,60 +99,45 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                   ],
                 ),
               ),
+              Divider(
+                color: Colors.white,
+                thickness: 2,
+                endIndent: 10,
+                indent: 10,
+              ),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8.0,
                       vertical: 20,
                     ),
-                    child: provider.Consumer<AnnouncementService>(
+                    child: provider.Consumer<TicketService>(
                       builder: (context, value, child) {
                         return ListView.builder(
-                          itemCount: value.announcements.length,
+                          itemCount: value.tickets.length,
                           itemBuilder: (context, index) {
-                            return AnnouncementCard(
-                              message: value.announcements[index],
-                              deletaAction: () async {
-                                context
-                                    .read<AnnouncementService>()
-                                    .deleteAnnouncement(
-                                        value.announcements[index]);
+                            return GestureDetector(
+                              onTap: () {
+                                print(index);
                               },
+                              child: TicketCard(
+                                message: value.tickets[index],
+                                deletaAction: () async {
+                                  context
+                                      .read<TicketService>()
+                                      .deleteTicket(value.tickets[index]);
+                                },
+                              ),
                             );
                           },
                         );
                       },
                     )),
               ),
-              /*ElevatedButton(
-                  child: Text(
-                    'Refresh',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {
-                    refreshAnnouncementsInUI(context);
-                  },
-                ),*/
-              /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Save Changes'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                  },
-                ),*/
-              /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Write Announcement'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                    Navigator.pushNamed(
-                        context, RouteManager.writeAnnouncements);
-                  },
-                ),*/
             ],
           ),
         ),
-        provider.Selector<AnnouncementService, bool>(
+        provider.Selector<TicketService, bool>(
           selector: (context, value) => value.busyRetrieving,
           builder: (context, value, child) {
             return value
@@ -170,25 +151,29 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
   }
 }
 
-Container adminWidgets(BuildContext context) {
-  return Container(
-    child: Row(
-      children: [
-        IconButton(
-            icon: Icon(Icons.system_update_tv_sharp),
-            tooltip: 'Save',
-            onPressed: () {
-              saveAllAnnouncementsInUI(context);
-            }),
-        SizedBox(width: 10),
-        IconButton(
-            icon: Icon(Icons.add),
-            tooltip: 'Write Announcement',
-            onPressed: () {
-              Navigator.pushNamed(context, RouteManager.writeAnnouncements);
-            }),
-        SizedBox(width: 20),
-      ],
-    ),
-  );
+TextStyle myTextStyle() {
+  return TextStyle(fontSize: 15, color: Colors.white);
 }
+
+// Container adminWidgets(BuildContext context) {
+//   return Container(
+//     child: Row(
+//       children: [
+//         IconButton(
+//             icon: Icon(Icons.system_update_tv_sharp),
+//             tooltip: 'Save',
+//             onPressed: () {
+//               saveAllTicketsInUI(context);
+//             }),
+//         SizedBox(width: 10),
+//         IconButton(
+//             icon: Icon(Icons.add),
+//             tooltip: 'Write Ticket',
+//             onPressed: () {
+//               Navigator.pushNamed(context, RouteManager.writeTicket);
+//             }),
+//         SizedBox(width: 20),
+//       ],
+//     ),
+//   );
+// }

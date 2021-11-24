@@ -3,6 +3,7 @@ class MyRegexes {
   static String phonenumber = r'^(\+27|0)[6-8][0-9]{8}$';
   static String name = r'^[a-z A-Z]+$';
   static String email = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
+  //Minimum eight characters, at least one letter, one number and one special character
   static String password =
       r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$';
   static String idNumber =

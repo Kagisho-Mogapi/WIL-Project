@@ -1,8 +1,11 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Functions/role_assign.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/schedule_service.dart';
+import 'package:interstate_bus_services_app/services/ticket_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +35,7 @@ class _LoadingState extends State<Loading> {
   void loadTimer() async {
     String result = await context.read<UserService>().checkIfUserLoggedIn();
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
 
     if (result == 'OK') {
       Navigator.popAndPushNamed(context, RouteManager.home);
@@ -43,21 +46,11 @@ class _LoadingState extends State<Loading> {
           .read<ScheduleService>()
           .getSchedules(context.read<UserService>().currentUser!.email);
 
-      if (context.read<UserService>().currentUser!.getProperty('fName') ==
-          'Johnney') {
-        getStream =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiam9obm5leSJ9.ZxQBe8iAshCY3zLaMbLGusELOaBSvVF2Tcl2LL42K1I';
-      } else if (context
-              .read<UserService>()
-              .currentUser!
-              .getProperty('fName') ==
-          'Hephaestus') {
-        getStream =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiaGVwaGFlc3R1cyJ9.qQwKnmhpljgJo9o9ahDKx1b08EH0emcPshOWqReI21U';
-      } else {
-        getStream =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoibWFyeSJ9.574p0xc5I8EZWYOTMOx88IAhpgDCGws3p_2-vBTMfUc';
-      }
+      context
+          .read<TicketService>()
+          .getTickets(context.read<UserService>().currentUser!.email);
+
+      RoleAssign.roleAssign(context);
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/schedule_service.dart';
 import 'package:interstate_bus_services_app/services/helper_schedule.dart';
@@ -7,6 +8,7 @@ import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart'
 import 'package:interstate_bus_services_app/widgets/schedule_card.dart';
 import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 import 'package:tuple/tuple.dart';
 
 class ViewBusSchedule extends StatefulWidget {
@@ -45,20 +47,7 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                 refreshSchedulesInUI(context);
               }),
           SizedBox(width: 10),
-          IconButton(
-              icon: Icon(Icons.system_update_tv_sharp),
-              tooltip: 'Save',
-              onPressed: () {
-                saveAllSchedulesInUI(context);
-              }),
-          SizedBox(width: 10),
-          IconButton(
-              icon: Icon(Icons.add),
-              tooltip: 'Write Schedule',
-              onPressed: () {
-                Navigator.pushNamed(context, RouteManager.writeSchedule);
-              }),
-          SizedBox(width: 20),
+          UserRole.userRole == 'admin' ? adminWidgets(context) : Container()
         ],
       ),
       backgroundColor: Colors.grey[200],
@@ -164,4 +153,27 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
 
 TextStyle myTextStyle() {
   return TextStyle(fontSize: 15, color: Colors.white);
+}
+
+Container adminWidgets(BuildContext context) {
+  return Container(
+    child: Row(
+      children: [
+        IconButton(
+            icon: Icon(Icons.system_update_tv_sharp),
+            tooltip: 'Save',
+            onPressed: () {
+              saveAllSchedulesInUI(context);
+            }),
+        SizedBox(width: 10),
+        IconButton(
+            icon: Icon(Icons.add),
+            tooltip: 'Write Schedule',
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.writeSchedule);
+            }),
+        SizedBox(width: 20),
+      ],
+    ),
+  );
 }

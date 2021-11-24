@@ -4,17 +4,12 @@ class Schedule {
   //TODO: change to DAteTime
   final String time;
   final String busCode;
-  // Done is from example that task has been complete
-  //bool done;
-  //final DateTime created;
 
   Schedule({
     required this.from,
     required this.to,
     required this.time,
     required this.busCode,
-    //this.done = false,
-    //required this.created,
   });
 
   Map<String, Object?> toJson() => {
@@ -32,21 +27,6 @@ class Schedule {
         time: json['time'] as String,
         busCode: json['busCode'] as String,
       );
-
-  // Checks for from duplicates
-  /*@override
-  bool operator ==(covariant Schedule schedule) {
-    return (this
-            .from
-            .toUpperCase()
-            .compareTo(schedule.from.toUpperCase()) ==
-        0);
-  }
-
-  @override
-  int get hashCode {
-    return from.hashCode;
-  }*/
 }
 
 Map<dynamic, dynamic> convertScheduleListToMap(List<Schedule> schedules) {

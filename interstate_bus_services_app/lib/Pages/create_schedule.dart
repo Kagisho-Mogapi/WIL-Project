@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/services/schedule_service.dart';
 import 'package:interstate_bus_services_app/services/helper_schedule.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/createScheduleFields.dart';
+import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
 
@@ -172,78 +174,18 @@ class _CreateScheduleState extends State<CreateSchedule> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextField(
+                          MyCreateScheduleFields(
                               controller: fromController,
-                              maxLines: 1,
-                              decoration: InputDecoration(
-                                hintText: 'Enter From Location',
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextField(
+                              hint: 'Enter From Location'),
+                          MyCreateScheduleFields(
                               controller: toController,
-                              maxLines: 1,
-                              decoration: InputDecoration(
-                                hintText: 'Enter To Location',
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextField(
+                              hint: 'Enter To Location'),
+                          MyCreateScheduleFields(
                               controller: timeController,
-                              maxLines: 1,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Departure Time',
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextField(
+                              hint: 'Enter Departure Time'),
+                          MyCreateScheduleFields(
                               controller: busCodeController,
-                              maxLines: 1,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Bus Code',
-                              ),
-                            ),
-                          ),
+                              hint: 'Enter Bus Code'),
                         ],
                       ),
                     ),
@@ -259,13 +201,20 @@ class _CreateScheduleState extends State<CreateSchedule> {
                         ),
                       ),
                       onPressed: () {
-                        // Are they both needed?
-                        createNewScheduleInUI(context,
-                            fromController: fromController,
-                            toController: toController,
-                            timeController: timeController,
-                            busCodeController: busCodeController);
-                        saveAllSchedulesInUI(context);
+                        if (fromController.text.trim().isEmpty ||
+                            toController.text.trim().isEmpty ||
+                            timeController.text.trim().isEmpty ||
+                            busCodeController.text.trim().isEmpty) {
+                          showSnackBar(context, 'Please Enter All Fields!!');
+                        } else {
+                          // Are they both needed?
+                          createNewScheduleInUI(context,
+                              fromController: fromController,
+                              toController: toController,
+                              timeController: timeController,
+                              busCodeController: busCodeController);
+                          saveAllSchedulesInUI(context);
+                        }
                       },
                       style: ButtonStyle(
                         shadowColor: MaterialStateProperty.all(Colors.white),
