@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Functions/role_assign.dart';
-import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
@@ -89,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (!value) {
                                 setState(() {
                                   if (emailController.text.trim().isEmpty) {
-                                    isValidEmail = true;
+                                    isValidEmail = false;
                                   } else {
                                     isValidEmail = myInputValidation(
                                         emailController.text.trim(),

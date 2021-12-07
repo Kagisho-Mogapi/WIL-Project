@@ -1,10 +1,10 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/models/announcement.dart';
 import 'package:interstate_bus_services_app/models/announcement_entry.dart';
 
 class AnnouncementService with ChangeNotifier {
-  //TODO: Change user reg. to ann. entry
   AnnouncementEntry? _announcementEntry;
 
   List<Announcement> _announcements = [];
@@ -14,6 +14,8 @@ class AnnouncementService with ChangeNotifier {
   String levelEveryone = "level ='everyone'";
   String levelBusDriver = "level ='busDriver'";
   String levelAdmin = "level ='admin'";
+  String level = '';
+  static bool fromCreateAnnouncement = false;
 
   void emptyAnnouncements() {
     _announcements = [];
@@ -26,12 +28,33 @@ class AnnouncementService with ChangeNotifier {
   bool get busyRetrieving => _busyRetrieving;
   bool get busySaving => _busySaving;
 
-  Future<String> getAnnouncements(String username) async {
+  Future<String> getAnnouncements(String recipient) async {
     String result = 'OK';
+    print(recipient);
 
-    // Which username's Row
-    DataQueryBuilder queryBuilder = DataQueryBuilder()
-      ..whereClause = levelEveryone;
+    if (fromCreateAnnouncement) {
+      if (recipient == 'Administrator') {
+        level = levelAdmin;
+      } else if (recipient == 'Bus Driver') {
+        level = levelBusDriver;
+      } else {
+        level = levelEveryone;
+      }
+      fromCreateAnnouncement = false;
+      print('We Heeeeeeeeerrrr');
+    } else {
+      if (UserRole.userRole == 'admin') {
+        level = levelAdmin;
+      } else if (UserRole.userRole == 'driver') {
+        level = levelBusDriver;
+      } else {
+        level = levelEveryone;
+      }
+    }
+
+    // Which level's Row
+    DataQueryBuilder queryBuilder = DataQueryBuilder()..whereClause = level;
+    print(level);
 
     _busyRetrieving = true;
     notifyListeners();
@@ -53,7 +76,7 @@ class AnnouncementService with ChangeNotifier {
 
     if (map != null) {
       if (map.length > 0) {
-        // !!!! {map.first} because there's only one list per user !!!!!!!!!
+        //print(map[0]);
         _announcementEntry = AnnouncementEntry.fromJson(map.first);
         _announcements =
             convertMapToAnnouncementList(_announcementEntry!.announcements);

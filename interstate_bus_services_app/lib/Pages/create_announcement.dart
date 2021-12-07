@@ -1,9 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/helper_announcement.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
-import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
 
 class CreateAnnouncement extends StatefulWidget {
@@ -14,12 +15,13 @@ class CreateAnnouncement extends StatefulWidget {
 }
 
 class _CreateAnnouncementState extends State<CreateAnnouncement> {
+  late TextEditingController titleController;
   late TextEditingController announcementController;
 
   final List<String> administrators = [
-    'Administrators',
-    'Bus Drivers',
-    'Everyone',
+    'Administrator',
+    'Bus Driver',
+    'Commuter',
   ];
 
   String? recipient;
@@ -33,11 +35,13 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
   @override
   void initState() {
     super.initState();
+    titleController = TextEditingController();
     announcementController = TextEditingController();
   }
 
   @override
   void dispose() {
+    titleController.dispose();
     announcementController.dispose();
     super.dispose();
   }
@@ -167,6 +171,35 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Focus(
+                            onFocusChange: (value) {
+                              if (!value) {
+                                AnnouncementService.fromCreateAnnouncement =
+                                    true;
+                                context
+                                    .read<AnnouncementService>()
+                                    .getAnnouncements(recipient!);
+                              }
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(8),
+                              padding: EdgeInsets.only(bottom: 8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                              child: TextField(
+                                controller: titleController,
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  hintText: '  Write Announcement title',
+                                ),
+                              ),
+                            ),
+                          ),
                           Container(
                             margin: EdgeInsets.all(8),
                             padding: EdgeInsets.only(bottom: 8.0),
@@ -181,7 +214,7 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                               controller: announcementController,
                               maxLines: 8,
                               decoration: InputDecoration(
-                                hintText: 'Type Announcement',
+                                hintText: '  Write Announcement Description',
                               ),
                             ),
                           ),
@@ -201,13 +234,19 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                       ),
                       onPressed: () {
                         if (recipient == null ||
-                            announcementController.text.trim().isEmpty) {
+                            announcementController.text.trim().isEmpty ||
+                            titleController.text.trim().isEmpty) {
                           showSnackBar(context, 'Please Enter All Fields');
                         } else {
                           // Are they both needed?
+                          context
+                              .read<AnnouncementService>()
+                              .getAnnouncements(recipient!);
                           createNewAnnouncementInUI(context,
-                              titleController: announcementController);
-                          saveAllAnnouncementsInUI(context);
+                              titleController: titleController,
+                              descriptionController: announcementController,
+                              recepientController: recipient!);
+                          saveAllAnnouncementsInUI(context, recipient!);
                         }
                       },
                       style: ButtonStyle(

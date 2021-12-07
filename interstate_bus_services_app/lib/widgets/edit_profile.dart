@@ -1,7 +1,4 @@
-import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
-import 'package:provider/provider.dart' as provider;
 
 class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
@@ -20,9 +17,10 @@ class MyTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(fontSize: 13),
+      style: TextStyle(fontSize: 17, color: Colors.white),
       controller: controller,
       decoration: InputDecoration(
+        labelStyle: TextStyle(color: Colors.white70),
         labelText: hint,
         isDense: true,
       ),
@@ -75,9 +73,10 @@ class MyPasswordFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: true,
-      style: TextStyle(fontSize: 13),
+      style: TextStyle(fontSize: 17, color: Colors.white),
       controller: controller,
       decoration: InputDecoration(
+        labelStyle: TextStyle(color: Colors.white70),
         labelText: hint,
         isDense: true,
       ),

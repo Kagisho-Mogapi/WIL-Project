@@ -7,7 +7,6 @@ import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
 void refreshSchedulesInUI(BuildContext context) async {
-  //TODO: Check when doing full schedules, update getSchedules()
   String result = await context
       .read<ScheduleService>()
       .getSchedules(context.read<UserService>().currentUser!.email);
@@ -21,22 +20,22 @@ void refreshSchedulesInUI(BuildContext context) async {
 
 void createNewScheduleInUI(
   BuildContext context, {
-  required TextEditingController fromController,
-  required TextEditingController toController,
-  required TextEditingController timeController,
-  required TextEditingController busCodeController,
+  required String fromController,
+  required String toController,
+  required String timeController,
+  required String busCodeController,
 }) async {
-  if (fromController.text.isEmpty ||
-      toController.text.isEmpty ||
-      timeController.text.isEmpty ||
-      busCodeController.text.isEmpty) {
+  if (fromController.isEmpty ||
+      toController.isEmpty ||
+      timeController.isEmpty ||
+      busCodeController.isEmpty) {
     showSnackBar(context, 'Please Enter All Fields First!!');
   } else {
     Schedule schedule = Schedule(
-        from: fromController.text.trim(),
-        to: toController.text.trim(),
-        time: timeController.text.trim(),
-        busCode: busCodeController.text.trim());
+        from: fromController.trim(),
+        to: toController.trim(),
+        time: timeController.trim(),
+        busCode: busCodeController.trim());
     context.read<ScheduleService>().createSchedule(schedule);
     Navigator.pop(context);
 

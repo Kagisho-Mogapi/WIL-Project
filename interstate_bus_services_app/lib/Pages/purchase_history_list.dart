@@ -14,6 +14,7 @@ class _PurchaseHistoryListState extends State<PurchaseHistoryList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: Colors.grey[300],
       body: Stack(
         children: [

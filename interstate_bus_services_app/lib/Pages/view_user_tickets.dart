@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Functions/user_role.dart';
-import 'package:interstate_bus_services_app/Routes/routes.dart';
-import 'package:interstate_bus_services_app/services/announcement_service.dart';
-import 'package:interstate_bus_services_app/services/helper_announcement.dart';
-import 'package:interstate_bus_services_app/widgets/announcement_card.dart';
+import 'package:interstate_bus_services_app/services/ticket_service.dart';
+import 'package:interstate_bus_services_app/services/helper_ticket.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
+import 'package:interstate_bus_services_app/widgets/ticket_card.dart';
 import 'package:provider/provider.dart' as provider;
 
-class ViewAnnouncement extends StatefulWidget {
-  const ViewAnnouncement({Key? key}) : super(key: key);
+class ViewUserTickets extends StatefulWidget {
+  const ViewUserTickets({Key? key}) : super(key: key);
 
   @override
-  _ViewAnnouncementState createState() => _ViewAnnouncementState();
+  _ViewUserTicketsState createState() => _ViewUserTicketsState();
 }
 
-class _ViewAnnouncementState extends State<ViewAnnouncement> {
+class _ViewUserTicketsState extends State<ViewUserTickets> {
+  TextEditingController findController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    // context.read<AnnouncementService>().getAnnouncements('');
   }
 
   @override
@@ -37,10 +36,9 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
               icon: Icon(Icons.replay_outlined),
               tooltip: 'Refresh',
               onPressed: () {
-                refreshAnnouncementsInUI(context);
+                refreshTicketsInUI(context);
               }),
-          SizedBox(width: 10),
-          UserRole.userRole == 'admin' ? adminWidgets(context) : Container()
+          SizedBox(width: 30),
         ],
       ),
       backgroundColor: Colors.grey[200],
@@ -74,7 +72,7 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'View Announcement',
+                      'View My Tickets',
                       style: TextStyle(
                         fontSize: 22,
                         color: Colors.black,
@@ -97,16 +95,52 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                   ],
                 ),
               ),
+              Divider(
+                color: Colors.white,
+                thickness: 2,
+                endIndent: 10,
+                indent: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  color: Colors.grey[100],
+                  child: ListTile(
+                    title: TextField(
+                      controller: findController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    // OpenTextField(
+                    //     hint: 'User email',
+                    //     regExp: MyRegexes.email,
+                    //     controller: findController,
+                    //     isPass: false,
+                    //     isValidInput: true,
+                    //     errorMsg: 'errorMsg'),
+                    trailing: Container(
+                      // color: Colors.grey[300],
+                      child: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          context
+                              .read<TicketService>()
+                              .getTickets(findController.text.trim());
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8.0,
                       vertical: 20,
                     ),
-                    child: provider.Consumer<AnnouncementService>(
+                    child: provider.Consumer<TicketService>(
                       builder: (context, value, child) {
                         return ListView.builder(
-                          itemCount: value.announcements.length,
+                          itemCount: value.tickets.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
@@ -118,10 +152,11 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      title: Text(
-                                          value.announcements[index].title),
-                                      content: Text(value
-                                          .announcements[index].description),
+                                      //title: Text(value.tickets[index].to),
+                                      content: Text('Ticket Owner: ${value.tickets[index].ticketOwner}\n' +
+                                          'Amount: R${value.tickets[index].price}\n' +
+                                          'Ticket Type: ${value.tickets[index].ticketType}\n' +
+                                          'Is Used: ${value.tickets[index].isUsed}\n'),
                                       actions: [
                                         TextButton(
                                           child: Text('Close'),
@@ -134,13 +169,12 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                                   },
                                 );
                               },
-                              child: AnnouncementCard(
-                                message: value.announcements[index],
+                              child: MyTicketCard(
+                                message: value.tickets[index],
                                 deletaAction: () async {
                                   context
-                                      .read<AnnouncementService>()
-                                      .deleteAnnouncement(
-                                          value.announcements[index]);
+                                      .read<TicketService>()
+                                      .deleteTicket(value.tickets[index]);
                                 },
                               ),
                             );
@@ -149,35 +183,10 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
                       },
                     )),
               ),
-              /*ElevatedButton(
-                  child: Text(
-                    'Refresh',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {
-                    refreshAnnouncementsInUI(context);
-                  },
-                ),*/
-              /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Save Changes'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                  },
-                ),*/
-              /*SizedBox(height: 10),
-                ElevatedButton(
-                  child: Text('Write Announcement'),
-                  onPressed: () {
-                    saveAllAnnouncementsInUI(context);
-                    Navigator.pushNamed(
-                        context, RouteManager.writeAnnouncements);
-                  },
-                ),*/
             ],
           ),
         ),
-        provider.Selector<AnnouncementService, bool>(
+        provider.Selector<TicketService, bool>(
           selector: (context, value) => value.busyRetrieving,
           builder: (context, value, child) {
             return value
@@ -191,25 +200,6 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
   }
 }
 
-Container adminWidgets(BuildContext context) {
-  return Container(
-    child: Row(
-      children: [
-        IconButton(
-            icon: Icon(Icons.system_update_tv_sharp),
-            tooltip: 'Save',
-            onPressed: () {
-              saveAllAnnouncementsInUI(context, UserRole.userRole);
-            }),
-        SizedBox(width: 10),
-        IconButton(
-            icon: Icon(Icons.add),
-            tooltip: 'Write Announcement',
-            onPressed: () {
-              Navigator.pushNamed(context, RouteManager.writeAnnouncements);
-            }),
-        SizedBox(width: 20),
-      ],
-    ),
-  );
+TextStyle myTextStyle() {
+  return TextStyle(fontSize: 15, color: Colors.white);
 }

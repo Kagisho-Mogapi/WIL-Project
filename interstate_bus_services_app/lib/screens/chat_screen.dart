@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/Themes/theme.dart';
 import 'package:interstate_bus_services_app/chat_helpers.dart';
 import 'package:interstate_bus_services_app/widgets/display_error_message.dart';
@@ -67,12 +69,14 @@ class _ChatScreenState extends State<ChatScreen> {
           leadingWidth: 54,
           leading: Align(
             alignment: Alignment.centerRight,
-            child: IconBackground(
-              icon: CupertinoIcons.back,
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
+            child: UserRole.userRole == 'admin'
+                ? IconBackground(
+                    icon: CupertinoIcons.back,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                : null,
           ),
           title: const _AppBarTitle(),
           actions: [

@@ -1,11 +1,19 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:interstate_bus_services_app/models/user_registration.dart';
+import 'package:interstate_bus_services_app/models/user.dart';
+import 'package:interstate_bus_services_app/models/user_list_entry.dart';
+import 'package:provider/provider.dart';
 
 class UserService with ChangeNotifier {
   BackendlessUser? _currentUser;
   BackendlessUser? get currentUser => _currentUser;
   static String userEmail = '';
+  static double topUpAmount = 0;
+  static double subtractAmount = 0;
+
+  UserListEntry? userEntry;
+  String users = '';
+  String result = 'OK';
 
   bool _userExists = false;
   bool get userExists => _userExists;
@@ -134,6 +142,8 @@ class UserService with ChangeNotifier {
 
         if (mapOfCurentUser != null) {
           _currentUser = BackendlessUser.fromJson(mapOfCurentUser);
+          userEmail = _currentUser!.email;
+
           notifyListeners();
         } else {
           result = 'NOT OK';
@@ -147,6 +157,90 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+  Future<void> updateProfile(
+    BuildContext context,
+    String fNameEdit,
+    String lNameEdit,
+    String phoneNumberEdit,
+    String passwordEdit,
+  ) async {
+    Map<dynamic, dynamic> entity = {};
+    int? saveChange = -1;
+
+    if (fNameEdit.isNotEmpty) {
+      entity.addAll({'fName': '$fNameEdit'});
+    }
+
+    if (lNameEdit.isNotEmpty) {
+      entity.addAll({'lName': '$lNameEdit'});
+    }
+
+    if (phoneNumberEdit.isNotEmpty) {
+      entity.addAll({'phoneNumber': '$phoneNumberEdit'});
+    }
+
+    if (passwordEdit.isNotEmpty) {
+      BackendlessUser? user = context.read<UserService>().currentUser;
+      user!.password = passwordEdit;
+      Backendless.data
+          .of("Users")
+          .save(user.toJson())
+          .then((response) => print("User password has been changed"));
+    }
+
+    saveChange = await Backendless.data.of("Users").update(
+        "email ='${context.read<UserService>().currentUser!.email}'", entity);
+
+    print(saveChange);
+  }
+
+  Future<void> topUpBalance(
+    String username,
+  ) async {
+    final topUpBalance = await Backendless.data
+        .of("Users")
+        .update("email ='$username'", {'credits': topUpAmount});
+    print('Topup Result: $topUpBalance');
+  }
+
+  Future<void> subtractBalance(String username, double diff) async {
+    final topUpBalance = await Backendless.data
+        .of("Users")
+        .update("email ='$username'", {'credits': diff});
+    print('Subtract Result: $topUpBalance');
+  }
+
+  Future<void> getUsers() async {
+    DataQueryBuilder queryBuilder = DataQueryBuilder()
+      ..whereClause = "credits ='0'";
+
+    List<Map<dynamic, dynamic>?>? map = await Backendless.data
+        .of('Users')
+        .find(queryBuilder)
+        .onError((error, stackTrace) {
+      result = error.toString();
+    });
+
+    if (map != null) {
+      if (map.length > 0) {
+        // !!!! {map.first} because there's only one list per user !!!!!!!!!
+        print(map.first);
+        print('--------------------------------------------');
+        userEntry = UserListEntry.fromJson(map.first);
+        users = convertMapToUserList(userEntry!.email);
+        notifyListeners();
+      } else {
+        result = 'NOT OK';
+      }
+
+      // int index = 0;
+      // while (index < map.length) {
+      //   print(map[index]);
+      //   index++;
+      // }
+    }
+  }
+
   Future<String> createUser(BackendlessUser user) async {
     String result = 'OK';
 
@@ -157,26 +251,6 @@ class UserService with ChangeNotifier {
     try {
       // Registers a user
       await Backendless.userService.register(user);
-
-      // Create an empty announcement entry
-      /*UserRegistration emptyEntry = UserRegistration(
-        announcements: {},
-        username: user.email,
-        fName: user.getProperty('fName'),
-        lName: user.getProperty('lName'),
-        phoneNumber: user.getProperty('phoneNumber'),
-        idNumber: user.getProperty('idNumber'),
-        password: user.password,
-      );*/
-
-      // Sends the blank entry to the {AnnouncementEntry} table on Backendless
-      // .onError gives errors
-      /*await Backendless.data
-          .of('AnnouncementEntry')
-          .save(emptyEntry.toJson())
-          .onError((error, stackTrace) {
-        result = error.toString();
-      });*/
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }

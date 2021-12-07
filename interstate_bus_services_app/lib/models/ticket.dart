@@ -1,30 +1,17 @@
 class Ticket {
   final String ticketOwner;
-  final String ticketRecipient;
-  final String from;
-  final String to;
-  //TODO: change to DAteTime
-  final String time;
   final String ticketType;
   final String isUsed;
   final String price;
 
   Ticket(
       {required this.ticketOwner,
-      required this.ticketRecipient,
-      required this.from,
-      required this.to,
-      required this.time,
       required this.ticketType,
       required this.isUsed,
       required this.price});
 
   Map<String, Object?> toJson() => {
         'ticketOwner': ticketOwner,
-        'ticketRecipient': ticketRecipient,
-        'from': from,
-        'to': to,
-        'time': time,
         'ticketType': ticketType,
         'isUsed': isUsed,
         'price': price,
@@ -34,10 +21,6 @@ class Ticket {
 
   static Ticket fromJson(Map<dynamic, dynamic>? json) => Ticket(
         ticketOwner: json!['ticketOwner'] as String,
-        ticketRecipient: json['ticketRecipient'] as String,
-        from: json['from'] as String,
-        to: json['to'] as String,
-        time: json['time'] as String,
         ticketType: json['ticketType'] as String,
         isUsed: json['isUsed'] as String,
         price: json['price'] as String,

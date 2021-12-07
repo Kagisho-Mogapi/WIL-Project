@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:provider/provider.dart';
 
-class PurchaseDetails extends StatefulWidget {
-  const PurchaseDetails({Key? key}) : super(key: key);
+class TopupBalance extends StatefulWidget {
+  const TopupBalance({Key? key}) : super(key: key);
 
   @override
-  _PurchaseDetailsState createState() => _PurchaseDetailsState();
+  _TopupBalanceState createState() => _TopupBalanceState();
 }
 
-class _PurchaseDetailsState extends State<PurchaseDetails> {
+class _TopupBalanceState extends State<TopupBalance> {
+  TextEditingController amountController = TextEditingController();
+  int currentBalance = 0;
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +63,18 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
                           width: 44,
                         ),
                         Text(
-                          'Purchase Details',
+                          'Topup Balance',
+                          style: TextStyle(fontSize: 22, color: Colors.black),
+                        ),
+                        Text(
+                          'R${context.read<UserService>().currentUser!.getProperty('credits')}',
                           style: TextStyle(fontSize: 22, color: Colors.black),
                         ),
                       ],
@@ -78,6 +94,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                       ),
                     ),
                     child: TextField(
+                      controller: amountController,
                       decoration: InputDecoration(
                         hintText: 'Enter Amount',
                       ),
@@ -93,8 +110,20 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                         primary: Colors.red[400],
                         fixedSize: Size(300, 60),
                       ),
-                      onPressed: () {},
-                      child: Text('Pay'),
+                      onPressed: () {
+                        double amountInt =
+                            double.parse(amountController.text.trim());
+                        double creditsInt = double.parse(context
+                            .read<UserService>()
+                            .currentUser!
+                            .getProperty('credits'));
+
+                        UserService.topUpAmount = amountInt + creditsInt;
+
+                        Navigator.pushNamed(
+                            context, RouteManager.paymentDetails);
+                      },
+                      child: Text('Topup'),
                     ),
                   ),
                 ],

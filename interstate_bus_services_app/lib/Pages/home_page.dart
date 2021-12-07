@@ -18,6 +18,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -58,43 +63,50 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Center(
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundImage: AssetImage('assets/images/Unity.jpeg'),
-                    ),
-                    SizedBox(height: 5),
-                    provider.Selector<UserService, BackendlessUser?>(
-                      selector: (context, value) => value.currentUser,
-                      builder: (context, value, child) {
-                        return value == null
-                            ? Container()
-                            : Text(
-                                "Hello ${value.getProperty('fName')}",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 50,
-                                  color: Colors.white,
-                                ),
-                              );
-                      },
-                    ),
-                    UserRole.userRole == 'commuter'
-                        ? commuterWidgets(context)
-                        : UserRole.userRole == 'admin'
-                            ? adminWidgets(context)
-                            : UserRole.userRole == 'driver'
-                                ? driverWidgets(context)
-                                : Container(
-                                    child: Text('Unknown Role'),
-                                  )
-                  ],
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundImage: AssetImage('assets/images/Unity.jpeg'),
+                      ),
+                      SizedBox(height: 5),
+                      provider.Selector<UserService, BackendlessUser?>(
+                        selector: (context, value) => value.currentUser,
+                        builder: (context, value, child) {
+                          return value == null
+                              ? Container()
+                              : Text(
+                                  "Hello ${value.getProperty('fName')}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 50,
+                                    color: Colors.white,
+                                  ),
+                                );
+                        },
+                      ),
+                      UserRole.userRole == 'commuter'
+                          ? commuterWidgets(context)
+                          : UserRole.userRole == 'admin'
+                              ? adminWidgets(context)
+                              : UserRole.userRole == 'driver'
+                                  ? driverWidgets(context)
+                                  : Container(
+                                      child: Text('Unknown Role'),
+                                    ),
+                      MyElevatedBtnA(
+                        btnName: 'New home',
+                        routeName: RouteManager.newHome,
+                        getMeSome: '',
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -121,39 +133,47 @@ Container commuterWidgets(BuildContext context) {
         MyElevatedBtnA(
           btnName: 'Buy Ticket',
           routeName: RouteManager.buy,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Purchase History',
           routeName: RouteManager.boughtHistory,
+          getMeSome: 'tickets',
         ),
         MyElevatedBtnA(
           btnName: 'View Schedule',
-          routeName: RouteManager.schedule,
+          routeName: RouteManager.chooseBusRoute,
+          getMeSome: 'schedules',
         ),
         MyElevatedBtnA(
           btnName: 'Balance Details',
-          routeName: '',
+          routeName: RouteManager.balanceDetails,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Annoucements',
           routeName: RouteManager.announcements,
+          getMeSome: 'annoucements',
         ),
         MyElevatedBtnA(
           btnName: 'View Profile',
           routeName: RouteManager.profile,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Scan QR',
           routeName: RouteManager.scanQR,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Messages',
           routeName: RouteManager.messages,
+          getMeSome: '',
         ),
-        MyElevatedBtnA(
-          btnName: 'Payment Details',
-          routeName: RouteManager.paymentDetails,
-        ),
+        // MyElevatedBtnA(
+        //   btnName: 'Payment Details',
+        //   routeName: RouteManager.paymentDetails,
+        // ),
       ],
     ),
   );
@@ -164,24 +184,29 @@ Container adminWidgets(BuildContext context) {
     child: Column(
       children: [
         MyElevatedBtnA(
-          btnName: 'Purchase History',
-          routeName: '',
+          btnName: 'Tickets List',
+          routeName: RouteManager.userTickets,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'View Schedule',
-          routeName: RouteManager.schedule,
+          routeName: RouteManager.chooseBusRoute,
+          getMeSome: 'schedules',
         ),
         MyElevatedBtnA(
           btnName: 'Annoucements',
           routeName: RouteManager.announcements,
+          getMeSome: 'annoucements',
         ),
         MyElevatedBtnA(
           btnName: 'View Profile',
           routeName: RouteManager.profile,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Messages',
           routeName: RouteManager.messages,
+          getMeSome: '',
         ),
       ],
     ),
@@ -194,19 +219,23 @@ Container driverWidgets(BuildContext context) {
       children: [
         MyElevatedBtnA(
           btnName: 'View Schedule',
-          routeName: RouteManager.schedule,
+          routeName: RouteManager.chooseBusRoute,
+          getMeSome: 'schedules',
         ),
         MyElevatedBtnA(
           btnName: 'Annoucements',
           routeName: RouteManager.announcements,
+          getMeSome: 'annoucements',
         ),
         MyElevatedBtnA(
           btnName: 'View Profile',
           routeName: RouteManager.profile,
+          getMeSome: '',
         ),
         MyElevatedBtnA(
           btnName: 'Messages',
           routeName: RouteManager.messages,
+          getMeSome: '',
         ),
       ],
     ),

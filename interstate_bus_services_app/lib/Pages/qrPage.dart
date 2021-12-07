@@ -9,6 +9,7 @@ class QrPage extends StatefulWidget {
 }
 
 class _QrPageState extends State<QrPage> {
+  final controller = TextEditingController();
   String data = '';
 
   @override
@@ -42,29 +43,70 @@ class _QrPageState extends State<QrPage> {
             ),
           ),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BarcodeWidget(
-                  data: data,
-                  barcode: Barcode.qrCode(),
-                  color: Colors.white,
-                  width: 300,
-                  height: 300,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(80.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Scan',
-                        style: TextStyle(fontSize: 22, color: Colors.white),
-                      ),
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 370,
+                    height: 370,
+                    color: Colors.white,
+                    child: BarcodeWidget(
+                      data: controller.text,
+                      barcode: Barcode.qrCode(),
+                      color: Colors.black,
+                      width: 300,
+                      height: 300,
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: controller,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Insert Cell number to generate code',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        FloatingActionButton(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          child: Icon(Icons.done, size: 30),
+                          onPressed: () => setState(() {}),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],

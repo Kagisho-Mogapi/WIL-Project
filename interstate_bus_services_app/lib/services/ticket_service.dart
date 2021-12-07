@@ -1,14 +1,9 @@
-import 'dart:js';
-
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:interstate_bus_services_app/models/ticket.dart';
 import 'package:interstate_bus_services_app/models/ticket_entry.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
-import 'package:provider/provider.dart';
 
 class TicketService with ChangeNotifier {
-  //TODO: Change user reg. to ann. entry
   TicketEntry? _ticketEntry;
 
   List<Ticket> _tickets = [];
@@ -16,6 +11,16 @@ class TicketService with ChangeNotifier {
 
   void emptyTickets() {
     _tickets = [];
+    notifyListeners();
+  }
+
+  TicketEntry? _otherTicketEntry;
+
+  List<Ticket> _otherTickets = [];
+  List<Ticket> get otherTickets => _otherTickets;
+
+  void emptyOtherTickets() {
+    _otherTickets = [];
     notifyListeners();
   }
 
@@ -27,7 +32,7 @@ class TicketService with ChangeNotifier {
 
   Future<String> getTickets(String username) async {
     String result = 'OK';
-    username = UserService.userEmail;
+    // username = UserService.userEmail;
 
     // Which username's Row
     DataQueryBuilder queryBuilder = DataQueryBuilder()
@@ -101,12 +106,81 @@ class TicketService with ChangeNotifier {
     return result;
   }
 
-  // if task is done
+  Future<String> getOtherTickets(String username) async {
+    String result = 'OK';
+    // username = UserService.userEmail;
 
-  /*void toggleTicketDone(int index) {
-    _tickets[index].done = !_tickets[index].done;
+    // Which username's Row
+    DataQueryBuilder queryBuilder = DataQueryBuilder()
+      ..whereClause = "username ='$username'";
+
+    _busyRetrieving = true;
     notifyListeners();
-  }*/
+
+    // Get Data from table called 'AnnoucementEntry'
+    List<Map<dynamic, dynamic>?>? map = await Backendless.data
+        .of('TicketEntry')
+        .find(queryBuilder)
+        .onError((error, stackTrace) {
+      result = error.toString();
+    });
+
+    // if theres an error it will stop here
+    if (result != 'OK') {
+      _busyRetrieving = false;
+      notifyListeners();
+      return result;
+    }
+
+    if (map != null) {
+      if (map.length > 0) {
+        // !!!! {map.first} because there's only one list per user !!!!!!!!!
+        _otherTicketEntry = TicketEntry.fromJson(map.first);
+        _otherTickets = convertMapToTicketList(_otherTicketEntry!.tickets);
+        notifyListeners();
+      } else {
+        emptyOtherTickets();
+      }
+    } else {
+      result = 'NOT OK';
+    }
+
+    _busyRetrieving = false;
+    notifyListeners();
+
+    return result;
+  }
+
+  Future<String> saveOtherTicketEntry(String username, bool inUI) async {
+    String result = 'OK';
+    if (_otherTicketEntry == null) {
+      _otherTicketEntry = TicketEntry(
+          tickets: convertTicketListToMap(_otherTickets), username: username);
+    } else {
+      _otherTicketEntry!.tickets = convertTicketListToMap(_otherTickets);
+    }
+
+    // Showing the busy progress
+    if (inUI) {
+      _busySaving = true;
+      notifyListeners();
+    }
+
+    // Saving the Ticket to table
+    await Backendless.data
+        .of('TicketEntry')
+        .save(_otherTicketEntry!.toJson())
+        .onError((error, stackTrace) {
+      result = error.toString();
+    });
+
+    // Closing the busy progress
+    if (inUI) {
+      _busySaving = false;
+      notifyListeners();
+    }
+    return result;
+  }
 
   void deleteTicket(Ticket ticket) {
     _tickets.remove(ticket);
@@ -115,6 +189,11 @@ class TicketService with ChangeNotifier {
 
   void createTicket(Ticket ticket) {
     _tickets.insert(0, ticket);
+    notifyListeners();
+  }
+
+  void createOtherTicket(Ticket ticket) {
+    _otherTickets.insert(0, ticket);
     notifyListeners();
   }
 }

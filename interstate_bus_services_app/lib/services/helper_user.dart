@@ -2,7 +2,6 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Functions/role_assign.dart';
-import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
 import 'package:interstate_bus_services_app/services/schedule_service.dart';
@@ -76,12 +75,12 @@ void loginUserInUI(BuildContext context,
     }
     // if everything went OK with the login process
     else {
+      RoleAssign.roleAssign(context);
       context.read<ScheduleService>().getSchedules(email);
-      context.read<AnnouncementService>().getAnnouncements(email);
+      context.read<AnnouncementService>().getAnnouncements('');
       context.read<TicketService>().getTickets(email);
 
       Navigator.of(context).popAndPushNamed(RouteManager.home);
-      RoleAssign.roleAssign(context);
     }
   }
 }

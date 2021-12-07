@@ -2,15 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/models/announcement.dart';
 import 'package:interstate_bus_services_app/services/announcement_service.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
 void refreshAnnouncementsInUI(BuildContext context) async {
-  //TODO: Check when doing full announcements
-  String result = await context
-      .read<AnnouncementService>()
-      .getAnnouncements(context.read<UserService>().currentUser!.email);
+  String result =
+      await context.read<AnnouncementService>().getAnnouncements('');
 
   if (result != 'OK') {
     showSnackBar(context, result);
@@ -19,13 +16,20 @@ void refreshAnnouncementsInUI(BuildContext context) async {
   }
 }
 
-void createNewAnnouncementInUI(BuildContext context,
-    {required TextEditingController titleController}) async {
-  if (titleController.text.isEmpty) {
+void createNewAnnouncementInUI(
+  BuildContext context, {
+  required TextEditingController titleController,
+  required TextEditingController descriptionController,
+  required String recepientController,
+}) async {
+  if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
     showSnackBar(context, 'Please Enter Announcement First!!');
   } else {
     Announcement announcement = Announcement(
-        title: titleController.text.trim(), created: DateTime.now());
+        title: titleController.text.trim(),
+        description: descriptionController.text.trim(),
+        level: recepientController.trim(),
+        created: DateTime.now());
 
     // Check for title duplicate
     if (context
@@ -35,17 +39,17 @@ void createNewAnnouncementInUI(BuildContext context,
       showSnackBar(context, 'Title Already Exist, Change Title');
     } else {
       titleController.text = '';
+      descriptionController.text = '';
       context.read<AnnouncementService>().createAnnouncement(announcement);
       Navigator.pop(context);
     }
   }
 }
 
-void saveAllAnnouncementsInUI(BuildContext context) async {
+void saveAllAnnouncementsInUI(BuildContext context, String recipient) async {
   String result = await context
       .read<AnnouncementService>()
-      .saveAnnouncementEntry(
-          context.read<UserService>().currentUser!.email, true);
+      .saveAnnouncementEntry(recipient, true);
 
   if (result != 'OK') {
     showSnackBar(context, result);

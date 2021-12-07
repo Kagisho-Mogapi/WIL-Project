@@ -39,7 +39,7 @@ class Chat extends StatelessWidget {
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: ThemeMode.dark,
-        title: 'Chatter',
+        title: 'Interstate Bus Line Services',
         builder: (context, child) {
           return StreamChatCore(
             client: client,

@@ -1,24 +1,29 @@
 class Announcement {
   final String title;
+  final String description;
+  final String level;
   // Done is from example that task has been complete
   //bool done;
   final DateTime created;
 
   Announcement({
     required this.title,
-    //this.done = false,
+    required this.description,
+    required this.level,
     required this.created,
   });
 
   Map<String, Object?> toJson() => {
         'title': title,
-        //'done': done ? 1 : 0,
+        'description': description,
+        'level': level,
         'created': created.millisecondsSinceEpoch,
       };
 
   static Announcement fromJson(Map<dynamic, dynamic>? json) => Announcement(
         title: json!['title'] as String,
-        //done: json['done'] == 1 ? true : false,
+        description: json['description'] as String,
+        level: json['level'] as String,
         created: DateTime.fromMillisecondsSinceEpoch(
             (json['created'] as double).toInt()),
       );

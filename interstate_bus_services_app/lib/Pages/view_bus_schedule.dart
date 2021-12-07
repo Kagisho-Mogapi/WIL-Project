@@ -6,25 +6,36 @@ import 'package:interstate_bus_services_app/services/helper_schedule.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:interstate_bus_services_app/widgets/schedule_card.dart';
-import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 import 'package:provider/provider.dart' as provider;
-import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
-import 'package:tuple/tuple.dart';
 
 class ViewBusSchedule extends StatefulWidget {
   const ViewBusSchedule({Key? key}) : super(key: key);
-
+  static String? fromRoute;
+  static String? toRoute;
   @override
   _ViewBusScheduleState createState() => _ViewBusScheduleState();
 }
 
 class _ViewBusScheduleState extends State<ViewBusSchedule> {
   late TextEditingController scheduleController;
+  String? fromRoute = ViewBusSchedule.fromRoute;
+  String? toRoute = ViewBusSchedule.toRoute;
+
+  bool hasServices = false;
+  int index = 0;
+  bool scheduleChecked = false;
+  Widget schedules = Container();
+  Widget loadingSchedules = Container();
+
+  bool shownServiceStatus = false;
 
   @override
   void initState() {
     super.initState();
     scheduleController = TextEditingController();
+    // context
+    //     .read<ScheduleService>()
+    //     .getSchedules(context.read<UserService>().currentUser!.email);
   }
 
   @override
@@ -110,6 +121,26 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                 endIndent: 10,
                 indent: 10,
               ),
+              // Expanded(
+              //   child: Padding(
+              //       padding: const EdgeInsets.symmetric(
+              //         horizontal: 8.0,
+              //         vertical: 20,
+              //       ),
+              //       child: provider.Consumer<UserService>(
+              //         builder: (context, value, child) {
+              //           return ListView.builder(
+              //             itemCount: value.users.length,
+              //             itemBuilder: (context, index) {
+              //               // print('List is : ${value.users.length.toString()}');
+              //               return UserCard(
+              //                 message: value.userEntry!.email[index],
+              //               );
+              //             },
+              //           );
+              //         },
+              //       )),
+              // ),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -118,19 +149,57 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                     ),
                     child: provider.Consumer<ScheduleService>(
                       builder: (context, value, child) {
-                        return ListView.builder(
+                        //Note: It will first return the ListView then run the
+                        //  following code
+
+                        loadingSchedules = ListView.builder(
                           itemCount: value.schedules.length,
                           itemBuilder: (context, index) {
-                            return ScheduleCard(
-                              message: value.schedules[index],
-                              deletaAction: () async {
-                                context
-                                    .read<ScheduleService>()
-                                    .deleteSchedule(value.schedules[index]);
-                              },
-                            );
+                            while (this.index < value.schedules.length &&
+                                !scheduleChecked) {
+                              if (value.schedules[this.index].from ==
+                                      fromRoute &&
+                                  value.schedules[this.index].to == toRoute &&
+                                  !hasServices) {
+                                hasServices = true;
+                              }
+                              this.index++;
+                            }
+                            scheduleChecked = true;
+
+                            if (hasServices) {
+                              if (value.schedules[index].from == fromRoute &&
+                                  value.schedules[index].to == toRoute) {
+                                schedules = ScheduleCard(
+                                  message: value.schedules[index],
+                                  deletaAction: () async {
+                                    context
+                                        .read<ScheduleService>()
+                                        .deleteSchedule(value.schedules[index]);
+                                  },
+                                );
+                              } else {
+                                schedules = Container();
+                              }
+                            }
+                            // print(hasServices.toString());
+
+                            return schedules;
                           },
                         );
+                        print(hasServices.toString());
+                        if (!hasServices &&
+                            !shownServiceStatus &&
+                            scheduleChecked) {
+                          // print('In here!!');
+                          loadingSchedules = Text(
+                            'No services',
+                            style: TextStyle(fontSize: 30),
+                          );
+                        }
+                        // print('Current widget: ' + loadingSchedules.toString());
+
+                        return loadingSchedules;
                       },
                     )),
               ),
@@ -176,4 +245,31 @@ Container adminWidgets(BuildContext context) {
       ],
     ),
   );
+}
+
+class UserCard extends StatelessWidget {
+  const UserCard({
+    Key? key,
+    required this.message,
+    //required this.messageToggleAction,
+  }) : super(key: key);
+
+  final String message;
+  //final Function(bool? value) messageToggleAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.grey.shade300,
+      child: ListTile(
+        tileColor: Colors.lightBlueAccent,
+        title: Text(
+          'email: $message,',
+          style: TextStyle(
+            color: Colors.orange[900],
+          ),
+        ),
+      ),
+    );
+  }
 }

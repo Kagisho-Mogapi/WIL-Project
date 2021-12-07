@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/widgets/elevated_btn_a.dart';
 import 'package:interstate_bus_services_app/widgets/get_profile_details.dart';
-import 'package:interstate_bus_services_app/widgets/water_deep_deco.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -76,13 +75,16 @@ class ProfilePageState extends State<ProfilePage> {
                             detailHeader: 'Email', detailName: 'email'),
                         SizedBox(height: 15),
                         ProfileDetails(
-                            detailHeader: 'ID Number', detailName: 'idNumber'),
+                            detailHeader: 'Phone Number',
+                            detailName: 'phoneNumber'),
                         SizedBox(height: 30),
                       ],
                     ),
                     MyElevatedBtnA(
-                        btnName: 'Edit Profile',
-                        routeName: RouteManager.editProfile),
+                      btnName: 'Edit Profile',
+                      routeName: RouteManager.editProfile,
+                      getMeSome: '',
+                    ),
                     /*ViewProfileButtons(
                         btnName: 'Edit Profile',
                         routeName: RouteManager.editProfile),*/

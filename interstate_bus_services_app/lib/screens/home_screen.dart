@@ -24,8 +24,6 @@ class HomeScreen extends StatelessWidget {
 
   final pageTitles = const [
     'Messages',
-    'Notifications',
-    'Calls',
     'Contacts',
   ];
 
@@ -54,15 +52,6 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         leadingWidth: 54,
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: Icons.search,
-            onTap: () {
-              print('TODO search');
-            },
-          ),
-        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),

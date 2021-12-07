@@ -278,6 +278,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       minWidth: 200,
                       color: Colors.red[700],
                       onPressed: () {
+                        // createNewUserListInUI(context,
+                        //     emailController: emailController.text.trim(),
+                        //     phoneNumberController:
+                        //         phoneNumberController.text.trim());
+                        // saveAllUserListsInUI(context);
+                        // saveAllUsersListInUI(
+                        //     context,
+                        //     emailController.text.trim(),
+                        //     phoneNumberController.text.trim());
                         createNewUserInUI(
                           context,
                           email: emailController.text.trim(),

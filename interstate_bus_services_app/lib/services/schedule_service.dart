@@ -4,7 +4,6 @@ import 'package:interstate_bus_services_app/models/schedule.dart';
 import 'package:interstate_bus_services_app/models/schedule_entry.dart';
 
 class ScheduleService with ChangeNotifier {
-  //TODO: Change user reg. to ann. entry
   ScheduleEntry? _scheduleEntry;
 
   List<Schedule> _schedules = [];

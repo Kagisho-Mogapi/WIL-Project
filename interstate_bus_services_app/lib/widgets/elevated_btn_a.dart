@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/schedule_service.dart';
+import 'package:interstate_bus_services_app/services/ticket_service.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:provider/provider.dart';
 
 class MyElevatedBtnA extends StatelessWidget {
   const MyElevatedBtnA({
     Key? key,
     required this.btnName,
     required this.routeName,
+    required this.getMeSome,
   }) : super(key: key);
 
   final String btnName;
   final String routeName;
+  final String getMeSome;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class MyElevatedBtnA extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.of(context).pushNamed(routeName);
-          //print(context.read<AnnouncementService>().busyRetrieving);
+          getThose(context, getMeSome);
         },
         style: ButtonStyle(
           shadowColor: MaterialStateProperty.all(Colors.white),
@@ -33,5 +40,19 @@ class MyElevatedBtnA extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void getThose(BuildContext context, String getSome) {
+  if (getSome == 'tickets') {
+    context
+        .read<TicketService>()
+        .getTickets(context.read<UserService>().currentUser!.email);
+  } else if (getSome == 'schedules') {
+    context
+        .read<ScheduleService>()
+        .getSchedules(context.read<UserService>().currentUser!.email);
+  } else if (getSome == 'annoucements') {
+    context.read<AnnouncementService>().getAnnouncements('');
   }
 }

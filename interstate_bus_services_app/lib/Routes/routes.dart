@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Pages/buy_for_user.dart';
+import 'package:interstate_bus_services_app/Pages/buy_ticket.dart';
 import 'package:interstate_bus_services_app/Pages/chat.dart';
 import 'package:interstate_bus_services_app/Pages/chatting.dart';
 import 'package:interstate_bus_services_app/Pages/create_schedule.dart';
 import 'package:interstate_bus_services_app/Pages/create_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
+import 'package:interstate_bus_services_app/Pages/home.dart';
 import 'package:interstate_bus_services_app/Pages/home_page.dart';
 import 'package:interstate_bus_services_app/Pages/loading.dart';
 import 'package:interstate_bus_services_app/Pages/login_page.dart';
-import 'package:interstate_bus_services_app/Pages/message_page.dart';
 import 'package:interstate_bus_services_app/Pages/payment_details.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
-import 'package:interstate_bus_services_app/Pages/purchase_details.dart';
-import 'package:interstate_bus_services_app/Pages/purchase_page.dart';
-import 'package:interstate_bus_services_app/Pages/qrPage.dart';
+import 'package:interstate_bus_services_app/Pages/successPage.dart';
+import 'package:interstate_bus_services_app/Pages/topup_balance.dart';
+import 'package:interstate_bus_services_app/Pages/(og)qrPage.dart';
 import 'package:interstate_bus_services_app/Pages/reset_password.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
-import 'package:interstate_bus_services_app/Pages/successPage.dart';
 import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/view_bought_tickets.dart';
 import 'package:interstate_bus_services_app/Pages/view_bus_schedule.dart';
+import 'package:interstate_bus_services_app/Pages/view_user_tickets.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
+import 'package:interstate_bus_services_app/widgets/area_and_day_choice.dart';
 
 class RouteManager {
-  //TODO: Change routes after Adding a Page
+  static const String newHome = '/new home';
 
   static const String loading = '/loading';
   static const String welcome = '/';
@@ -31,11 +32,15 @@ class RouteManager {
   static const String login = '/login';
   static const String resetPassword = '/login/reset password';
   static const String home = '/login/home';
-
+  static const String chooseBusRoute = '/login/chooseBusRoute';
+  static const String balanceDetails = '/login/home/balanceDetails';
   static const String chatting = '/login/home/chatting';
+  static const String userTickets = '/login/userTickets';
   static const String messages = '/login/home/messages';
   static const String buy = '/login/home/Buy';
   static const String purchaseDetails = '/login/home/Buy/PuchaseDetails';
+  static const String successfulTopup =
+      '/login/home/Buy/PuchaseDetails/successfulTopup';
   static const String boughtHistory =
       '/login/home/Buy/PuchaseDetails/boughtHistory';
   static const String history = '/login/home/history';
@@ -53,8 +58,6 @@ class RouteManager {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      //TODO: Add routes of other pages once are finished
-
       case loading:
         return MaterialPageRoute(builder: (context) => Loading());
 
@@ -85,11 +88,23 @@ class RouteManager {
       case boughtHistory:
         return MaterialPageRoute(builder: (context) => ViewMyBoughtTicket());
 
+      case userTickets:
+        return MaterialPageRoute(builder: (context) => ViewUserTickets());
+
+      case chooseBusRoute:
+        return MaterialPageRoute(builder: (context) => AreaAndDayChoice());
+
       case messages:
         return MaterialPageRoute(builder: (context) => Chat());
 
-      case purchaseDetails:
-        return MaterialPageRoute(builder: (context) => PurchaseDetails());
+      case newHome:
+        return MaterialPageRoute(builder: (context) => Home());
+
+      case balanceDetails:
+        return MaterialPageRoute(builder: (context) => TopupBalance());
+
+      case successfulTopup:
+        return MaterialPageRoute(builder: (context) => SuccessPage());
 
       case schedule:
         return MaterialPageRoute(builder: (context) => ViewBusSchedule());
@@ -112,8 +127,8 @@ class RouteManager {
       case editProfile:
         return MaterialPageRoute(builder: (context) => EditProfile());
 
-      case messages:
-        return MaterialPageRoute(builder: (context) => MessagePage());
+      // case messages:
+      //   return MaterialPageRoute(builder: (context) => MessagePage());
 
       case paymentDetails:
         return MaterialPageRoute(builder: (context) => PaymentDetails());

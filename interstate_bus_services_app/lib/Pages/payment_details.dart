@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:provider/provider.dart';
 
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({Key? key}) : super(key: key);
@@ -114,7 +117,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             //   height: 10,
             // ),
             Padding(
-              padding: const EdgeInsets.only(top: 2.0),
+              padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -132,9 +135,13 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     print('valid!');
+                    UserService().topUpBalance(
+                        context.read<UserService>().currentUser!.email);
+
+                    Navigator.pushNamed(context, RouteManager.successfulTopup);
                   } else {
                     print('invalid!');
                   }

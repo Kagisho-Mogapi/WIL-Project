@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/material_btn_a.dart';
+import 'package:provider/provider.dart' as provider;
 
 class WelcomePage extends StatelessWidget {
   void initState() {
@@ -97,7 +99,7 @@ class WelcomePage extends StatelessWidget {
                       height: 10,
                     ),
                     MaterialBtnA(
-                        btnName: 'Sign In', location: RouteManager.login)
+                        btnName: 'Sign In', location: RouteManager.login),
                   ],
                 ),
               ],

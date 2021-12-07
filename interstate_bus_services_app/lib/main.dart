@@ -14,16 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          // List of providers
-          ChangeNotifierProvider(create: (context) => UserService()),
-          ChangeNotifierProvider(create: (context) => AnnouncementService()),
-          ChangeNotifierProvider(create: (context) => ScheduleService()),
-          ChangeNotifierProvider(create: (context) => TicketService()),
-        ],
-        child: MaterialApp(
-          initialRoute: RouteManager.loading,
-          onGenerateRoute: RouteManager.generateRoute,
-        ));
+      providers: [
+        // List of providers
+        ChangeNotifierProvider(create: (context) => UserService()),
+        ChangeNotifierProvider(create: (context) => AnnouncementService()),
+        ChangeNotifierProvider(create: (context) => ScheduleService()),
+        ChangeNotifierProvider(create: (context) => TicketService()),
+      ],
+      child: MaterialApp(
+        initialRoute: RouteManager.loading,
+        onGenerateRoute: RouteManager.generateRoute,
+      ),
+    );
   }
 }

@@ -1,11 +1,10 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Functions/role_assign.dart';
-import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
-import 'package:interstate_bus_services_app/services/announcement_service.dart';
-import 'package:interstate_bus_services_app/services/schedule_service.dart';
-import 'package:interstate_bus_services_app/services/ticket_service.dart';
+// import 'package:interstate_bus_services_app/services/announcement_service.dart';
+// import 'package:interstate_bus_services_app/services/schedule_service.dart';
+// import 'package:interstate_bus_services_app/services/ticket_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +21,6 @@ class _LoadingState extends State<Loading> {
   static const String ANDROID_API_KEY = "5771E324-6F0D-4CF2-A813-D9339D3223FD";
   static const String IOS_API_KEY = "6A6097DF-84AC-442F-AEA9-FADDCE16F1CB";
   static const String JS_API_KEY = "CBB3571F-FB60-4DDE-95B3-21615345B79B";
-  static const String STREAM_CHAT_API_KEY = "cecfemefmkqf";
-  String getStream = '';
 
   @override
   void initState() {
@@ -33,24 +30,24 @@ class _LoadingState extends State<Loading> {
   }
 
   void loadTimer() async {
+    await Future.delayed(Duration(seconds: 2));
     String result = await context.read<UserService>().checkIfUserLoggedIn();
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
 
     if (result == 'OK') {
-      Navigator.popAndPushNamed(context, RouteManager.home);
-      context
-          .read<AnnouncementService>()
-          .getAnnouncements(context.read<UserService>().currentUser!.email);
-      context
-          .read<ScheduleService>()
-          .getSchedules(context.read<UserService>().currentUser!.email);
-
-      context
-          .read<TicketService>()
-          .getTickets(context.read<UserService>().currentUser!.email);
-
       RoleAssign.roleAssign(context);
+      Navigator.popAndPushNamed(context, RouteManager.home);
+      // context.read<AnnouncementService>().getAnnouncements('');
+      //context.read<UserListService>().getUserLists();
+      // context
+      //     .read<ScheduleService>()
+      //     .getSchedules(context.read<UserService>().currentUser!.email);
+
+      // context
+      //     .read<TicketService>()
+      //     .getTickets(context.read<UserService>().currentUser!.email);
+      // context.read<UserService>().getUsers();
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }

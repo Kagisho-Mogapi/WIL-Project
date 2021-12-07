@@ -1,4 +1,3 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Themes/theme.dart';
 import 'package:interstate_bus_services_app/screens/screens.dart';
