@@ -31,7 +31,8 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.redAccent,
+        title: Text('View Announcements'),
+        backgroundColor: Colors.orangeAccent,
         actions: [
           IconButton(
               icon: Icon(Icons.replay_outlined),
@@ -43,46 +44,71 @@ class _ViewAnnouncementState extends State<ViewAnnouncement> {
           UserRole.userRole == 'admin' ? adminWidgets(context) : Container()
         ],
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.orangeAccent,
       body: Stack(children: [
+        // Container(
+        //   constraints: BoxConstraints.expand(),
+        //   decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage('assets/images/Background1.jpg'),
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        // ),
+        // Opacity(
+        //   opacity: 0.85,
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //           begin: Alignment.topCenter,
+        //           end: Alignment.bottomCenter,
+        //           colors: [Colors.red, Colors.blue]),
+        //     ),
+        //   ),
+        // ),
         Container(
-          constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/Background1.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
+          height: MediaQuery.of(context).size.height - 82.0,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.transparent,
         ),
-        Opacity(
-          opacity: 0.85,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.red, Colors.blue]),
-            ),
-          ),
-        ),
+
+        Positioned(
+            top: 40.0,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(45.0),
+                  topRight: Radius.circular(45.0),
+                ),
+                // image: DecorationImage(
+                //     image: AssetImage('assets/images/BusLines.png'),
+                //     fit: BoxFit.fill),
+                color: Colors.white,
+              ),
+              height: MediaQuery.of(context).size.height - 120.0,
+              width: MediaQuery.of(context).size.width,
+            )),
         SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'View Announcement',
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+              // Padding(
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         'View Announcement',
+              //         style: TextStyle(
+              //           fontSize: 22,
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(
+                height: 32,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

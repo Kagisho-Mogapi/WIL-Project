@@ -51,31 +51,31 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.redAccent,
+        title: Text('Create announcement'),
+        backgroundColor: Colors.orangeAccent,
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.orangeAccent,
       body: Stack(
         children: <Widget>[
+          //
           Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background1.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+            height: MediaQuery.of(context).size.height - 82.0,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
           ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
+          Positioned(
+              top: 80.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(45.0),
+                    topRight: Radius.circular(45.0),
+                  ),
+                  color: Colors.white,
+                ),
+                height: MediaQuery.of(context).size.height - 120.0,
+                width: MediaQuery.of(context).size.width,
+              )),
           SafeArea(
             //child: Container(
             //height: 1000,
@@ -84,22 +84,22 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Create Announcement',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(16.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //         'Create Announcement',
+                  //         style: TextStyle(
+                  //           fontSize: 22,
+                  //           color: Colors.black,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(

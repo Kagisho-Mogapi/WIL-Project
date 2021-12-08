@@ -74,7 +74,9 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

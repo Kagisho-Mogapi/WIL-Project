@@ -26,18 +26,18 @@ class SignUpTextField extends StatelessWidget {
           const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 20, right: 20),
       child: TextField(
         obscureText: hideText,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black),
         cursorColor: Colors.white,
         controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           errorText: isValidInput ? null : errorMsg,
           errorStyle: TextStyle(color: Colors.amber[400]),
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: TextStyle(color: Colors.black),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 2,
-              color: Colors.white54,
+              color: Colors.grey,
             ),
           ),
           enabledBorder: OutlineInputBorder(

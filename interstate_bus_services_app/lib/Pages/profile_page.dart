@@ -16,31 +16,31 @@ class ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.black54,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black54,
       body: Container(
         child: Stack(children: [
-          Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background1.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
+          // Container(
+          //   constraints: BoxConstraints.expand(),
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage('assets/images/Background1.jpg'),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Opacity(
+          //   opacity: 0.85,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.red, Colors.blue]),
+          //     ),
+          //   ),
+          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,

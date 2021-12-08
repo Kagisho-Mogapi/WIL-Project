@@ -37,8 +37,9 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: Colors.orangeAccent,
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.orangeAccent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -50,29 +51,38 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: [
               Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/Background1.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                height: MediaQuery.of(context).size.height - 82.0,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.transparent,
               ),
+              Positioned(
+                  top: 50.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(45.0),
+                        topRight: Radius.circular(45.0),
+                      ),
+                      color: Colors.white,
+                    ),
+                    height: MediaQuery.of(context).size.height - 120.0,
+                    width: MediaQuery.of(context).size.width,
+                  )),
 
-              Opacity(
-                opacity: 0.85,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.red, Colors.blue]),
-                  ),
-                ),
-              ),
+              // Opacity(
+              //   opacity: 0.85,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       gradient: LinearGradient(
+              //           begin: Alignment.topCenter,
+              //           end: Alignment.bottomCenter,
+              //           colors: [Colors.red, Colors.blue]),
+              //     ),
+              //   ),
+              // ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
                   child: SingleChildScrollView(
                     child: Form(
                       key: profileFormKey,
@@ -195,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
 
 ButtonStyle buttonStyle() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.red[600]),
+    backgroundColor: MaterialStateProperty.all(Colors.orange),
     fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
   );
 }

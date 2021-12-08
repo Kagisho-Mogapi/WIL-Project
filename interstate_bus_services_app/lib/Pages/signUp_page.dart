@@ -58,31 +58,52 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.orangeAccent,
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.orangeAccent,
       body: Stack(
         children: [
+          // Container(
+          //   constraints: BoxConstraints.expand(),
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage('assets/images/Background1.jpg'),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Opacity(
+          //   opacity: 0.85,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.red, Colors.blue]),
+          //     ),
+          //   ),
+          // ),
           Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background1.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+            height: MediaQuery.of(context).size.height - 82.0,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
           ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
+          Positioned(
+              top: 50.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(45.0),
+                    // topRight: Radius.circular(45.0),
+                  ),
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/BusLines.png'),
+                      fit: BoxFit.fill),
+                  color: Colors.white,
+                ),
+                height: MediaQuery.of(context).size.height - 120.0,
+                width: MediaQuery.of(context).size.width,
+              )),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -93,6 +114,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Image.asset(
                       'assets/images/Register.jpg',
                       alignment: Alignment.center,
+                      height: 100,
+                      width: 300,
                     ),
                   ),
                   Focus(
@@ -276,7 +299,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: MaterialButton(
                       height: 50,
                       minWidth: 200,
-                      color: Colors.red[700],
+                      color: Colors.orange,
                       onPressed: () {
                         // createNewUserListInUI(context,
                         //     emailController: emailController.text.trim(),

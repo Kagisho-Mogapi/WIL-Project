@@ -41,30 +41,52 @@ class _EditProfileState extends State<EditProfile> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.black54,
         ),
+        backgroundColor: Colors.black54,
         body: Stack(
           children: [
+            // Container(
+            //   constraints: BoxConstraints.expand(),
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/images/Background1.jpg'),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
+            // Opacity(
+            //   opacity: 0.85,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //           begin: Alignment.topCenter,
+            //           end: Alignment.bottomCenter,
+            //           colors: [Colors.red, Colors.blue]),
+            //     ),
+            //   ),
+            // ),
             Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/Background1.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              height: MediaQuery.of(context).size.height - 82.0,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.transparent,
             ),
-            Opacity(
-              opacity: 0.85,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.red, Colors.blue]),
-                ),
-              ),
-            ),
+            Positioned(
+                top: 50.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(45.0),
+                      topRight: Radius.circular(45.0),
+                    ),
+                    // image: DecorationImage(
+                    //     image: AssetImage('assets/images/BusLines.png'),
+                    //     fit: BoxFit.fill),
+                    color: Colors.grey[600],
+                  ),
+                  height: MediaQuery.of(context).size.height - 120.0,
+                  width: MediaQuery.of(context).size.width,
+                )),
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(20),

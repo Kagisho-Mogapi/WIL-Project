@@ -24,11 +24,11 @@ class OpenTextField extends StatelessWidget {
     return TextFormField(
       cursorColor: Colors.white,
       obscureText: isPass,
-      style: TextStyle(fontSize: 15, color: Colors.white),
+      style: TextStyle(fontSize: 15, color: Colors.grey[800]),
       controller: controller,
       decoration: InputDecoration(
         errorStyle: TextStyle(color: Colors.amber[400]),
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.grey[800]),
         errorText: isValidInput ? null : errorMsg,
         labelText: hint,
         isDense: true,

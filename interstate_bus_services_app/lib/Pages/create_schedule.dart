@@ -134,7 +134,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.orangeAccent,
       ),
       //backgroundColor: Colors.grey[200],
       body: Stack(

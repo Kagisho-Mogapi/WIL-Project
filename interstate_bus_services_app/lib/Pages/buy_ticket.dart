@@ -75,32 +75,55 @@ class _BuyForUserState extends State<BuyForUser> {
     ///
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.orangeAccent,
         elevation: 0,
+        title: Text('Purchase Details'),
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.orangeAccent,
       body: Stack(
         children: [
+          // Container(
+          //   constraints: BoxConstraints.expand(),
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage('assets/images/Background1.jpg'),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          // Opacity(
+          //   opacity: 0.85,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //           begin: Alignment.topCenter,
+          //           end: Alignment.bottomCenter,
+          //           colors: [Colors.red, Colors.blue]),
+          //     ),
+          //   ),
+          // ),
           Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background1.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+            height: MediaQuery.of(context).size.height - 82.0,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
           ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
+          Positioned(
+              top: 50.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    // topLeft: Radius.circular(45.0),
+                    topRight: Radius.circular(45.0),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/Background1.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                  // color: Colors.orangeAccent,
+                ),
+                height: MediaQuery.of(context).size.height - 120.0,
+                width: MediaQuery.of(context).size.width,
+              )),
           GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Center(
@@ -108,13 +131,15 @@ class _BuyForUserState extends State<BuyForUser> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/images/PurchaseDetail.png',
-                        alignment: Alignment.center,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Image.asset(
+                    //     'assets/images/PurchaseDetail.png',
+                    //     alignment: Alignment.center,
+                    //     height: 300,
+                    //     width: 300,
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -123,10 +148,10 @@ class _BuyForUserState extends State<BuyForUser> {
                           SizedBox(
                             width: 44,
                           ),
-                          Text(
-                            'Purchase Details',
-                            style: TextStyle(fontSize: 22, color: Colors.black),
-                          ),
+                          // Text(
+                          //   'Purchase Details',
+                          //   style: TextStyle(fontSize: 22, color: Colors.black),
+                          // ),
                         ],
                       ),
                     ),

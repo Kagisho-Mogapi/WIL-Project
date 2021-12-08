@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => TicketService()),
       ],
       child: MaterialApp(
-        initialRoute: RouteManager.loading,
+        initialRoute: RouteManager.paymentDetails,
         onGenerateRoute: RouteManager.generateRoute,
       ),
     );

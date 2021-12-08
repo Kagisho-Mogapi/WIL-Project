@@ -34,8 +34,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.orangeAccent,
       ),
+      backgroundColor: Colors.grey[300],
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Column(
@@ -49,17 +50,17 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             //     ),
             //   ),
             // ),
-            Opacity(
-              opacity: 0.85,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.red, Colors.blue]),
-                ),
-              ),
-            ),
+            // Opacity(
+            //   opacity: 0.85,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //           begin: Alignment.topCenter,
+            //           end: Alignment.bottomCenter,
+            //           colors: [Colors.red, Colors.blue]),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
@@ -72,7 +73,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               obscureCardNumber: true,
               obscureCardCvv: true,
               isHolderNameVisible: true,
-              cardBgColor: Colors.redAccent,
+              cardBgColor: Colors.black,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
               customCardTypeIcons: <CustomCardTypeIcon>[
                 CustomCardTypeIcon(
@@ -86,6 +87,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               ],
               animationDuration: Duration(milliseconds: 100),
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -113,6 +115,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 ),
               ),
             ),
+
             // SizedBox(
             //   height: 10,
             // ),
@@ -123,7 +126,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  primary: Colors.red.shade400,
+                  primary: Colors.black,
                 ),
                 child: Container(
                   margin: const EdgeInsets.all(12),
