@@ -10,7 +10,7 @@ import 'Routes/routes.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root the application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => TicketService()),
       ],
       child: MaterialApp(
-        initialRoute: RouteManager.paymentDetails,
+        initialRoute: RouteManager.loading,
         onGenerateRoute: RouteManager.generateRoute,
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Functions/refresh_user_details.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
@@ -7,6 +8,8 @@ import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:interstate_bus_services_app/widgets/ticket_card.dart';
 import 'package:provider/provider.dart' as provider;
+
+// This page will allow a user to view tickets they have bought
 
 class ViewMyBoughtTicket extends StatefulWidget {
   const ViewMyBoughtTicket({Key? key}) : super(key: key);
@@ -23,9 +26,6 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
   void initState() {
     super.initState();
     ticketController = TextEditingController();
-    // context
-    //     .read<TicketService>()
-    //     .getTickets(context.read<UserService>().currentUser!.email);
   }
 
   @override
@@ -38,18 +38,31 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.redAccent,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.replay_outlined),
-              tooltip: 'Refresh',
-              onPressed: () {
-                refreshTicketsInUI(context);
-              }),
-          SizedBox(width: 30),
-        ],
-      ),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.replay_outlined,
+                  color: Colors.orange[700],
+                ),
+                tooltip: 'Refresh',
+                onPressed: () {
+                  context.read<TicketService>().getTickets(
+                      context.read<UserService>().currentUser!.email);
+                }),
+            SizedBox(width: 10),
+          ],
+          elevation: 0,
+          backgroundColor: Colors.grey[200],
+          leading: IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.orange[700],
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.newHome);
+            },
+          )),
       backgroundColor: Colors.grey[200],
       body: Stack(children: [
         SafeArea(
@@ -78,7 +91,7 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                           width: 20,
                         ),
                         Text(
-                          'Purchase',
+                          '  Purchase',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ],
@@ -93,9 +106,8 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                           width: 20,
                         ),
                         Text(
-                          'History List',
-                          style: TextStyle(
-                              fontSize: 20, color: Colors.orange[800]),
+                          '  History List',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ],
                     ),
@@ -119,7 +131,7 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                 ),
               ),
               Divider(
-                color: Colors.white,
+                color: Colors.orange[400],
                 thickness: 2,
                 endIndent: 10,
                 indent: 10,
@@ -152,7 +164,13 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                                           'Is Used: ${value.tickets[index].isUsed}\n'),
                                       actions: [
                                         TextButton(
-                                          child: Text('Repeat'),
+                                          child: Text(
+                                            'Repeat',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 19,
+                                                color: Colors.teal[400]),
+                                          ),
                                           onPressed: () {
                                             double currentBalance =
                                                 double.parse(context
@@ -173,12 +191,20 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                                                           BorderRadius.circular(
                                                               20),
                                                     ),
-                                                    //title: Text(value.tickets[index].to),
                                                     content: Text(
                                                         'Current balance is low, balance is R$currentBalance'),
                                                     actions: [
                                                       TextButton(
-                                                        child: Text('Topup'),
+                                                        child: Text(
+                                                          'Topup',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 19,
+                                                              color: Colors
+                                                                  .teal[400]),
+                                                        ),
                                                         onPressed: () {
                                                           Navigator.pushNamed(
                                                               context,
@@ -187,7 +213,16 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                                                         },
                                                       ),
                                                       TextButton(
-                                                        child: Text('Close'),
+                                                        child: Text(
+                                                          'Close',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 19,
+                                                              color: Colors
+                                                                  .teal[400]),
+                                                        ),
                                                         onPressed: () {
                                                           Navigator.pop(
                                                               context);
@@ -198,10 +233,6 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                                                 },
                                               );
                                             } else {
-                                              // double currentCredits = double.parse(context
-                                              //     .read<UserService>()
-                                              //     .currentUser!
-                                              //     .getProperty('credits'));
                                               differance = currentBalance -
                                                   double.parse(value
                                                       .tickets[index].price);
@@ -233,32 +264,53 @@ class _ViewMyBoughtTicketState extends State<ViewMyBoughtTicket> {
                                               saveAllTicketsInUI(context);
                                               refreshUserDetails(context);
                                             }
-                                            // UserService.userEmail = context
-                                            //     .read<UserService>()
-                                            //     .currentUser!
-                                            //     .email;
-                                            // createNewTicketInUI(
-                                            //   context,
-                                            //   ownerController: value
-                                            //       .tickets[index].ticketOwner,
-                                            //   typeController: value
-                                            //       .tickets[index].ticketType,
-                                            //   isUsedController:
-                                            //       value.tickets[index].isUsed,
-                                            //   priceController:
-                                            //       value.tickets[index].price,
-                                            // );
-                                            // saveAllTicketsInUI(context);
-                                            /*Navigator.pushNamed(
-                            context, RouteManager.paymentDetails);*/
                                           },
                                         ),
                                         TextButton(
-                                          child: Text('Share'),
-                                          onPressed: () {},
+                                          child: Text(
+                                            'Get QR',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 19,
+                                                color: Colors.teal[400]),
+                                          ),
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 120,
+                                                            right: 120,
+                                                            top: 340,
+                                                            bottom: 340),
+                                                    child: Container(
+                                                      width: 100,
+                                                      height: 100,
+                                                      color: Colors.white,
+                                                      child: BarcodeWidget(
+                                                        data: "username ='${context.read<UserService>().currentUser!.email}' " +
+                                                            "&& created = '${value.tickets[index].created}'",
+                                                        barcode:
+                                                            Barcode.qrCode(),
+                                                        color: Colors.black,
+                                                        width: 300,
+                                                        height: 300,
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
                                         ),
                                         TextButton(
-                                          child: Text('Close'),
+                                          child: Text(
+                                            'Close',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 19,
+                                                color: Colors.teal[400]),
+                                          ),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },

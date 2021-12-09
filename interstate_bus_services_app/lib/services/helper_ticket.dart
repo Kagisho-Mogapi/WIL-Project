@@ -6,7 +6,9 @@ import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
+// Function for getting the latest tickets
 void refreshTicketsInUI(BuildContext context) async {
+  // "getTickets" will be called to get the latest tickets of a user
   String result = await context
       .read<TicketService>()
       .getTickets(context.read<UserService>().currentUser!.email);
@@ -18,6 +20,7 @@ void refreshTicketsInUI(BuildContext context) async {
   }
 }
 
+// Function for creating a new Ticket
 void createNewTicketInUI(
   BuildContext context, {
   required String typeController,
@@ -30,11 +33,16 @@ void createNewTicketInUI(
     ticketType: typeController,
     isUsed: isUsedController,
     price: priceController,
+    created: DateTime.now(),
   );
+
+  //The newly created Ticket is sent to Ticket Service to
+  //be saved on the database
   context.read<TicketService>().createTicket(ticket);
   Navigator.pop(context);
 }
 
+// Function for creating a new Ticket for another user
 void createNewOtherTicketInUI(
   BuildContext context, {
   required String typeController,
@@ -43,15 +51,19 @@ void createNewOtherTicketInUI(
   required String priceController,
 }) async {
   Ticket ticket = Ticket(
-    ticketOwner: ownerController,
-    ticketType: typeController,
-    isUsed: isUsedController,
-    price: priceController,
-  );
+      ticketOwner: ownerController,
+      ticketType: typeController,
+      isUsed: isUsedController,
+      price: priceController,
+      created: DateTime.now());
+
+  //The newly created Ticket of another user is sent to Ticket Service to
+  //be saved on the database
   context.read<TicketService>().createOtherTicket(ticket);
   Navigator.pop(context);
 }
 
+// Function for saving tickets that would be displayed on the UI
 void saveAllTicketsInUI(BuildContext context) async {
   String result = await context
       .read<TicketService>()
@@ -60,10 +72,11 @@ void saveAllTicketsInUI(BuildContext context) async {
   if (result != 'OK') {
     showSnackBar(context, result);
   } else {
-    showSnackBar(context, 'Ticket Saved!!!');
+    showSnackBar(context, 'Ticket Bought!!!');
   }
 }
 
+// Function for saving to another user's tickets list
 void saveAllOtherTicketsInUI(BuildContext context, String otherUser) async {
   String result =
       await context.read<TicketService>().saveOtherTicketEntry(otherUser, true);
@@ -71,6 +84,6 @@ void saveAllOtherTicketsInUI(BuildContext context, String otherUser) async {
   if (result != 'OK') {
     showSnackBar(context, result);
   } else {
-    showSnackBar(context, 'Ticket Saved!!!');
+    showSnackBar(context, 'Ticket Bought!!!');
   }
 }

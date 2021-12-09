@@ -15,7 +15,7 @@ class MaterialBtnA extends StatelessWidget {
     return MaterialButton(
       height: 50,
       minWidth: 200,
-      color: Colors.red[700],
+      color: Colors.orange,
       onPressed: () {
         Navigator.of(context).pushNamed(location);
       },

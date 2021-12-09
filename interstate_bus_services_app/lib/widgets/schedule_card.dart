@@ -29,11 +29,15 @@ class ScheduleCard extends StatelessWidget {
           )
         ],
         child: ListTile(
-          tileColor: Colors.lightBlueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(9.0),
+          ),
+          tileColor: Colors.teal[400],
           title: Text(
-            'From: ${message.from}, To: ${message.to}, Time: ${message.time}, Bus Code: ${message.busCode} ',
+            'From: ${message.from}, To: ${message.to}, Time: ${message.hour}:${message.minute}, \n' +
+                'Day of the Week: ${message.dayOfWeek}, Bus Code: ${message.busCode},',
             style: TextStyle(
-              color: Colors.orange[900],
+              color: Colors.white,
             ),
           ),
           /*subtitle: Text(

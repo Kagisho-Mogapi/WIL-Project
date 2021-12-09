@@ -1,3 +1,4 @@
 class UserRole {
-  static String userRole = 'commuter';
+  // Users role
+  static String userRole = '';
 }

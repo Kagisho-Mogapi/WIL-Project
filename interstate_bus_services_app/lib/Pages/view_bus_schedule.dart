@@ -3,10 +3,12 @@ import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/schedule_service.dart';
 import 'package:interstate_bus_services_app/services/helper_schedule.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart';
 import 'package:interstate_bus_services_app/widgets/schedule_card.dart';
 import 'package:provider/provider.dart' as provider;
+
+// This page will allow users to view bus schedules and if they are an admin it
+// will let them to be able to write new bus schedules
 
 class ViewBusSchedule extends StatefulWidget {
   const ViewBusSchedule({Key? key}) : super(key: key);
@@ -33,9 +35,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
   void initState() {
     super.initState();
     scheduleController = TextEditingController();
-    // context
-    //     .read<ScheduleService>()
-    //     .getSchedules(context.read<UserService>().currentUser!.email);
   }
 
   @override
@@ -64,26 +63,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
       ),
       backgroundColor: Colors.orangeAccent,
       body: Stack(children: [
-        // Container(
-        //   constraints: BoxConstraints.expand(),
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: AssetImage('assets/images/Background1.jpg'),
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // ),
-        // Opacity(
-        //   opacity: 0.85,
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       gradient: LinearGradient(
-        //           begin: Alignment.topCenter,
-        //           end: Alignment.bottomCenter,
-        //           colors: [Colors.red, Colors.blue]),
-        //     ),
-        //   ),
-        // ),
         Container(
           height: MediaQuery.of(context).size.height - 82.0,
           width: MediaQuery.of(context).size.width,
@@ -97,9 +76,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                   topLeft: Radius.circular(45.0),
                   topRight: Radius.circular(45.0),
                 ),
-                // image: DecorationImage(
-                //     image: AssetImage('assets/images/BusLines.png'),
-                //     fit: BoxFit.fill),
                 color: Colors.white,
               ),
               height: MediaQuery.of(context).size.height - 120.0,
@@ -108,22 +84,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
         SafeArea(
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'View Schedule',
-              //         style: TextStyle(
-              //           fontSize: 22,
-              //           color: Colors.black,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(
                 height: 32,
               ),
@@ -146,26 +106,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                 endIndent: 10,
                 indent: 10,
               ),
-              // Expanded(
-              //   child: Padding(
-              //       padding: const EdgeInsets.symmetric(
-              //         horizontal: 8.0,
-              //         vertical: 20,
-              //       ),
-              //       child: provider.Consumer<UserService>(
-              //         builder: (context, value, child) {
-              //           return ListView.builder(
-              //             itemCount: value.users.length,
-              //             itemBuilder: (context, index) {
-              //               // print('List is : ${value.users.length.toString()}');
-              //               return UserCard(
-              //                 message: value.userEntry!.email[index],
-              //               );
-              //             },
-              //           );
-              //         },
-              //       )),
-              // ),
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -207,7 +147,6 @@ class _ViewBusScheduleState extends State<ViewBusSchedule> {
                                 schedules = Container();
                               }
                             }
-                            // print(hasServices.toString());
 
                             return schedules;
                           },

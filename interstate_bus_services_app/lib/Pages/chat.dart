@@ -5,14 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/screens/select_user_screen.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
-// void main() {
-
-//   runApp(
-//     MyApp(
-//       client: client,
-//     ),
-//   );
-// }
+// A page that will initialize the chat feature
 
 class Chat extends StatelessWidget {
   Chat({
@@ -21,7 +14,6 @@ class Chat extends StatelessWidget {
   }) : super(key: key);
 
   final client = StreamChatClient(streamKey);
-  //final StreamChatClient client;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +22,7 @@ class Chat extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, RouteManager.home);
+            Navigator.pushNamed(context, RouteManager.newHome);
           },
         ),
         backgroundColor: Colors.black54,

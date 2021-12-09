@@ -35,7 +35,7 @@ class MyElevatedBtnA extends StatelessWidget {
         },
         style: ButtonStyle(
           shadowColor: MaterialStateProperty.all(Colors.white),
-          backgroundColor: MaterialStateProperty.all(Colors.blue[900]),
+          backgroundColor: MaterialStateProperty.all(Colors.teal[400]),
           fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
         ),
       ),
@@ -49,9 +49,7 @@ void getThose(BuildContext context, String getSome) {
         .read<TicketService>()
         .getTickets(context.read<UserService>().currentUser!.email);
   } else if (getSome == 'schedules') {
-    context
-        .read<ScheduleService>()
-        .getSchedules(context.read<UserService>().currentUser!.email);
+    context.read<ScheduleService>().getSchedules();
   } else if (getSome == 'annoucements') {
     context.read<AnnouncementService>().getAnnouncements('');
   }

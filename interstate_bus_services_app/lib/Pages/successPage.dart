@@ -3,6 +3,8 @@ import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
+// This page will allow show user their total balance after a successful top-up
+
 class SuccessPage extends StatefulWidget {
   const SuccessPage({Key? key}) : super(key: key);
 
@@ -20,29 +22,9 @@ class _SuccessPageState extends State<SuccessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.teal[400],
       body: Stack(
         children: [
-          Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background2.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -130,5 +112,5 @@ Future<void> exitPage(BuildContext context) async {
   String result = await context.read<UserService>().checkIfUserLoggedIn();
   await Future.delayed(Duration(seconds: 5));
   print('Load results: $result');
-  Navigator.pushNamed(context, RouteManager.home);
+  Navigator.pushNamed(context, RouteManager.newHome);
 }

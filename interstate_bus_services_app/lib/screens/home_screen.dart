@@ -6,7 +6,6 @@ import 'package:interstate_bus_services_app/Themes/theme.dart';
 import 'package:interstate_bus_services_app/chatt_connect.dart';
 import 'package:interstate_bus_services_app/screens/profile_screen.dart';
 import 'package:interstate_bus_services_app/widgets/avatar.dart';
-import 'package:interstate_bus_services_app/widgets/icon_buttons.dart';
 import 'package:interstate_bus_services_app/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -127,38 +126,6 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
                   onTap: handleItemSelected,
                 ),
               ),
-              // _NavigationBarItem(
-              //   index: 1,
-              //   lable: 'Notifications',
-              //   icon: CupertinoIcons.bell_solid,
-              //   isSelected: (selectedIndex == 1),
-              //   onTap: handleItemSelected,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(10),
-              //   child: GlowingActionButton(
-              //     color: AppColors.secondary,
-              //     icon: CupertinoIcons.add,
-              //     onPressed: () {
-              //       showDialog(
-              //         context: context,
-              //         builder: (BuildContext context) => const Dialog(
-              //           child: AspectRatio(
-              //             aspectRatio: 8 / 7,
-              //             child: ContactsPage(),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
-              // _NavigationBarItem(
-              //   index: 2,
-              //   lable: 'Calls',
-              //   icon: CupertinoIcons.phone_fill,
-              //   isSelected: (selectedIndex == 2),
-              //   onTap: handleItemSelected,
-              // ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15, top: 10),
                 child: _NavigationBarItem(

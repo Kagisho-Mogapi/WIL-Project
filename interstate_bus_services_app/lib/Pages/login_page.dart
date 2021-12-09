@@ -8,6 +8,8 @@ import 'package:interstate_bus_services_app/widgets/regexes.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
+// this page will allow a user to login proving their email and password
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -69,17 +71,6 @@ class _LoginPageState extends State<LoginPage> {
                     width: MediaQuery.of(context).size.width,
                   )),
 
-              // Opacity(
-              //   opacity: 0.85,
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //           begin: Alignment.topCenter,
-              //           end: Alignment.bottomCenter,
-              //           colors: [Colors.red, Colors.blue]),
-              //     ),
-              //   ),
-              // ),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -145,20 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                                   'Minimum eight characters, at least one letter, one number and one special character',
                               isValidInput: isValidPass,
                             ),
-                          ),
-                          SizedBox(height: 7),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberMe,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    rememberMe = value;
-                                  });
-                                },
-                              ),
-                              Text('Remember Me'),
-                            ],
                           ),
                           SizedBox(height: 40),
                           ElevatedButton(

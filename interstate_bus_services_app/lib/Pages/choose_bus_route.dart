@@ -9,6 +9,8 @@ class ChooseBusRoute extends StatefulWidget {
   _ChooseBusRouteState createState() => _ChooseBusRouteState();
 }
 
+// A page that will allow a user choose a route they want to view it's schedule
+
 class _ChooseBusRouteState extends State<ChooseBusRoute> {
   final items = ['Route 1', 'Route 2', 'Route 3'];
   String? value;
@@ -249,12 +251,6 @@ class _ChooseBusRouteState extends State<ChooseBusRoute> {
                                 hint: Text('Choose Route'),
                               ),
                             ),
-
-                            // DropdownButton<String>(
-                            //   items: items.map(buildMenuItem).toList(),
-                            //   onChanged: (value) =>
-                            //       setState(() => this.value = value),
-                            // ),
                           ]),
                     ),
                   ],

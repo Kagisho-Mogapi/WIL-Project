@@ -4,7 +4,6 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Functions/user_role.dart';
-import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/Themes/theme.dart';
 import 'package:interstate_bus_services_app/chat_helpers.dart';
 import 'package:interstate_bus_services_app/widgets/display_error_message.dart';
@@ -79,26 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 : null,
           ),
           title: const _AppBarTitle(),
-          actions: [
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //   child: Center(
-            //     child: IconBorder(
-            //       icon: CupertinoIcons.video_camera_solid,
-            //       onTap: () {},
-            //     ),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(right: 20),
-            //   child: Center(
-            //     child: IconBorder(
-            //       icon: CupertinoIcons.phone_solid,
-            //       onTap: () {},
-            //     ),
-            //   ),
-            // ),
-          ],
+          actions: [],
         ),
         body: Column(
           children: [
@@ -605,22 +585,6 @@ class __ActionBarState extends State<_ActionBar> {
       top: false,
       child: Row(
         children: [
-          // Container(
-          //   decoration: BoxDecoration(
-          //     border: Border(
-          //       right: BorderSide(
-          //         width: 2,
-          //         color: Theme.of(context).dividerColor,
-          //       ),
-          //     ),
-          //   ),
-          //   child: const Padding(
-          //     padding: EdgeInsets.symmetric(horizontal: 16.0),
-          //     child: Icon(
-          //       CupertinoIcons.camera_fill,
-          //     ),
-          //   ),
-          // ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0, bottom: 7),

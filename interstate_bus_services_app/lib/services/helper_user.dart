@@ -10,6 +10,7 @@ import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
+// Function for registering a new User
 void createNewUserInUI(
   BuildContext context, {
   required String email,
@@ -18,6 +19,7 @@ void createNewUserInUI(
   required String lName,
   required String idNumber,
   required String phoneNumber,
+  required String city,
 }) async {
   // to remove focus from field
   FocusManager.instance.primaryFocus?.unfocus();
@@ -27,6 +29,7 @@ void createNewUserInUI(
       lName.isEmpty ||
       idNumber.isEmpty ||
       phoneNumber.isEmpty ||
+      city.isEmpty ||
       password.isEmpty) {
     showSnackBar(context, 'Please Enter All Fields');
   }
@@ -40,10 +43,12 @@ void createNewUserInUI(
         'lName': lName.trim(),
         'idNumber': idNumber.trim(),
         'phoneNumber': phoneNumber.trim(),
+        'city': city.trim(),
       });
     //Custom columns here
 
-    // Sends user details to {createUser} function
+    //The newly created BackendlessUser is sent to User Service to
+    //be saved on the database
     String result = await context.read<UserService>().createUser(user);
 
     if (result != 'OK') {
@@ -55,6 +60,7 @@ void createNewUserInUI(
   }
 }
 
+// Function for logging in a user with provided info from the UI
 void loginUserInUI(BuildContext context,
     {required String email, required String password}) async {
   // For closing the keyboard
@@ -76,16 +82,18 @@ void loginUserInUI(BuildContext context,
     // if everything went OK with the login process
     else {
       RoleAssign.roleAssign(context);
-      context.read<ScheduleService>().getSchedules(email);
+      context.read<ScheduleService>().getSchedules();
       context.read<AnnouncementService>().getAnnouncements('');
       context.read<TicketService>().getTickets(email);
 
-      Navigator.of(context).popAndPushNamed(RouteManager.home);
+      Navigator.of(context).popAndPushNamed(RouteManager.newHome);
     }
   }
 }
 
+// Function for logging out a user thats currently logged in
 void logoutUserInUI(BuildContext context) async {
+  // the 'logout' function is called to logout the current user
   String result = await context.read<UserService>().logoutUser();
   if (result == 'OK') {
     context.read<UserService>().setCurrentUserNull();
@@ -95,10 +103,12 @@ void logoutUserInUI(BuildContext context) async {
   }
 }
 
+// Function for reseting a users password
 void resetPasswordInUI(BuildContext context, {required String email}) async {
   if (email.isEmpty) {
     showSnackBar(context, 'Please Enter Email First');
   } else {
+    // the 'resetPassword' function is called to resset a users passwords
     String result =
         await context.read<UserService>().resetPassword(email.trim());
 

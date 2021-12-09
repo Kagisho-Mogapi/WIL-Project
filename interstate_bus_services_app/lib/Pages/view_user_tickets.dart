@@ -5,6 +5,8 @@ import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart'
 import 'package:interstate_bus_services_app/widgets/ticket_card.dart';
 import 'package:provider/provider.dart' as provider;
 
+// This page will allow an admin to view tickets bought by a specific commuter
+
 class ViewUserTickets extends StatefulWidget {
   const ViewUserTickets({Key? key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class _ViewUserTicketsState extends State<ViewUserTickets> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orangeAccent,
-        title: Text('View my tickets'),
+        title: Text('View commuter tickets'),
         actions: [
           IconButton(
               icon: Icon(Icons.replay_outlined),
@@ -44,26 +46,6 @@ class _ViewUserTicketsState extends State<ViewUserTickets> {
       ),
       backgroundColor: Colors.orangeAccent,
       body: Stack(children: [
-        // Container(
-        //   constraints: BoxConstraints.expand(),
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: AssetImage('assets/images/Background1.jpg'),
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // ),
-        // Opacity(
-        //   opacity: 0.85,
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       gradient: LinearGradient(
-        //           begin: Alignment.topCenter,
-        //           end: Alignment.bottomCenter,
-        //           colors: [Colors.red, Colors.blue]),
-        //     ),
-        //   ),
-        // ),
         Container(
           height: MediaQuery.of(context).size.height - 82.0,
           width: MediaQuery.of(context).size.width,
@@ -77,9 +59,6 @@ class _ViewUserTicketsState extends State<ViewUserTickets> {
                   topLeft: Radius.circular(45.0),
                   topRight: Radius.circular(45.0),
                 ),
-                // image: DecorationImage(
-                //     image: AssetImage('assets/images/BusLines.png'),
-                //     fit: BoxFit.fill),
                 color: Colors.white,
               ),
               height: MediaQuery.of(context).size.height - 120.0,
@@ -88,22 +67,6 @@ class _ViewUserTicketsState extends State<ViewUserTickets> {
         SafeArea(
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'View My Tickets',
-              //         style: TextStyle(
-              //           fontSize: 22,
-              //           color: Colors.black,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(
                 height: 32,
               ),
@@ -132,20 +95,21 @@ class _ViewUserTicketsState extends State<ViewUserTickets> {
                   color: Colors.grey[100],
                   child: ListTile(
                     title: TextField(
+                      style: TextStyle(fontSize: 19, color: Colors.teal[400]),
+                      decoration: InputDecoration(
+                        hintStyle: TextStyle(color: Colors.teal[400]),
+                        border: InputBorder.none,
+                        hintText: 'Enter Commuter Email',
+                      ),
                       controller: findController,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    // OpenTextField(
-                    //     hint: 'User email',
-                    //     regExp: MyRegexes.email,
-                    //     controller: findController,
-                    //     isPass: false,
-                    //     isValidInput: true,
-                    //     errorMsg: 'errorMsg'),
                     trailing: Container(
-                      // color: Colors.grey[300],
                       child: IconButton(
-                        icon: Icon(Icons.search),
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.teal[400],
+                        ),
                         onPressed: () {
                           context
                               .read<TicketService>()

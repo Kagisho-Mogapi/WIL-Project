@@ -7,6 +7,8 @@ import 'package:interstate_bus_services_app/widgets/app_progress_indicator.dart'
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart' as provider;
 
+// A page that will allow an admin to write an announcemnt
+
 class CreateAnnouncement extends StatefulWidget {
   const CreateAnnouncement({Key? key}) : super(key: key);
 
@@ -24,7 +26,14 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
     'Commuter',
   ];
 
+  final List<String> city = [
+    'Bloemfontein',
+    'Botshabelo',
+    'Thaba Nchu',
+  ];
+
   String? recipient;
+  String? cityValue;
   DropdownMenuItem<String> buildMenuItem(String admin) => DropdownMenuItem(
       value: admin,
       child: Text(
@@ -51,7 +60,7 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Create announcement'),
+        title: Text('Write announcement'),
         backgroundColor: Colors.orangeAccent,
       ),
       backgroundColor: Colors.orangeAccent,
@@ -84,22 +93,6 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.all(16.0),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //         'Create Announcement',
-                  //         style: TextStyle(
-                  //           fontSize: 22,
-                  //           color: Colors.black,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -125,45 +118,98 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                         Text(
                           'Announcement',
                           style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
+                            fontSize: 20,
+                            color: Colors.teal[400],
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(8),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(8),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                color: Colors.grey[200],
+                                border: Border.all(
+                                  color: Colors.teal.shade400,
+                                  width: 2,
+                                ),
+                              ),
+                              child: DropdownButton(
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.teal[400],
+                                ),
+                                underline: Container(),
+                                style: TextStyle(
+                                    color: Colors.teal[400], fontSize: 17),
+                                onChanged: (value) => setState(
+                                    () => this.recipient = value as String),
+                                value: recipient,
+                                items:
+                                    administrators.map(buildMenuItem).toList(),
+                                iconSize: 20,
+                                hint: Text('Choose recipient',
+                                    style: TextStyle(
+                                        color: Colors.teal[400], fontSize: 17)),
+                              ),
                             ),
-                          ),
-                          child: DropdownButton(
-                            onChanged: (value) => setState(
-                                () => this.recipient = value as String),
-                            value: recipient,
-                            items: administrators.map(buildMenuItem).toList(),
-                            icon: Icon(Icons.arrow_drop_down,
-                                color: Colors.black),
-                            iconSize: 20,
-                            hint: Text('Choose recipient'),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(8),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: Colors.grey[200],
+                                  border: Border.all(
+                                    color: Colors.teal.shade400,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: DropdownButton<String>(
+                                  style: TextStyle(
+                                      color: Colors.teal[400], fontSize: 17),
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.teal[400],
+                                  ),
+                                  underline: Container(),
+                                  items: city.map(buildMenuItem).toList(),
+                                  onChanged: (value) =>
+                                      setState(() => this.cityValue = value),
+                                  value: this.cityValue,
+                                  hint: Text('Choose city',
+                                      style: TextStyle(
+                                          color: Colors.teal[400],
+                                          fontSize: 17)),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -185,17 +231,26 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                               margin: EdgeInsets.all(8),
                               padding: EdgeInsets.only(bottom: 8.0),
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
                                 color: Colors.grey[200],
                                 border: Border.all(
-                                  color: Colors.black,
+                                  color: Colors.teal.shade400,
                                   width: 2,
                                 ),
                               ),
-                              child: TextField(
-                                controller: titleController,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  hintText: '  Write Announcement title',
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  style: TextStyle(
+                                      fontSize: 19, color: Colors.teal[400]),
+                                  controller: titleController,
+                                  maxLines: 1,
+                                  decoration: InputDecoration(
+                                    hintStyle:
+                                        TextStyle(color: Colors.teal[400]),
+                                    border: InputBorder.none,
+                                    hintText: 'Write Announcement title',
+                                  ),
                                 ),
                               ),
                             ),
@@ -204,17 +259,25 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                             margin: EdgeInsets.all(8),
                             padding: EdgeInsets.only(bottom: 8.0),
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
                               color: Colors.grey[200],
                               border: Border.all(
-                                color: Colors.black,
+                                color: Colors.teal.shade400,
                                 width: 2,
                               ),
                             ),
-                            child: TextField(
-                              controller: announcementController,
-                              maxLines: 8,
-                              decoration: InputDecoration(
-                                hintText: '  Write Announcement Description',
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                style: TextStyle(
+                                    fontSize: 19, color: Colors.teal[400]),
+                                controller: announcementController,
+                                maxLines: 8,
+                                decoration: InputDecoration(
+                                  hintStyle: TextStyle(color: Colors.teal[400]),
+                                  border: InputBorder.none,
+                                  hintText: 'Write Announcement Description',
+                                ),
                               ),
                             ),
                           ),
@@ -229,11 +292,15 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                         padding: const EdgeInsets.only(top: 7, bottom: 7),
                         child: Text(
                           'Upload',
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900),
                         ),
                       ),
                       onPressed: () {
                         if (recipient == null ||
+                            cityValue == null ||
                             announcementController.text.trim().isEmpty ||
                             titleController.text.trim().isEmpty) {
                           showSnackBar(context, 'Please Enter All Fields');
@@ -245,16 +312,14 @@ class _CreateAnnouncementState extends State<CreateAnnouncement> {
                           createNewAnnouncementInUI(context,
                               titleController: titleController,
                               descriptionController: announcementController,
-                              recepientController: recipient!);
+                              recepientController: recipient!,
+                              cityController: cityValue!);
                           saveAllAnnouncementsInUI(context, recipient!);
                         }
                       },
-                      style: ButtonStyle(
-                        shadowColor: MaterialStateProperty.all(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue[900]),
-                        fixedSize:
-                            MaterialStateProperty.all(Size.fromWidth(220)),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.teal[400],
+                        fixedSize: Size(270, 60),
                       ),
                     ),
                   ),

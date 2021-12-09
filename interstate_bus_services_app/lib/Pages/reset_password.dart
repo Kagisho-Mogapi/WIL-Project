@@ -5,6 +5,8 @@ import 'package:interstate_bus_services_app/widgets/regexes.dart';
 import 'package:interstate_bus_services_app/widgets/sign_up_text_field.dart';
 import 'package:provider/provider.dart';
 
+// This page will allow a user reset their password by providing their email
+
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
 
@@ -39,26 +41,6 @@ class _ResetPasswordState extends State<ResetPassword> {
         ),
         body: Stack(
           children: [
-            // Container(
-            //   constraints: BoxConstraints.expand(),
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage('assets/images/Background1.jpg'),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-            // Opacity(
-            //   opacity: 0.85,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //           begin: Alignment.topCenter,
-            //           end: Alignment.bottomCenter,
-            //           colors: [Colors.red, Colors.blue]),
-            //     ),
-            //   ),
-            // ),
             Container(
               height: MediaQuery.of(context).size.height - 82.0,
               width: MediaQuery.of(context).size.width,
@@ -82,14 +64,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Text(
-                    //   'Reset Password',
-                    //   style: TextStyle(
-                    //     color: Colors.black,
-                    //     fontSize: 30,
-                    //   ),
-                    //   textAlign: TextAlign.center,
-                    // ),
                     SizedBox(
                       height: 20,
                     ),

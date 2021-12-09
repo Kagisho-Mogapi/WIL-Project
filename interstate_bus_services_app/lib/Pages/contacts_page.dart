@@ -4,6 +4,8 @@ import 'package:interstate_bus_services_app/widgets/widgets.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 import 'package:interstate_bus_services_app/chatt_connect.dart';
 
+// A page that will display contact for the admin to chat with
+
 class ContactsPage extends StatelessWidget {
   const ContactsPage({Key? key}) : super(key: key);
 

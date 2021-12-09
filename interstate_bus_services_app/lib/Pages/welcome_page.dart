@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
-import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:interstate_bus_services_app/widgets/material_btn_a.dart';
-import 'package:provider/provider.dart' as provider;
+
+// This is the page first page of the app that allows a user to either
+// register or login
 
 class WelcomePage extends StatelessWidget {
   void initState() {
@@ -42,9 +43,6 @@ class WelcomePage extends StatelessWidget {
               sigmaX: 10.0,
               sigmaY: 10.0,
             ),
-            //width: double.infinity,
-            //height: MediaQuery.of(context).size.height,
-            //padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -5,6 +5,8 @@ import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
+// This page will allow a user to input their banking details for a top-up
+
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({Key? key}) : super(key: key);
 
@@ -34,33 +36,23 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
-      ),
+          elevation: 0,
+          backgroundColor: Colors.grey[300],
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.orange[700],
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.balanceDetails);
+            },
+          )),
       backgroundColor: Colors.grey[300],
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            // Container(
-            //   constraints: BoxConstraints.expand(),
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage('assets/images/Background1.jpg'),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-            // Opacity(
-            //   opacity: 0.85,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //           begin: Alignment.topCenter,
-            //           end: Alignment.bottomCenter,
-            //           colors: [Colors.red, Colors.blue]),
-            //     ),
-            //   ),
-            // ),
             SizedBox(
               height: 10,
             ),
@@ -87,7 +79,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
               ],
               animationDuration: Duration(milliseconds: 100),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -115,10 +106,6 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 ),
               ),
             ),
-
-            // SizedBox(
-            //   height: 10,
-            // ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: ElevatedButton(

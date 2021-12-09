@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-// import 'package:interstate_bus_services_app/models/announcement_entry.dart';
 
 class PurchaseCard extends StatelessWidget {
   const PurchaseCard({

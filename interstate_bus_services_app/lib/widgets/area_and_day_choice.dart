@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Pages/view_bus_schedule.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/helper_schedule.dart';
+import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 
 class AreaAndDayChoice extends StatefulWidget {
   const AreaAndDayChoice({Key? key}) : super(key: key);
@@ -74,9 +75,24 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent,
-      ),
+          title: Text(
+            'Choose route',
+            style: TextStyle(color: Colors.orange[700]),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.grey[200],
+          leading: IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.orange[700],
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.newHome);
+            },
+          )),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -91,8 +107,8 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 Text(
                   'Day of the week',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                    fontSize: 25,
+                    color: Colors.teal[400],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -104,6 +120,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 1,
                     groupValue: fromID,
                     onChanged: (val) {
@@ -113,7 +130,13 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Mondays to Fridays'),
+                  Text(
+                    'Mondays to Fridays',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -123,6 +146,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 2,
                     groupValue: fromID,
                     onChanged: (val) {
@@ -132,7 +156,13 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Saturdays'),
+                  Text(
+                    'Saturdays',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -142,6 +172,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 3,
                     groupValue: fromID,
                     onChanged: (val) {
@@ -151,11 +182,17 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Sundays'),
+                  Text(
+                    'Sundays',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
             ),
-            Divider(height: 15, thickness: 5),
+            Divider(height: 15, thickness: 5, color: Colors.orange[400]),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -165,8 +202,8 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 Text(
                   'From Area',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                    fontSize: 25,
+                    color: Colors.teal[400],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -178,6 +215,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 1,
                     groupValue: fromArea,
                     onChanged: (val) {
@@ -189,8 +227,15 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Botshabelo'),
+                  Text(
+                    'Botshabelo',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 2,
                     groupValue: fromArea,
                     onChanged: (val) {
@@ -202,8 +247,15 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Mangaung'),
+                  Text(
+                    'Mangaung',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 3,
                     groupValue: fromArea,
                     onChanged: (val) {
@@ -215,7 +267,13 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Suburbs'),
+                  Text(
+                    'Suburbs',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -225,6 +283,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 4,
                     groupValue: fromArea,
                     onChanged: (val) {
@@ -237,39 +296,37 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Thaba Nchu'),
-                  // Radio(
-                  //   value: 5,
-                  //   groupValue: area,
-                  //   onChanged: (val) {
-                  //     setState(() {
-                  //       areaItem = 'Other';
-                  //       area = 5;
-                  //     });
-                  //   },
-                  // ),
-                  // Text('Other'),
+                  Text(
+                    'Thaba Nchu',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Text(
                   'From Route',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                    fontSize: 25,
+                    color: Colors.teal[400],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Container(
                   margin: EdgeInsets.all(8),
@@ -278,24 +335,33 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
                     color: Colors.grey[200],
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.teal.shade400,
                       width: 2,
                     ),
                   ),
                   child: DropdownButton<String>(
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.teal[400],
+                    ),
+                    underline: Container(),
+                    style: TextStyle(color: Colors.teal[400], fontSize: 17),
                     items: fromRoute.map(buildMenuItem).toList(),
                     onChanged: (value) =>
                         setState(() => this.fromValue = value),
                     value: this.fromValue,
-                    hint: Text('Choose Route'),
+                    hint: Text('Choose Route',
+                        style:
+                            TextStyle(color: Colors.teal[400], fontSize: 17)),
                   ),
                 ),
               ]),
             ),
 
-            Divider(height: 15, thickness: 5),
+            Divider(height: 15, thickness: 5, color: Colors.orange[400]),
             SizedBox(height: 10),
 
             ///
@@ -311,8 +377,8 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 Text(
                   'To Area',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                    fontSize: 25,
+                    color: Colors.teal[400],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -324,6 +390,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 1,
                     groupValue: toArea,
                     onChanged: (val) {
@@ -335,8 +402,15 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Botshabelo'),
+                  Text(
+                    'Botshabelo',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 2,
                     groupValue: toArea,
                     onChanged: (val) {
@@ -348,8 +422,15 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Mangaung'),
+                  Text(
+                    'Mangaung',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 3,
                     groupValue: toArea,
                     onChanged: (val) {
@@ -361,7 +442,13 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Suburbs'),
+                  Text(
+                    'Suburbs',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -371,6 +458,7 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Radio(
+                    activeColor: Colors.teal[400],
                     value: 4,
                     groupValue: toArea,
                     onChanged: (val) {
@@ -383,32 +471,30 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                       });
                     },
                   ),
-                  Text('Thaba Nchu'),
-                  // Radio(
-                  //   value: 5,
-                  //   groupValue: area,
-                  //   onChanged: (val) {
-                  //     setState(() {
-                  //       areaItem = 'Other';
-                  //       area = 5;
-                  //     });
-                  //   },
-                  // ),
-                  // Text('Other'),
+                  Text(
+                    'Thaba Nchu',
+                    style: TextStyle(
+                      color: Colors.teal[400],
+                      fontSize: 17,
+                    ),
+                  ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Text(
                   'To Route',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                    fontSize: 25,
+                    color: Colors.teal[400],
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -424,30 +510,53 @@ class _AreaAndDayChoiceState extends State<AreaAndDayChoice> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
                     color: Colors.grey[200],
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.teal.shade400,
                       width: 2,
                     ),
                   ),
                   child: DropdownButton<String>(
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.teal[400],
+                    ),
+                    underline: Container(),
+                    style: TextStyle(color: Colors.teal[400], fontSize: 17),
                     items: toRoute.map(buildMenuItem).toList(),
                     onChanged: (value) => setState(() => this.toValue = value),
                     value: this.toValue,
-                    hint: Text('Choose Route'),
+                    hint: Text('Choose Route',
+                        style:
+                            TextStyle(color: Colors.teal[400], fontSize: 17)),
                   ),
                 ),
               ]),
             ),
 
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.teal[400],
+                  fixedSize: Size(270, 60),
+                ),
                 onPressed: () {
-                  ViewBusSchedule.fromRoute = this.fromValue;
-                  ViewBusSchedule.toRoute = this.toValue;
-                  Navigator.pushNamed(context, RouteManager.schedule);
-                  refreshSchedulesInUI(context);
+                  if (fromValue == null || toValue == null) {
+                    showSnackBar(context, 'Enter All Fields');
+                  } else {
+                    ViewBusSchedule.fromRoute = this.fromValue;
+                    ViewBusSchedule.toRoute = this.toValue;
+                    Navigator.pushNamed(context, RouteManager.schedule);
+                    refreshSchedulesInUI(context);
+                  }
                 },
-                child: Text('View Schedule'))
+                child: Text(
+                  'View Schedule',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900),
+                ))
           ],
         ),
       ),

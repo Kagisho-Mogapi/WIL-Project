@@ -2,11 +2,13 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Functions/role_assign.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
-// import 'package:interstate_bus_services_app/services/announcement_service.dart';
-// import 'package:interstate_bus_services_app/services/schedule_service.dart';
-// import 'package:interstate_bus_services_app/services/ticket_service.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/schedule_service.dart';
+import 'package:interstate_bus_services_app/services/ticket_service.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
+
+// A splash screen to load and configure the app to Backendless
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -37,17 +39,13 @@ class _LoadingState extends State<Loading> {
 
     if (result == 'OK') {
       RoleAssign.roleAssign(context);
-      Navigator.popAndPushNamed(context, RouteManager.home);
-      // context.read<AnnouncementService>().getAnnouncements('');
-      //context.read<UserListService>().getUserLists();
-      // context
-      //     .read<ScheduleService>()
-      //     .getSchedules(context.read<UserService>().currentUser!.email);
+      Navigator.popAndPushNamed(context, RouteManager.newHome);
+      context.read<AnnouncementService>().getAnnouncements('');
+      context.read<ScheduleService>().getSchedules();
 
-      // context
-      //     .read<TicketService>()
-      //     .getTickets(context.read<UserService>().currentUser!.email);
-      // context.read<UserService>().getUsers();
+      context
+          .read<TicketService>()
+          .getTickets(context.read<UserService>().currentUser!.email);
     } else {
       Navigator.popAndPushNamed(context, RouteManager.welcome);
     }

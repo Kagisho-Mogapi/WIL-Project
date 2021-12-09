@@ -8,6 +8,8 @@ import 'package:interstate_bus_services_app/widgets/regexes.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
+// A page that will a user buy a ticket for them selves or someone
+
 class BuyForUser extends StatefulWidget {
   const BuyForUser({Key? key}) : super(key: key);
 
@@ -82,26 +84,6 @@ class _BuyForUserState extends State<BuyForUser> {
       backgroundColor: Colors.orangeAccent,
       body: Stack(
         children: [
-          // Container(
-          //   constraints: BoxConstraints.expand(),
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage('assets/images/Background1.jpg'),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-          // Opacity(
-          //   opacity: 0.85,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //           begin: Alignment.topCenter,
-          //           end: Alignment.bottomCenter,
-          //           colors: [Colors.red, Colors.blue]),
-          //     ),
-          //   ),
-          // ),
           Container(
             height: MediaQuery.of(context).size.height - 82.0,
             width: MediaQuery.of(context).size.width,
@@ -117,7 +99,7 @@ class _BuyForUserState extends State<BuyForUser> {
                   ),
                   image: DecorationImage(
                     image: AssetImage('assets/images/Background1.jpg'),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                   // color: Colors.orangeAccent,
                 ),
@@ -131,15 +113,6 @@ class _BuyForUserState extends State<BuyForUser> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Image.asset(
-                    //     'assets/images/PurchaseDetail.png',
-                    //     alignment: Alignment.center,
-                    //     height: 300,
-                    //     width: 300,
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -148,10 +121,6 @@ class _BuyForUserState extends State<BuyForUser> {
                           SizedBox(
                             width: 44,
                           ),
-                          // Text(
-                          //   'Purchase Details',
-                          //   style: TextStyle(fontSize: 22, color: Colors.black),
-                          // ),
                         ],
                       ),
                     ),
@@ -166,9 +135,10 @@ class _BuyForUserState extends State<BuyForUser> {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
                         color: Colors.grey[200],
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.teal.shade400,
                           width: 2,
                         ),
                       ),
@@ -177,11 +147,17 @@ class _BuyForUserState extends State<BuyForUser> {
                           this.value = value as String?;
                           typeController.text = this.value!;
                         }),
+                        underline: Container(),
+                        style: TextStyle(color: Colors.teal[400], fontSize: 17),
                         value: value,
                         items: ticketTypeOption.map(buildMenuItem).toList(),
-                        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                        icon: Icon(Icons.arrow_drop_down,
+                            color: Colors.teal[400]),
                         iconSize: 20,
-                        hint: Text('Choose ticket type'),
+                        hint: Text(
+                          'Choose ticket type',
+                          style: TextStyle(color: Colors.teal[400]),
+                        ),
                       ),
                     ),
                     SizedBox(height: 15),
@@ -193,13 +169,16 @@ class _BuyForUserState extends State<BuyForUser> {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
                         color: Colors.grey[200],
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.teal.shade400,
                           width: 2,
                         ),
                       ),
                       child: DropdownButton(
+                        style: TextStyle(color: Colors.teal[400], fontSize: 17),
+                        underline: Container(),
                         onChanged: (value) => setState(() {
                           this.recipient = value as String?;
                           if (value == 'Someone') {
@@ -210,9 +189,11 @@ class _BuyForUserState extends State<BuyForUser> {
                         }),
                         value: recipient,
                         items: receipients.map(buildMenuItem).toList(),
-                        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                        icon: Icon(Icons.arrow_drop_down,
+                            color: Colors.teal[400]),
                         iconSize: 20,
-                        hint: Text('Choose recipient'),
+                        hint: Text('Choose recipient',
+                            style: TextStyle(color: Colors.teal[400])),
                       ),
                     ),
                     SizedBox(height: 15),
@@ -221,16 +202,21 @@ class _BuyForUserState extends State<BuyForUser> {
                             width: 300,
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
                               color: Colors.grey[200],
                               border: Border.all(
-                                color: Colors.black,
+                                color: Colors.teal.shade400,
                                 width: 2,
                               ),
                             ),
                             child: TextField(
+                              style: TextStyle(
+                                  fontSize: 19, color: Colors.teal[400]),
                               controller: recipientController,
                               decoration: InputDecoration(
+                                border: InputBorder.none,
                                 hintText: 'Recipient',
+                                hintStyle: TextStyle(color: Colors.teal[400]),
                               ),
                             ),
                           )
@@ -251,18 +237,23 @@ class _BuyForUserState extends State<BuyForUser> {
                         width: 300,
                         padding: EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
                           color: Colors.grey[200],
                           border: Border.all(
-                            color: Colors.black,
+                            color: Colors.teal.shade400,
                             width: 2,
                           ),
                         ),
                         child: TextField(
+                          style:
+                              TextStyle(fontSize: 19, color: Colors.teal[400]),
                           keyboardType: TextInputType.number,
                           controller: priceController,
                           decoration: InputDecoration(
+                            border: InputBorder.none,
                             errorText: isAmountValid ? null : 'Number only!!!',
                             hintText: 'Enter Amount',
+                            hintStyle: TextStyle(color: Colors.teal[400]),
                           ),
                         ),
                       ),
@@ -274,8 +265,8 @@ class _BuyForUserState extends State<BuyForUser> {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red[400],
-                          fixedSize: Size(300, 60),
+                          primary: Colors.teal[400],
+                          fixedSize: Size(270, 60),
                         ),
                         onPressed: () async {
                           FocusScope.of(context).unfocus();
@@ -306,14 +297,26 @@ class _BuyForUserState extends State<BuyForUser> {
                                         'Current balance is low, balance is R$currentBalance'),
                                     actions: [
                                       TextButton(
-                                        child: Text('Topup'),
+                                        child: Text(
+                                          'Topup',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 19,
+                                              color: Colors.teal[400]),
+                                        ),
                                         onPressed: () {
                                           Navigator.pushNamed(context,
                                               RouteManager.balanceDetails);
                                         },
                                       ),
                                       TextButton(
-                                        child: Text('Close'),
+                                        child: Text(
+                                          'Close',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 19,
+                                              color: Colors.teal[400]),
+                                        ),
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
@@ -323,14 +326,8 @@ class _BuyForUserState extends State<BuyForUser> {
                                 },
                               );
                             } else {
-                              // double currentCredits = double.parse(context
-                              //     .read<UserService>()
-                              //     .currentUser!
-                              //     .getProperty('credits'));
                               differance = currentBalance -
                                   double.parse(priceController.text.trim());
-                              // UserService.subtractAmount =
-                              //     );
                               UserService().subtractBalance(
                                   context
                                       .read<UserService>()
@@ -378,10 +375,14 @@ class _BuyForUserState extends State<BuyForUser> {
                               refreshUserDetails(context);
                             }
                           }
-                          /*Navigator.pushNamed(
-                              context, RouteManager.paymentDetails);*/
                         },
-                        child: Text('Pay'),
+                        child: Text(
+                          'Pay',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900),
+                        ),
                       ),
                     ),
                   ],

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Pages/buy_ticket.dart';
 import 'package:interstate_bus_services_app/Pages/chat.dart';
-import 'package:interstate_bus_services_app/Pages/chatting.dart';
 import 'package:interstate_bus_services_app/Pages/create_schedule.dart';
 import 'package:interstate_bus_services_app/Pages/create_announcement.dart';
 import 'package:interstate_bus_services_app/Pages/edit_profile_page.dart';
 import 'package:interstate_bus_services_app/Pages/home.dart';
-import 'package:interstate_bus_services_app/Pages/home_page.dart';
 import 'package:interstate_bus_services_app/Pages/loading.dart';
 import 'package:interstate_bus_services_app/Pages/login_page.dart';
 import 'package:interstate_bus_services_app/Pages/payment_details.dart';
 import 'package:interstate_bus_services_app/Pages/profile_page.dart';
+import 'package:interstate_bus_services_app/Pages/qrPage.dart';
 import 'package:interstate_bus_services_app/Pages/successPage.dart';
 import 'package:interstate_bus_services_app/Pages/topup_balance.dart';
-import 'package:interstate_bus_services_app/Pages/(og)qrPage.dart';
 import 'package:interstate_bus_services_app/Pages/reset_password.dart';
 import 'package:interstate_bus_services_app/Pages/signUp_page.dart';
 import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
@@ -23,6 +21,7 @@ import 'package:interstate_bus_services_app/Pages/view_user_tickets.dart';
 import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
 import 'package:interstate_bus_services_app/widgets/area_and_day_choice.dart';
 
+// A class to manage page routes
 class RouteManager {
   static const String newHome = '/new home';
 
@@ -72,15 +71,6 @@ class RouteManager {
 
       case resetPassword:
         return MaterialPageRoute(builder: (context) => ResetPassword());
-
-      case home:
-        return MaterialPageRoute(builder: (context) => HomePage());
-
-      case chatting:
-        return MaterialPageRoute(builder: (context) => Chatting());
-
-      case home:
-        return MaterialPageRoute(builder: (context) => HomePage());
 
       case buy:
         return MaterialPageRoute(builder: (context) => BuyForUser());

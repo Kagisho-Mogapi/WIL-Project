@@ -9,6 +9,7 @@ class ScheduleService with ChangeNotifier {
   List<Schedule> _schedules = [];
   List<Schedule> get schedules => _schedules;
 
+  // empty List for new database
   void emptySchedules() {
     _schedules = [];
     notifyListeners();
@@ -20,10 +21,11 @@ class ScheduleService with ChangeNotifier {
   bool get busyRetrieving => _busyRetrieving;
   bool get busySaving => _busySaving;
 
-  Future<String> getSchedules(String username) async {
+  // Function for Getting schedules
+  Future<String> getSchedules() async {
     String result = 'OK';
 
-    // Which username's Row
+    // Which Row
     DataQueryBuilder queryBuilder = DataQueryBuilder()
       ..whereClause = "show ='YES'";
 
@@ -47,7 +49,7 @@ class ScheduleService with ChangeNotifier {
 
     if (map != null) {
       if (map.length > 0) {
-        // !!!! {map.first} because there's only one list per user !!!!!!!!!
+        // {map.first} because there's only one list of schedules
         _scheduleEntry = ScheduleEntry.fromJson(map.first);
         _schedules = convertMapToScheduleList(_scheduleEntry!.schedules);
         notifyListeners();
@@ -64,11 +66,13 @@ class ScheduleService with ChangeNotifier {
     return result;
   }
 
+  // Function for saving a schedule entry
   Future<String> saveScheduleEntry(String username, bool inUI) async {
     String result = 'OK';
+
     if (_scheduleEntry == null) {
-      _scheduleEntry = ScheduleEntry(
-          schedules: convertScheduleListToMap(_schedules), username: username);
+      _scheduleEntry =
+          ScheduleEntry(schedules: convertScheduleListToMap(_schedules));
     } else {
       _scheduleEntry!.schedules = convertScheduleListToMap(_schedules);
     }
@@ -95,19 +99,16 @@ class ScheduleService with ChangeNotifier {
     return result;
   }
 
-  // if task is done
-
-  /*void toggleScheduleDone(int index) {
-    _schedules[index].done = !_schedules[index].done;
-    notifyListeners();
-  }*/
-
+  // Funtion for deleting a schedule from the List
   void deleteSchedule(Schedule schedule) {
+    // A schedule is removed from the List
     _schedules.remove(schedule);
     notifyListeners();
   }
 
+  // Funtion for inserting a schedule to the List
   void createSchedule(Schedule schedule) {
+    // A schedule is inserted to the List
     _schedules.insert(0, schedule);
     notifyListeners();
   }

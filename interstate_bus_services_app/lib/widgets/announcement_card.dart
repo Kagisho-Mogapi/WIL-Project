@@ -7,12 +7,10 @@ class AnnouncementCard extends StatelessWidget {
     Key? key,
     required this.message,
     required this.deletaAction,
-    //required this.messageToggleAction,
   }) : super(key: key);
 
   final Announcement message;
   final Function() deletaAction;
-  //final Function(bool? value) messageToggleAction;
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +27,21 @@ class AnnouncementCard extends StatelessWidget {
           )
         ],
         child: ListTile(
-          tileColor: Colors.lightBlueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(9.0),
+          ),
+          tileColor: Colors.teal[400],
           title: Text(
             message.title,
             style: TextStyle(
-              color: Colors.orange[900],
+              color: Colors.white,
             ),
           ),
           subtitle: Text(
               '${message.created.day}/${message.created.month}/${message.created.year}',
               style: TextStyle(
                 fontSize: 10,
-                color: Colors.grey[200],
+                color: Colors.grey[50],
               )),
         ),
       ),

@@ -19,6 +19,7 @@ class TicketService with ChangeNotifier {
   List<Ticket> _otherTickets = [];
   List<Ticket> get otherTickets => _otherTickets;
 
+  // empty List for new database
   void emptyOtherTickets() {
     _otherTickets = [];
     notifyListeners();
@@ -30,6 +31,7 @@ class TicketService with ChangeNotifier {
   bool get busyRetrieving => _busyRetrieving;
   bool get busySaving => _busySaving;
 
+  // Function for Getting current user tickets
   Future<String> getTickets(String username) async {
     String result = 'OK';
     // username = UserService.userEmail;
@@ -75,8 +77,10 @@ class TicketService with ChangeNotifier {
     return result;
   }
 
+  // Function for saving a ticket entry to current user
   Future<String> saveTicketEntry(String username, bool inUI) async {
     String result = 'OK';
+
     if (_ticketEntry == null) {
       _ticketEntry = TicketEntry(
           tickets: convertTicketListToMap(_tickets), username: username);
@@ -106,6 +110,7 @@ class TicketService with ChangeNotifier {
     return result;
   }
 
+  // Function for Getting another user tickets
   Future<String> getOtherTickets(String username) async {
     String result = 'OK';
     // username = UserService.userEmail;
@@ -134,7 +139,7 @@ class TicketService with ChangeNotifier {
 
     if (map != null) {
       if (map.length > 0) {
-        // !!!! {map.first} because there's only one list per user !!!!!!!!!
+        // {map.first} because there's only one list per user
         _otherTicketEntry = TicketEntry.fromJson(map.first);
         _otherTickets = convertMapToTicketList(_otherTicketEntry!.tickets);
         notifyListeners();
@@ -151,8 +156,10 @@ class TicketService with ChangeNotifier {
     return result;
   }
 
+  // Function for saving a ticket entry to another user
   Future<String> saveOtherTicketEntry(String username, bool inUI) async {
     String result = 'OK';
+
     if (_otherTicketEntry == null) {
       _otherTicketEntry = TicketEntry(
           tickets: convertTicketListToMap(_otherTickets), username: username);
@@ -182,17 +189,23 @@ class TicketService with ChangeNotifier {
     return result;
   }
 
+  // Funtion for deleting a ticket from the List
   void deleteTicket(Ticket ticket) {
+    // A ticket is removed from the List
     _tickets.remove(ticket);
     notifyListeners();
   }
 
+  // Funtion for inserting a ticket to the List
   void createTicket(Ticket ticket) {
+    // A ticket is inserted to the List
     _tickets.insert(0, ticket);
     notifyListeners();
   }
 
+  // Funtion for inserting a ticket to the List of another user
   void createOtherTicket(Ticket ticket) {
+    // A ticket is inserted to the List of another user
     _otherTickets.insert(0, ticket);
     notifyListeners();
   }

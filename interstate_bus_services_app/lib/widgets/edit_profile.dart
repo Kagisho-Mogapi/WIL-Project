@@ -26,27 +26,6 @@ class MyTextFormField extends StatelessWidget {
       ),
       validator: (value) {
         if (value!.length == 0) {
-          //   provider.Selector<UserService, BackendlessUser?>(
-          //   selector: (context, value) => value.currentUser,
-          //   builder: (context, value, child) {
-          //     return value == null
-          //         ? Container()
-          //         : Text(
-          //             value.setProperty(detailName, controller.text),
-          //             textAlign: TextAlign.center,
-          //             style: TextStyle(
-          //               fontSize: 20,
-          //               fontWeight: FontWeight.w200,
-          //               color: Colors.amber[900],
-          //             ),
-          //           );
-          //   },
-          // ),
-
-          // context
-          //     .read<UserService>()
-          //     .currentUser!
-          //     .setProperty(detailName, controller.text.trim());
           return null;
         }
         if (!RegExp(regExp).hasMatch(value)) {

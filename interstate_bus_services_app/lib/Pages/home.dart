@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:interstate_bus_services_app/Pages/message_page.dart';
-import 'package:interstate_bus_services_app/Pages/payment_details.dart';
-import 'package:interstate_bus_services_app/Pages/profile_page.dart';
-import 'package:interstate_bus_services_app/Pages/purchase_history.dart';
-import 'package:interstate_bus_services_app/Pages/purchase_page.dart';
-import 'package:interstate_bus_services_app/Pages/(og)qrPage.dart';
-import 'package:interstate_bus_services_app/Pages/view_announcement.dart';
-import 'package:interstate_bus_services_app/Pages/view_bus_schedule.dart';
+import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
+import 'package:interstate_bus_services_app/services/announcement_service.dart';
+import 'package:interstate_bus_services_app/services/helper_announcement.dart';
 import 'package:interstate_bus_services_app/services/helper_user.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
-import 'package:interstate_bus_services_app/widgets/search_bar.dart';
-import 'package:provider/provider.dart';
-// import 'package:interstate_bus_services_app/Pages/welcome_page.dart';
+import 'package:interstate_bus_services_app/widgets/announcement_card.dart';
+import 'package:provider/provider.dart' as provider;
+
+// this is the home page
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -26,56 +22,108 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[700],
-        title: Text('Home'),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text('Home', style: TextStyle(color: Colors.black)),
         actions: [
           IconButton(
+              icon: Icon(Icons.replay_outlined),
+              tooltip: 'Refresh',
               onPressed: () {
-                Navigator.pushNamed(context, RouteManager.home);
-              },
-              icon: Icon(Icons.home))
+                refreshAnnouncementsInUI(context);
+              }),
+          SizedBox(width: 10),
         ],
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 280,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.orangeAccent,
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        // offset: Offset(0, 7),
-                      ),
-                    ],
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/Interstatelogo.jpg'),
-                    ),
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(50)),
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 280,
+                decoration: BoxDecoration(
+                  boxShadow: [],
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/Interstatelogo.jpg'),
                   ),
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(50)),
                 ),
-                SearchBar(),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 180,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/Covid19Image.jpg'),
-                        fit: BoxFit.cover,
-                      ),
+              ),
+              SizedBox(height: 15),
+              Image.asset(
+                'assets/images/Covid19Image.jpg',
+                scale: 0.67,
+              ),
+              Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 20,
                     ),
-                  ),
-                ),
-              ],
-            ),
+                    child: provider.Consumer<AnnouncementService>(
+                      builder: (context, value, child) {
+                        return ListView.builder(
+                          itemCount: value.announcements.length,
+                          itemBuilder: (context, index) {
+                            return value.announcements[index].city ==
+                                    context
+                                        .read<UserService>()
+                                        .currentUser!
+                                        .getProperty('city')
+                                ? GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            title: Text(value
+                                                .announcements[index].title),
+                                            content: Text(value
+                                                .announcements[index]
+                                                .description),
+                                            actions: [
+                                              TextButton(
+                                                child: Text(
+                                                  'Close',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 19,
+                                                      color: Colors.teal[400]),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: AnnouncementCard(
+                                      message: value.announcements[index],
+                                      deletaAction: () async {
+                                        context
+                                            .read<AnnouncementService>()
+                                            .deleteAnnouncement(
+                                                value.announcements[index]);
+                                      },
+                                    ),
+                                  )
+                                : Container();
+                          },
+                        );
+                      },
+                    )),
+              ),
+            ],
           )
         ],
       ),
@@ -91,154 +139,214 @@ class _HomeState extends State<Home> {
                 ),
               ),
               padding: EdgeInsets.all(0),
-              child: Container(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('assets/images/Unity.jpeg'),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      context
-                          .read<UserService>()
-                          .currentUser!
-                          .getProperty('fName'),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: Container(),
             ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.dashboard),
-                    title: Text('Dashboard'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(RouteManager.newHome);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.account_balance_wallet),
-                    title: Text('Account Top Up'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(RouteManager.balanceDetails);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => PurchasePage()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.history_edu),
-                    title: Text('Purchase History'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(RouteManager.boughtHistory);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => PurchaseHistory()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.schedule),
-                    title: Text('View Schedule'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(RouteManager.chooseBusRoute);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ViewBusSchedule()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.announcement),
-                    title: Text('Annoucements'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(RouteManager.announcements);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ViewAnnouncement()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.preview_outlined),
-                    title: Text('View Profile'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(RouteManager.profile);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ProfilePage()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.qr_code_2),
-                    title: Text('Scan QR'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(RouteManager.scanQR);
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => QrPage()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.message),
-                    title: Text('Messages'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(RouteManager.messages);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => MessagePage()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.payment_sharp),
-                    title: Text('Payment Details'),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PaymentDetails()));
-                    },
-                  ),
-                  Divider(
-                    height: 10,
-                    thickness: 2,
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text('Log out'),
-                    onTap: () {
-                      logoutUserInUI(context);
-                    },
-                  ),
-                  Divider(
-                    height: 10,
-                    thickness: 2,
-                  ),
-                ],
-              ),
-            ),
+            UserRole.userRole == 'commuter'
+                ? commuterOps(context)
+                : UserRole.userRole == 'admin'
+                    ? adminOps(context)
+                    : UserRole.userRole == 'driver'
+                        ? driverOps(context)
+                        : Container(
+                            child: Text('Unknown Role'),
+                          ),
           ],
         ),
       ),
     );
   }
+}
+
+Expanded commuterOps(BuildContext context) {
+  return Expanded(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        ListTile(
+          leading: Icon(Icons.payments),
+          title: Text('Buy Ticket'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.buy);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.history_edu),
+          title: Text('Purchase History'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.boughtHistory);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.account_balance_wallet),
+          title: Text('Balance Details'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.balanceDetails);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.schedule),
+          title: Text('View Schedule'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.chooseBusRoute);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.announcement),
+          title: Text('Annoucements'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.announcements);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.preview_outlined),
+          title: Text('View Profile'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.profile);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.message),
+          title: Text('Messages'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.messages);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Log out'),
+          onTap: () {
+            logoutUserInUI(context);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+      ],
+    ),
+  );
+}
+
+Expanded adminOps(BuildContext context) {
+  return Expanded(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        ListTile(
+          leading: Icon(Icons.history_edu),
+          title: Text('Commuter History'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.userTickets);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.schedule),
+          title: Text('Write Schedule'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.writeSchedule);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.schedule),
+          title: Text('View Schedule'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.chooseBusRoute);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.announcement),
+          title: Text('Annoucements'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.announcements);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.preview_outlined),
+          title: Text('View Profile'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.profile);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.message),
+          title: Text('Messages'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.messages);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Log out'),
+          onTap: () {
+            logoutUserInUI(context);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+      ],
+    ),
+  );
+}
+
+Expanded driverOps(BuildContext context) {
+  return Expanded(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        ListTile(
+          leading: Icon(Icons.schedule),
+          title: Text('View Schedule'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.chooseBusRoute);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.announcement),
+          title: Text('Annoucements'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.announcements);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.preview_outlined),
+          title: Text('View Profile'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.profile);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.message),
+          title: Text('Messages'),
+          onTap: () {
+            Navigator.of(context).pushNamed(RouteManager.messages);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Log out'),
+          onTap: () {
+            logoutUserInUI(context);
+          },
+        ),
+        Divider(
+          height: 10,
+          thickness: 2,
+        ),
+      ],
+    ),
+  );
 }

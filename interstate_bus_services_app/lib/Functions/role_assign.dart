@@ -3,6 +3,7 @@ import 'package:interstate_bus_services_app/Functions/user_role.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
 import 'package:provider/provider.dart';
 
+// to assign a role of user depending on the domain of the email
 class RoleAssign {
   static void roleAssign(BuildContext context) {
     if (context

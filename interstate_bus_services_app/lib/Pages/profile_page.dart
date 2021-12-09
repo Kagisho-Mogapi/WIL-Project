@@ -3,6 +3,8 @@ import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/widgets/elevated_btn_a.dart';
 import 'package:interstate_bus_services_app/widgets/get_profile_details.dart';
 
+// This page will allow a user to view their profile details
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -15,45 +17,27 @@ class ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('My profile'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.home,
+            color: Colors.white,
+            size: 28,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, RouteManager.newHome);
+          },
+        ),
         elevation: 0,
         backgroundColor: Colors.black54,
       ),
       backgroundColor: Colors.black54,
       body: Container(
         child: Stack(children: [
-          // Container(
-          //   constraints: BoxConstraints.expand(),
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage('assets/images/Background1.jpg'),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-          // Opacity(
-          //   opacity: 0.85,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //           begin: Alignment.topCenter,
-          //           end: Alignment.bottomCenter,
-          //           colors: [Colors.red, Colors.blue]),
-          //     ),
-          //   ),
-          // ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 40, bottom: 10),
-                child: Center(
-                  child: CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage('assets/images/Unity.jpeg'),
-                  ),
-                ),
-              ),
               Center(
                 child: Column(
                   children: [
@@ -77,6 +61,9 @@ class ProfilePageState extends State<ProfilePage> {
                         ProfileDetails(
                             detailHeader: 'Phone Number',
                             detailName: 'phoneNumber'),
+                        SizedBox(height: 15),
+                        ProfileDetails(
+                            detailHeader: 'City', detailName: 'city'),
                         SizedBox(height: 30),
                       ],
                     ),
@@ -85,9 +72,6 @@ class ProfilePageState extends State<ProfilePage> {
                       routeName: RouteManager.editProfile,
                       getMeSome: '',
                     ),
-                    /*ViewProfileButtons(
-                        btnName: 'Edit Profile',
-                        routeName: RouteManager.editProfile),*/
                     SizedBox(height: 10),
                   ],
                 ),

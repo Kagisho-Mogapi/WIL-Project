@@ -17,6 +17,7 @@ class AnnouncementService with ChangeNotifier {
   String level = '';
   static bool fromCreateAnnouncement = false;
 
+  // empty List for new users
   void emptyAnnouncements() {
     _announcements = [];
     notifyListeners();
@@ -28,10 +29,12 @@ class AnnouncementService with ChangeNotifier {
   bool get busyRetrieving => _busyRetrieving;
   bool get busySaving => _busySaving;
 
+  // Function for Getting announcements
   Future<String> getAnnouncements(String recipient) async {
     String result = 'OK';
-    print(recipient);
 
+    // Checks if function is called from initial load or
+    // from writing an announcement then assign a query accordingly
     if (fromCreateAnnouncement) {
       if (recipient == 'Administrator') {
         level = levelAdmin;
@@ -41,7 +44,6 @@ class AnnouncementService with ChangeNotifier {
         level = levelEveryone;
       }
       fromCreateAnnouncement = false;
-      print('We Heeeeeeeeerrrr');
     } else {
       if (UserRole.userRole == 'admin') {
         level = levelAdmin;
@@ -52,14 +54,14 @@ class AnnouncementService with ChangeNotifier {
       }
     }
 
-    // Which level's Row
+    // Specify which Row
     DataQueryBuilder queryBuilder = DataQueryBuilder()..whereClause = level;
     print(level);
 
     _busyRetrieving = true;
     notifyListeners();
 
-    // Get Data from table called 'AnnoucementEntry'
+    // Get Data from table called 'AnnoucementEntry' with the above query
     List<Map<dynamic, dynamic>?>? map = await Backendless.data
         .of('AnnouncementEntry')
         .find(queryBuilder)
@@ -75,13 +77,15 @@ class AnnouncementService with ChangeNotifier {
     }
 
     if (map != null) {
+      // if "map" is not empty
       if (map.length > 0) {
-        //print(map[0]);
         _announcementEntry = AnnouncementEntry.fromJson(map.first);
         _announcements =
             convertMapToAnnouncementList(_announcementEntry!.announcements);
         notifyListeners();
-      } else {
+      }
+      // else is for when "map" is empty
+      else {
         emptyAnnouncements();
       }
     } else {
@@ -94,12 +98,13 @@ class AnnouncementService with ChangeNotifier {
     return result;
   }
 
+  // Function for saving an announcement entry
   Future<String> saveAnnouncementEntry(String username, bool inUI) async {
     String result = 'OK';
+
     if (_announcementEntry == null) {
       _announcementEntry = AnnouncementEntry(
-          announcements: convertAnnouncementListToMap(_announcements),
-          username: username);
+          announcements: convertAnnouncementListToMap(_announcements));
     } else {
       _announcementEntry!.announcements =
           convertAnnouncementListToMap(_announcements);
@@ -127,19 +132,16 @@ class AnnouncementService with ChangeNotifier {
     return result;
   }
 
-  // if task is done
-
-  /*void toggleAnnouncementDone(int index) {
-    _announcements[index].done = !_announcements[index].done;
-    notifyListeners();
-  }*/
-
+  // Funtion for deleting an announcement from a List
   void deleteAnnouncement(Announcement announcement) {
+    // An announcement is removed from the List
     _announcements.remove(announcement);
     notifyListeners();
   }
 
+  // Funtion for inserting an announcement to the List
   void createAnnouncement(Announcement announcement) {
+    // An announcement is inserted from the List
     _announcements.insert(0, announcement);
     notifyListeners();
   }

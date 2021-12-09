@@ -5,6 +5,8 @@ import 'package:interstate_bus_services_app/widgets/regexes.dart';
 import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
 
+// A page that will the logged in user to update their profile
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
@@ -41,31 +43,12 @@ class _EditProfileState extends State<EditProfile> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          title: Text('Edit profile'),
           backgroundColor: Colors.black54,
         ),
         backgroundColor: Colors.black54,
         body: Stack(
           children: [
-            // Container(
-            //   constraints: BoxConstraints.expand(),
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage('assets/images/Background1.jpg'),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-            // Opacity(
-            //   opacity: 0.85,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //           begin: Alignment.topCenter,
-            //           end: Alignment.bottomCenter,
-            //           colors: [Colors.red, Colors.blue]),
-            //     ),
-            //   ),
-            // ),
             Container(
               height: MediaQuery.of(context).size.height - 82.0,
               width: MediaQuery.of(context).size.width,
@@ -79,9 +62,6 @@ class _EditProfileState extends State<EditProfile> {
                       topLeft: Radius.circular(45.0),
                       topRight: Radius.circular(45.0),
                     ),
-                    // image: DecorationImage(
-                    //     image: AssetImage('assets/images/BusLines.png'),
-                    //     fit: BoxFit.fill),
                     color: Colors.grey[600],
                   ),
                   height: MediaQuery.of(context).size.height - 120.0,
@@ -178,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
 
 ButtonStyle buttonStyle() {
   return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.blue),
+    backgroundColor: MaterialStateProperty.all(Colors.teal[400]),
     fixedSize: MaterialStateProperty.all(Size.fromWidth(220)),
   );
 }

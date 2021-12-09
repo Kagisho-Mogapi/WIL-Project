@@ -1,7 +1,5 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:interstate_bus_services_app/models/user.dart';
-import 'package:interstate_bus_services_app/models/user_list_entry.dart';
 import 'package:provider/provider.dart';
 
 class UserService with ChangeNotifier {
@@ -11,7 +9,6 @@ class UserService with ChangeNotifier {
   static double topUpAmount = 0;
   static double subtractAmount = 0;
 
-  UserListEntry? userEntry;
   String users = '';
   String result = 'OK';
 
@@ -24,21 +21,25 @@ class UserService with ChangeNotifier {
   String _userProgressText = '';
   String get userProgressText => _userProgressText;
 
+// Function for setting current user to null
   void setCurrentUserNull() {
     _currentUser = null;
   }
 
+// Function for checking if user alread exists
   set userExists(bool value) {
     _userExists = value;
     notifyListeners();
   }
 
+// Function for reseting a user's passwords
   Future<String> resetPassword(String username) async {
     String result = 'OK';
     _showUserProgress = true;
     _userProgressText = 'Reseting the password... Please Wait...';
     notifyListeners();
 
+    // the app will call Backendless services to help with reseting a password
     await Backendless.userService
         .restorePassword(username)
         .onError((error, stackTrace) {
@@ -50,6 +51,7 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+// Function to logout a user
   Future<String> logoutUser() async {
     String result = 'OK';
 
@@ -57,6 +59,8 @@ class UserService with ChangeNotifier {
     _userProgressText = 'Signing Out... Please Wait...';
     notifyListeners();
 
+    // the app will use Backendless services to help with logging out the
+    //current user
     await Backendless.userService.logout().onError((error, stackTrace) {
       result = error.toString();
     });
@@ -66,10 +70,14 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+// Function to check if a user has already registered
   void checkIfUserExists(String username) async {
+    // this query will look for matching emails on the database
     DataQueryBuilder? queryBuilder = DataQueryBuilder()
       ..whereClause = "email = '$username'";
 
+    // the app will use Backendless services to on the Users tables for
+    // matching emails
     await Backendless.data
         .withClass<BackendlessUser>()
         .find(queryBuilder)
@@ -87,6 +95,7 @@ class UserService with ChangeNotifier {
     });
   }
 
+// Function to login a user with the provided details
   Future<String> loginUser(String username, String password) async {
     String result = 'OK';
 
@@ -94,8 +103,7 @@ class UserService with ChangeNotifier {
     _userProgressText = 'Logging In.... Please Wait';
     notifyListeners();
 
-    // Logging in a user
-    // .onError gives errors
+    // Logging in a user using Backendless services
     BackendlessUser? user = await Backendless.userService
         .login(username, password, true)
         .onError((error, stackTrace) {
@@ -104,8 +112,8 @@ class UserService with ChangeNotifier {
 
     if (user != null) {
       _currentUser = user;
+      userEmail = _currentUser!.email;
     }
-    userEmail = _currentUser!.email;
 
     _showUserProgress = false;
     notifyListeners();
@@ -113,10 +121,11 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+// Function to check if user is already logged in
   Future<String> checkIfUserLoggedIn() async {
     String result = 'OK';
 
-    // Checks if there was a valid login
+    // Checks if there was a valid login using Backendless services
     bool? validLogin = await Backendless.userService
         .isValidLogin()
         .onError((error, stackTrace) {
@@ -157,6 +166,7 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+// Function for updating user profile details
   Future<void> updateProfile(
     BuildContext context,
     String fNameEdit,
@@ -164,9 +174,10 @@ class UserService with ChangeNotifier {
     String phoneNumberEdit,
     String passwordEdit,
   ) async {
-    Map<dynamic, dynamic> entity = {};
+    Map<dynamic, dynamic> entity = {}; // map of changes
     int? saveChange = -1;
 
+    // fields a checked is they are empty or not
     if (fNameEdit.isNotEmpty) {
       entity.addAll({'fName': '$fNameEdit'});
     }
@@ -179,6 +190,7 @@ class UserService with ChangeNotifier {
       entity.addAll({'phoneNumber': '$phoneNumberEdit'});
     }
 
+    // for updating user password
     if (passwordEdit.isNotEmpty) {
       BackendlessUser? user = context.read<UserService>().currentUser;
       user!.password = passwordEdit;
@@ -188,59 +200,32 @@ class UserService with ChangeNotifier {
           .then((response) => print("User password has been changed"));
     }
 
+    // The updates are applied to user
     saveChange = await Backendless.data.of("Users").update(
         "email ='${context.read<UserService>().currentUser!.email}'", entity);
 
-    print(saveChange);
+    // print(saveChange);
   }
 
-  Future<void> topUpBalance(
-    String username,
-  ) async {
+// Function to top-up user balance
+  Future<void> topUpBalance(String username) async {
+    // updates user balance on Backendless
     final topUpBalance = await Backendless.data
         .of("Users")
         .update("email ='$username'", {'credits': topUpAmount});
     print('Topup Result: $topUpBalance');
   }
 
+// Function to subtract from user balance
   Future<void> subtractBalance(String username, double diff) async {
+    // updates user balance on Backendless
     final topUpBalance = await Backendless.data
         .of("Users")
         .update("email ='$username'", {'credits': diff});
     print('Subtract Result: $topUpBalance');
   }
 
-  Future<void> getUsers() async {
-    DataQueryBuilder queryBuilder = DataQueryBuilder()
-      ..whereClause = "credits ='0'";
-
-    List<Map<dynamic, dynamic>?>? map = await Backendless.data
-        .of('Users')
-        .find(queryBuilder)
-        .onError((error, stackTrace) {
-      result = error.toString();
-    });
-
-    if (map != null) {
-      if (map.length > 0) {
-        // !!!! {map.first} because there's only one list per user !!!!!!!!!
-        print(map.first);
-        print('--------------------------------------------');
-        userEntry = UserListEntry.fromJson(map.first);
-        users = convertMapToUserList(userEntry!.email);
-        notifyListeners();
-      } else {
-        result = 'NOT OK';
-      }
-
-      // int index = 0;
-      // while (index < map.length) {
-      //   print(map[index]);
-      //   index++;
-      // }
-    }
-  }
-
+// Function for creating a new user
   Future<String> createUser(BackendlessUser user) async {
     String result = 'OK';
 
@@ -249,7 +234,7 @@ class UserService with ChangeNotifier {
     notifyListeners();
 
     try {
-      // Registers a user
+      // Registers a new user to Backendless using Backendless services
       await Backendless.userService.register(user);
     } catch (e) {
       result = getHumanReadableError(e.toString());
@@ -262,6 +247,7 @@ class UserService with ChangeNotifier {
     return result;
   }
 
+// Function for displaying human readable errors
   String getHumanReadableError(String message) {
     if (message.contains('email address must be confirmed first')) {
       return 'Please check your inbox and confirm your email address and try to login again.';

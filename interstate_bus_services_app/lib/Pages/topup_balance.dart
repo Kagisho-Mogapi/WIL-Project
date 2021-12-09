@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:interstate_bus_services_app/Routes/routes.dart';
 import 'package:interstate_bus_services_app/services/user_service.dart';
+import 'package:interstate_bus_services_app/widgets/snack_bars.dart';
 import 'package:provider/provider.dart';
+
+// This page will allow a user to view and enter their top-up amount
 
 class TopupBalance extends StatefulWidget {
   const TopupBalance({Key? key}) : super(key: key);
@@ -24,31 +27,21 @@ class _TopupBalanceState extends State<TopupBalance> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-      ),
+          elevation: 0,
+          backgroundColor: Colors.grey[200],
+          leading: IconButton(
+            icon: Icon(
+              Icons.home,
+              color: Colors.orange[700],
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, RouteManager.newHome);
+            },
+          )),
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
-          Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/Background1.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Opacity(
-            opacity: 0.85,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.red, Colors.blue]),
-              ),
-            ),
-          ),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -71,11 +64,13 @@ class _TopupBalanceState extends State<TopupBalance> {
                         ),
                         Text(
                           'Topup Balance',
-                          style: TextStyle(fontSize: 22, color: Colors.black),
+                          style:
+                              TextStyle(fontSize: 22, color: Colors.teal[400]),
                         ),
                         Text(
                           'R${context.read<UserService>().currentUser!.getProperty('credits')}',
-                          style: TextStyle(fontSize: 22, color: Colors.black),
+                          style:
+                              TextStyle(fontSize: 22, color: Colors.teal[400]),
                         ),
                       ],
                     ),
@@ -87,15 +82,19 @@ class _TopupBalanceState extends State<TopupBalance> {
                     width: 300,
                     padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
                       color: Colors.grey[200],
                       border: Border.all(
-                        color: Colors.black,
+                        color: Colors.teal.shade400,
                         width: 2,
                       ),
                     ),
                     child: TextField(
+                      style: TextStyle(fontSize: 19, color: Colors.teal[400]),
                       controller: amountController,
                       decoration: InputDecoration(
+                        hintStyle: TextStyle(color: Colors.teal[400]),
+                        border: InputBorder.none,
                         hintText: 'Enter Amount',
                       ),
                     ),
@@ -107,23 +106,33 @@ class _TopupBalanceState extends State<TopupBalance> {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.red[400],
-                        fixedSize: Size(300, 60),
+                        primary: Colors.teal[400],
+                        fixedSize: Size(270, 60),
                       ),
                       onPressed: () {
-                        double amountInt =
-                            double.parse(amountController.text.trim());
-                        double creditsInt = double.parse(context
-                            .read<UserService>()
-                            .currentUser!
-                            .getProperty('credits'));
+                        if (amountController.text.trim().isNotEmpty) {
+                          double amountInt =
+                              double.parse(amountController.text.trim());
+                          double creditsInt = double.parse(context
+                              .read<UserService>()
+                              .currentUser!
+                              .getProperty('credits'));
 
-                        UserService.topUpAmount = amountInt + creditsInt;
+                          UserService.topUpAmount = amountInt + creditsInt;
 
-                        Navigator.pushNamed(
-                            context, RouteManager.paymentDetails);
+                          Navigator.pushNamed(
+                              context, RouteManager.paymentDetails);
+                        } else {
+                          showSnackBar(context, 'Enter All Fields');
+                        }
                       },
-                      child: Text('Topup'),
+                      child: Text(
+                        'Topup',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900),
+                      ),
                     ),
                   ),
                 ],

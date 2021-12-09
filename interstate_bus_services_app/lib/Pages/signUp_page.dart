@@ -7,6 +7,8 @@ import 'package:interstate_bus_services_app/widgets/sign_up_text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
+// This page will allow a new user to signup for the app
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -29,6 +31,15 @@ class _SignUpPageState extends State<SignUpPage> {
   bool isValidPhoneNo = true;
   bool isValidIDNo = true;
   bool passMatch = true;
+
+  List<String> fromRoute = [
+    'Bloemfontein',
+    'Botshabelo',
+    'Thaba Nchu',
+  ];
+  DropdownMenuItem<String> buildMenuItem(String item) =>
+      DropdownMenuItem(value: item, child: Text(item));
+  String? fromValue;
 
   @override
   void initState() {
@@ -60,50 +71,14 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(
         backgroundColor: Colors.orangeAccent,
       ),
-      backgroundColor: Colors.orangeAccent,
+      backgroundColor: Colors.grey[50],
       body: Stack(
         children: [
-          // Container(
-          //   constraints: BoxConstraints.expand(),
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage('assets/images/Background1.jpg'),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-          // Opacity(
-          //   opacity: 0.85,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //           begin: Alignment.topCenter,
-          //           end: Alignment.bottomCenter,
-          //           colors: [Colors.red, Colors.blue]),
-          //     ),
-          //   ),
-          // ),
           Container(
             height: MediaQuery.of(context).size.height - 82.0,
             width: MediaQuery.of(context).size.width,
             color: Colors.transparent,
           ),
-          Positioned(
-              top: 50.0,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(45.0),
-                    // topRight: Radius.circular(45.0),
-                  ),
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/BusLines.png'),
-                      fit: BoxFit.fill),
-                  color: Colors.white,
-                ),
-                height: MediaQuery.of(context).size.height - 120.0,
-                width: MediaQuery.of(context).size.width,
-              )),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -169,7 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           } else {
                             isValidIDNo = myInputValidation(
                                 idNumberController.text.trim(),
-                                MyRegexes.number);
+                                MyRegexes.idNumber);
                           }
                         });
                       }
@@ -178,9 +153,39 @@ class _SignUpPageState extends State<SignUpPage> {
                       keyboardType: TextInputType.number,
                       controller: idNumberController,
                       labeltext: 'Enter ID Number',
-                      errorMsg: 'Numbers Only',
+                      errorMsg: 'Incorrect ID Format',
                       isValidInput: isValidIDNo,
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: Colors.grey[200],
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: DropdownButton<String>(
+                              underline: Container(),
+                              items: fromRoute.map(buildMenuItem).toList(),
+                              onChanged: (value) =>
+                                  setState(() => this.fromValue = value),
+                              value: this.fromValue,
+                              hint: Text('I\'m From'),
+                            ),
+                          ),
+                        ]),
                   ),
                   Focus(
                     onFocusChange: (value) async {
@@ -301,24 +306,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       minWidth: 200,
                       color: Colors.orange,
                       onPressed: () {
-                        // createNewUserListInUI(context,
-                        //     emailController: emailController.text.trim(),
-                        //     phoneNumberController:
-                        //         phoneNumberController.text.trim());
-                        // saveAllUserListsInUI(context);
-                        // saveAllUsersListInUI(
-                        //     context,
-                        //     emailController.text.trim(),
-                        //     phoneNumberController.text.trim());
-                        createNewUserInUI(
-                          context,
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                          fName: nameController.text.trim(),
-                          lName: surnameController.text.trim(),
-                          idNumber: idNumberController.text.trim(),
-                          phoneNumber: phoneNumberController.text.trim(),
-                        );
+                        if (passMatch)
+                          createNewUserInUI(
+                            context,
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            fName: nameController.text.trim(),
+                            lName: surnameController.text.trim(),
+                            idNumber: idNumberController.text.trim(),
+                            phoneNumber: phoneNumberController.text.trim(),
+                            city: fromValue!,
+                          );
                       },
                       child: Text(
                         'Submit',
@@ -330,33 +328,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  /*Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: ElevatedButton(
-                        style:
-                            ElevatedButton.styleFrom(primary: Colors.red[400]),
-                        onPressed: () {
-                          // Passing New User Details
-                          createNewUserInUI(
-                            context,
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            fName: nameController.text.trim(),
-                            lName: surnameController.text.trim(),
-                            idNumber: idNumberController.text.trim(),
-                            phoneNumber: phoneNumberController.text.trim(),
-                          );
-                        },
-                        child: Text('Submit'),
-                      ),
-                    ),*/
-                  /*SizedBox(height: 10),
-                    ElevatedButton(
-                      child: Text('Back'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )*/
                 ],
               ),
             ),

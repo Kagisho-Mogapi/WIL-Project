@@ -30,12 +30,15 @@ class MyTicketCard extends StatelessWidget {
           )
         ],
         child: ListTile(
-          tileColor: Colors.lightBlueAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(9.0),
+          ),
+          tileColor: Colors.teal[400],
           title: Text(
             'Ticket Owner: ${message.ticketOwner} ' +
                 ', Ticket Type: ${message.ticketType}, Ticket Price: R${message.price}, Is Used: ${message.isUsed}',
             style: TextStyle(
-              color: Colors.orange[900],
+              color: Colors.white,
             ),
           ),
         ),
