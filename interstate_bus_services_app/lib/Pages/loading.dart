@@ -18,11 +18,11 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  static const String SERVER_URL = "https://eu-api.backendless.com";
-  static const String APPLICATION_ID = "6C057E8A-5743-1687-FF77-06AE75443400";
-  static const String ANDROID_API_KEY = "5771E324-6F0D-4CF2-A813-D9339D3223FD";
-  static const String IOS_API_KEY = "6A6097DF-84AC-442F-AEA9-FADDCE16F1CB";
-  static const String JS_API_KEY = "CBB3571F-FB60-4DDE-95B3-21615345B79B";
+  static const String SERVER_URL = "API_KEYS HERE'S";
+  static const String APPLICATION_ID = "API_KEYS HERE'S";
+  static const String ANDROID_API_KEY = "API_KEYS HERE'S";
+  static const String IOS_API_KEY = "API_KEYS HERE'S";
+  static const String JS_API_KEY = "API_KEYS HERE'S";
 
   @override
   void initState() {
